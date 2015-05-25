@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>sublime text 3 注册码 | xanarry&#39;s</title>
+  <title>搭建Hexo博客的简单步骤 | xanarry&#39;s</title>
   <meta name="author" content="xanarry">
   
   <meta name="description" content="xanarry&#39;s blog">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="sublime text 3 注册码"/>
+  <meta property="og:title" content="搭建Hexo博客的简单步骤"/>
   <meta property="og:site_name" content="xanarry&#39;s"/>
 
   
@@ -50,29 +50,24 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-05-02T05:35:14.000Z"><a href="/2015/05/02/sublime-text-3-注册码/">2015-05-02</a></time>
+        <time datetime="2015-05-25T14:10:29.000Z"><a href="/2015/05/25/搭建Hexo博客的简单步骤/">2015-05-25</a></time>
       
       
   
-    <h1 class="title">sublime text 3 注册码</h1>
+    <h1 class="title">搭建Hexo博客的简单步骤</h1>
   
 
     </header>
     <div class="entry">
       
-        <p>以下为sublime text 3注册码, 3059已经激活, 其他版本应该也可以</p>
-<pre><code>Andrew Weber  
-Single User License  
-EA7E-855605  
-813A03DD 5E4AD<span class="number">9E6 6C0</span>EEB94 BC99798F  
-<span class="number">942194A6 02</span>396E98 E<span class="number">62C9979 4</span>BB979FE  
-<span class="number">91424C9</span>D A45400BF F<span class="number">6747D88 2</span>FB88078  
-90F5CC94 1CDC92DC <span class="number">8457107</span><span class="keyword">A</span> F151657B  
-<span class="number">1D22E383</span> <span class="keyword">A</span><span class="number">997F016</span> <span class="number">42397640 33</span>F41CFC  
-E1D0AE85 A0BBD<span class="number">039 0E9</span>C8D55 E1B89D5D  
-5CDB7036 E56DE1C0 EFCC<span class="number">0840 650</span>CD3A6  
-B98FC99C 8FAC73EE D<span class="number">2B95564</span> DF450523
-</code></pre>
+        <p>前期准备,注册github账号,并创建GitHub Pages<br>1:安装<a href="https://nodejs.org/" target="_blank" rel="external">node.js</a><br>2:安装<a href="http://git-scm.com/" target="_blank" rel="external">git</a><br>3:在你的计算机中创建一个工作根目录,比如我是将hexo目录创建在D盘的. <font color="0080ff">D:\hexo</font><br>3:打开工作根目录,右键调出gitbash<br>4:输入npm install -g hexo<br>5:输入hexo init<br>6:输入npm install<br>7:检查ssh_key<br>    ls -al ~/.ssh<br>    如果没有请输入:ssh-keygen -t rsa -C “github注册邮箱”<br>    输入passphrase:要记住,后面用<br>    ssh-agent -s<br>    ssh-add ~/.ssh/id_rsa,如果本行出错执行下面两行<br>    eval <code>ssh-agent -s</code><br>    ssh-add<br>    然后在用户目录中找到.ssh目录中的id_rsa.pub,打开并复制其内容添加到github的ssh key中<br>8:测试ssh_key是否成功<br>    ssh -T git@github.com,如果输出hi yourname 那就正常了<br>9:添加用户信息<br>    git config —global user.name “cnfeat”//用户名<br>    git config —global user.email  “cnfeat@gmail.com”//填写自己的邮箱<br>10:编辑本地根目录中的配置文件<font color="0080ff">_config.yml</font>,添加github仓库信息</p>
+<pre><code><span class="attribute">deploy</span>:
+<span class="attribute">type</span>: git
+<span class="attribute">repository</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:you_name/your_name.github.io.git
+<span class="attribute">branch</span>: master
+</code></pre><p>11:使用<br>    hexo n添加新文章<br>    hexo g生成文章<br>    hexo d发布<br>    hexo s打开本地服务器测试:localhost:4000</p>
+<p>注意:如果发布出现deplorer not found git,请使用如下命令:<br>    npm install hexo-deployer-git —save </p>
+
       
     </div>
     <footer>
@@ -80,13 +75,13 @@ B98FC99C 8FAC73EE D<span class="number">2B95564</span> DF450523
         
   
   <div class="categories">
-    <a href="/categories/other/">other</a>
+    <a href="/categories/Hexo/">Hexo</a>
   </div>
 
         
   
   <div class="tags">
-    <a href="/tags/sublime-text/">sublime text</a>
+    <a href="/tags/hexo/">hexo</a>
   </div>
 
         
