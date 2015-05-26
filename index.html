@@ -125,7 +125,8 @@
     </header>
     <div class="entry">
       
-        
+        <p>方法还是将两个乘数转为两个包含乘数每位数字的list,<br>因为在计算中两个list中的数据要反复使用,所以定义第三个list来保存乘法的运算结果,然后使用两重循序模拟列竖式计算出乘法运算的结果, 因为乘法运算每次运算时需要向前移动一位表示扩大10倍,所以定义变量pos标记计算时移动的位数, 每次移动一位<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> reduce</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">multiply</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    a = list(map(<span class="keyword">lambda</span> x : int(x), a.strip()))</span><br><span class="line">    b = list(map(<span class="keyword">lambda</span> x : int(x), b.strip()))</span><br><span class="line">    c = list(map(<span class="keyword">lambda</span> x : <span class="number">0</span>, (<span class="string">"0"</span> + str(a) + str(b)).strip()))</span><br><span class="line">    index = len(c) - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(a) - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">        pos = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(len(b) - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            temp = a[i] * b[j] + c[index - pos] <span class="comment">#两个乘数相乘,并加上在此前一次的进位</span></span><br><span class="line">            c[index - pos] = temp % <span class="number">10</span> <span class="comment">#保存运算求余结果</span></span><br><span class="line">            c[index - pos - <span class="number">1</span>] += temp // <span class="number">10</span> <span class="comment">#处理进位,进位可以是0或者大于0的数</span></span><br><span class="line">            pos += <span class="number">1</span></span><br><span class="line">        index -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> int(reduce(<span class="keyword">lambda</span> x, y : str(x) + str(y), c)) <span class="comment">#将list中的内容转换为字符串</span></span><br><span class="line"></span><br><span class="line">a = input(<span class="string">"input a: "</span>)</span><br><span class="line">b = input(<span class="string">"input b: "</span>)</span><br><span class="line">print(multiply(a, b))</span><br></pre></td></tr></table></figure></p>
+
       
     </div>
     <footer>
@@ -473,7 +474,7 @@ hexo s <span class="comment">#打开本地服务器测试:localhost:4000</span>
   
     <li><a href="/categories/Life/">Life</a><small>1</small></li>
   
-    <li><a href="/categories/Python/">Python</a><small>6</small></li>
+    <li><a href="/categories/Python/">Python</a><small>7</small></li>
   
     <li><a href="/categories/other/">other</a><small>1</small></li>
   
@@ -504,7 +505,7 @@ hexo s <span class="comment">#打开本地服务器测试:localhost:4000</span>
   
     <li><a href="/tags/生活/">生活</a><small>1</small></li>
   
-    <li><a href="/tags/高精度/">高精度</a><small>2</small></li>
+    <li><a href="/tags/高精度/">高精度</a><small>3</small></li>
   
   </ul>
 </div>
