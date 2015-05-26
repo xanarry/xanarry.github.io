@@ -1,0 +1,233 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>C语言中字符串的复制 | xanarry&#39;s</title>
+  <meta name="author" content="xanarry">
+  
+  <meta name="description" content="xanarry&#39;s blog">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="C语言中字符串的复制"/>
+  <meta property="og:site_name" content="xanarry&#39;s"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="xanarry&#39;s" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">xanarry&#39;s</a></h1>
+  <h2><a href="/">创造就是一个构造过程的过程!</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-05-26T13:26:19.000Z"><a href="/2015/05/26/C语言中字符串的复制与memcpy函数/">2015-05-26</a></time>
+      
+      
+  
+    <h1 class="title">C语言中字符串的复制</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天做360实习生笔试题, 做完大多数题还是比较基础的, 但是每道题都需要仔细斟酌. 但是自己被虐得面目全非, 操作系统和计算机网络相关的很多知识都不会, 还得努力学习. 不过说重点, 面试题有两个编程题, 第一个是实现hashmap, 第二题是一个字符串的处理, 我主要说说第二题, 题目描述如下:</p>
+<pre><code>实现域名的字段顺序翻转函数,比如输入www<span class="class">.so</span><span class="class">.com</span>, 输出为com<span class="class">.so</span><span class="class">.www</span>, 要求实现的效率尽可能的优化
+</code></pre><p>我在做这个题的时候还剩下不到10分钟, 慌忙中将题目看复杂了,我想成会有<em>www.abc.efg.com</em>这样的情况了, 于是惯性思维促使我使用c++将域名按”.”切片, 然后逆序输出, 写的也烂, 也不是效率最高的, 提交后再看题目发现域名是只有<em>www</em>和<em>域名本体</em>和<em>com</em>三个部分, 当然后面的的<em>com</em>可能是其他的后缀,比如<em>io</em>或者<em>info</em>之类的, 发现直接是<em>memcpy()</em>复制内存片段效率应该会更高, 即首先复制后缀, 然后复制域名本体, 然后再复制<em>www</em>到字符串缓冲区,然后输出就是结果了,于是用c实现了这个方法:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">trans</span><span class="params">(<span class="keyword">char</span> *res, <span class="keyword">char</span> *a)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="built_in">strcat</span>(a, <span class="string">"."</span>); <span class="comment">//在域名默认加上".", 因为"com", 移动到最前面后后面需要一个"."</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *src = a; <span class="comment">//复制一个常量副本, 因为memcpy()函数的参数中要求常量</span></span><br><span class="line">    <span class="keyword">int</span> len = <span class="built_in">strlen</span>(src) - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> i = len;</span><br><span class="line">    <span class="keyword">while</span>(src[--i] != <span class="string">'.'</span>); <span class="comment">//找到后开始的下标</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">memcpy</span>(res, src + i + <span class="number">1</span>, (len - i) * <span class="keyword">sizeof</span>(<span class="keyword">char</span>)); <span class="comment">//复制后缀到res字符串缓冲区的起点</span></span><br><span class="line">    <span class="built_in">memcpy</span>(res + (len - i), src + <span class="number">4</span>, (i - <span class="number">3</span>) * <span class="keyword">sizeof</span>(<span class="keyword">char</span>)); <span class="comment">//将域名内容复制到res缓冲区的末尾</span></span><br><span class="line">    <span class="built_in">memcpy</span>(res + (len + <span class="number">1</span> - <span class="number">4</span>), src, <span class="number">3</span> * <span class="keyword">sizeof</span>(<span class="keyword">char</span>)); <span class="comment">//继续将"www"复制到res末尾</span></span><br><span class="line">    res[len] = <span class="string">'\0'</span>; <span class="comment">//设置字符串结束标志</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> a[<span class="number">100</span>], res[<span class="number">100</span>];</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%s"</span>, a);</span><br><span class="line">    trans(res, a);</span><br><span class="line">    <span class="built_in">puts</span>(res);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果如下:</p>
+<pre><code>www<span class="class">.baidu</span><span class="class">.com</span>
+com<span class="class">.baidu</span><span class="class">.www</span>
+</code></pre><p>关于c语言中字符串的复制, 通常可以使用<em>strcpy()</em>来实现, 当然也可手动写个循环, 但是复制效率是最低的, 无论是从人的角度还是计算机的角度来说, 第三个就是直接使用<em>memcpy()</em>, 直接将复制目标内存片段到指定位置, 并且复制速度是最快的, 但是<em>strcpy()</em>与<em>memcpy()</em>在用来复制字符串的时候有一个小小的区别就是无论如何<em>strcpy()</em>从字符串的开始只复制到第一个”\0”的位置, 但是由于<em>memcpy()</em>是整个内存片段,所以”\0”也不会被忽略, 虽然最后复制内容输入到屏幕显示的结果是一样的, 我们用个小程序演示一下这个区别:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;string.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> a[<span class="number">20</span>] = <span class="string">"asdf\0uiop"</span>;</span><br><span class="line">    <span class="keyword">char</span> b[<span class="number">20</span>];</span><br><span class="line">    <span class="keyword">char</span> c[<span class="number">20</span>];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">strcpy</span>(b, a);</span><br><span class="line">    <span class="built_in">puts</span>(b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, <span class="built_in">strlen</span>(a));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">5</span>; i &lt; <span class="number">9</span>; i++)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%c"</span>, b[i]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"-----------------------"</span>);</span><br><span class="line">    <span class="built_in">memcpy</span>(c, a, <span class="number">9</span> * <span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br><span class="line">    <span class="built_in">puts</span>(c);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, <span class="built_in">strlen</span>(c));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">5</span>; i &lt; <span class="number">9</span>; i++)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%c"</span>, c[i]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果如下:</p>
+<pre><code>asdf
+4
+S
+
+-<span class="ruby">----------------------
+</span>asdf
+4
+uiop
+请按任意键继续. . .
+</code></pre><p>从结果可以看出,使用<em>strcpy()</em>仅仅复制到了”\0”, 因为输出b的后半部分结果是未定义的,说明并没有复制过来, 但是输出c的后半部分是, 输出了事先定义的结果</p>
+<p>同样, 利用<em>memcpy()</em>函数的特性, 我们可以做一个泛型的交换函数:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;string.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//因为交换的数据类型是未知的, 所以添加一个额外的参数告诉函数复制多长内存片段</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">void</span> *a, <span class="keyword">void</span> *b, <span class="keyword">int</span> size)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> buffer[size];</span><br><span class="line">    <span class="built_in">memcpy</span>(buffer, a, size);</span><br><span class="line">    <span class="built_in">memcpy</span>(a, b, size);</span><br><span class="line">    <span class="built_in">memcpy</span>(b, buffer, size);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> a = <span class="string">'a'</span>, b = <span class="string">'b'</span>;</span><br><span class="line">    swap(&amp;a, &amp;b, <span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a = %c b = %c\n"</span>, a , b);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> x = <span class="number">11</span>, y = <span class="number">99</span>;</span><br><span class="line">    swap(&amp;x, &amp;y, <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"x = %d y = %d\n"</span>, x , y);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出:</p>
+<pre><code><span class="tag">a</span> = <span class="tag">b</span> <span class="tag">b</span> = <span class="tag">a</span>
+x = <span class="number">99</span> y = <span class="number">11</span>
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/C/">C</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/字符串/">字符串</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/C/">C</a><small>1</small></li>
+  
+    <li><a href="/categories/C/">C++</a><small>1</small></li>
+  
+    <li><a href="/categories/Hexo/">Hexo</a><small>2</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>1</small></li>
+  
+    <li><a href="/categories/Python/">Python</a><small>7</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/C/">C++</a><small>1</small></li>
+  
+    <li><a href="/tags/MySQL/">MySQL</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>3</small></li>
+  
+    <li><a href="/tags/lambda表达式/">lambda表达式</a><small>1</small></li>
+  
+    <li><a href="/tags/python字典/">python字典</a><small>1</small></li>
+  
+    <li><a href="/tags/sublime-text/">sublime text</a><small>1</small></li>
+  
+    <li><a href="/tags/test/">test</a><small>1</small></li>
+  
+    <li><a href="/tags/字符串/">字符串</a><small>1</small></li>
+  
+    <li><a href="/tags/排序/">排序</a><small>1</small></li>
+  
+    <li><a href="/tags/生活/">生活</a><small>1</small></li>
+  
+    <li><a href="/tags/高精度/">高精度</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 xanarry
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'xanarry';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?05b8c86ae6be8be1243fc590c74bfde1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</body>
+</html>
