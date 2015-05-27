@@ -61,7 +61,7 @@
     <div class="entry">
       
         <p>使用python写的递归程序如果递归太深, 那么极有可能因为超过系统默认的递归深度限制而出现</p>
-<pre><code><span class="attribute">RuntimeError\</span>: <span class="string">maximum recursion depth exceeded in comparison</span>
+<pre><code><span class="label">RuntimeError:</span> maximum recursion depth exceeded <span class="keyword">in</span> comparison
 </code></pre><p>的错误, 解决方法很简单, 人为将系统设定的递归深度设置为一个较大的值即可:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.setrecursionlimit(<span class="number">1000000</span>) <span class="comment">#括号中的值为递归深度</span></span><br></pre></td></tr></table></figure></p>
 
       
