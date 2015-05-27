@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>python学习中的小点滴 | xanarry&#39;s</title>
+  <title>python递归栈溢出 | xanarry&#39;s</title>
   <meta name="author" content="xanarry">
   
   <meta name="description" content="xanarry&#39;s blog">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="python学习中的小点滴"/>
+  <meta property="og:title" content="python递归栈溢出"/>
   <meta property="og:site_name" content="xanarry&#39;s"/>
 
   
@@ -54,25 +54,15 @@
       
       
   
-    <h1 class="title">python学习中的小点滴</h1>
+    <h1 class="title">python递归栈溢出</h1>
   
 
     </header>
     <div class="entry">
       
-        <font color="0080ff"><em>此文记录python中不足以写成博文, 但是很重要的小点滴,.会不间断添加新内容</em></font>
-
-<ol>
-<li><p>使用python递归程序时如果递归太深, 那么极有可能因为超过系统默认的递归深度限制而出现</p>
-<p> RuntimeError: maximum recursion depth exceeded in comparison</p>
-</li>
-</ol>
-<p>的错误, 所以人为的将系统设定的递归深度设置为一个较大的值即即可:</p>
-<pre><code><span class="preprocessor"><span class="keyword">import</span> sys</span>
-sys.setrecursionlimit(<span class="number">1000000</span>)<span class="preprocessor"> #括号中的值为递归深度</span>
-</code></pre><ol>
-<li>hello world</li>
-</ol>
+        <p>使用python写的递归程序如果递归太深, 那么极有可能因为超过系统默认的递归深度限制而出现</p>
+<pre><code><span class="attribute">RuntimeError\</span>: <span class="string">maximum recursion depth exceeded in comparison</span>
+</code></pre><p>的错误, 解决方法很简单, 人为将系统设定的递归深度设置为一个较大的值即可:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.setrecursionlimit(<span class="number">1000000</span>) <span class="comment">#括号中的值为递归深度</span></span><br></pre></td></tr></table></figure></p>
 
       
     </div>
