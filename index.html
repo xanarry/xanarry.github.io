@@ -61,18 +61,16 @@
     </header>
     <div class="entry">
       
-        <p><font color="0080ff"><em>此文记录python中不足以写成博文, 但是很重要的小点滴</em></font></p>
+        <font color="0080ff"><em>此文记录python中不足以写成博文, 但是很重要的小点滴,.会不间断添加新内容</em></font>
+
 <ol>
-<li>使用python递归程序时如果递归太深, 那么极有可能因为超过系统默认的递归深度限制而出现</li>
+<li><p>使用python递归程序时如果递归太深, 那么极有可能因为超过系统默认的递归深度限制而出现</p>
+<p> RuntimeError: maximum recursion depth exceeded in comparison</p>
+</li>
 </ol>
-<pre><code><span class="attribute">RuntimeError</span>: <span class="string">maximum recursion depth exceeded in comparison</span>
-
-<span class="monkey">
-的错误, 所以人为的将系统设定的递归深度设置为一个较大的值即即可:
-
-
-<span class="preprocessor"><span class="keyword">import</span> sys</span>
-sys.setrecursionlimit(<span class="number">1000000</span>)<span class="preprocessor"> #括号中的值为递归深度</span></span>
+<p>的错误, 所以人为的将系统设定的递归深度设置为一个较大的值即即可:</p>
+<pre><code><span class="preprocessor"><span class="keyword">import</span> sys</span>
+sys.setrecursionlimit(<span class="number">1000000</span>)<span class="preprocessor"> #括号中的值为递归深度</span>
 </code></pre><ol>
 <li>hello world</li>
 </ol>
