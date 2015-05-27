@@ -262,8 +262,9 @@ nums.sort<span class="params">(key = lambda x : x[<span class="number">1</span>]
 <span class="string">name:</span> indf, <span class="string">price:</span> <span class="number">123</span>
 <span class="string">name:</span> kjsdf, <span class="string">price:</span> <span class="number">3452</span>
 <span class="string">name:</span> kenfs, <span class="string">price:</span> <span class="number">979</span>
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用sorted按书名排序</span></span><br><span class="line">sbooks = sorted(books, key = <span class="keyword">lambda</span> x : x.name)</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> sbooks:</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure>
-<p>输出结果:</p>
+</code></pre><p>使用sorted按书名排序</p>
+<pre><code>sbooks = <span class="function"><span class="title">sorted</span><span class="params">(books, key = lambda x : x.name)</span></span>
+</code></pre><p>输出结果:</p>
 <pre><code><span class="string">name:</span> dfw, <span class="string">price:</span> <span class="number">435</span>
 <span class="string">name:</span> ed, <span class="string">price:</span> <span class="number">123</span>
 <span class="string">name:</span> gwert, <span class="string">price:</span> <span class="number">56</span>
@@ -274,18 +275,9 @@ nums.sort<span class="params">(key = lambda x : x[<span class="number">1</span>]
 <span class="string">name:</span> rgsd, <span class="string">price:</span> <span class="number">23</span>
 <span class="string">name:</span> ydfg, <span class="string">price:</span> <span class="number">674</span>
 <span class="string">name:</span> zert, <span class="string">price:</span> <span class="number">12</span>
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#按书价排序</span></span><br><span class="line">tbooks = books;</span><br><span class="line">tbooks.sort(key = <span class="keyword">lambda</span> x: x.price)</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> tbooks:</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure>
-<p>输出结果:</p>
-<pre><code><span class="string">name:</span> zert, <span class="string">price:</span> <span class="number">12</span>
-<span class="string">name:</span> hkjhi, <span class="string">price:</span> <span class="number">12</span>
-<span class="string">name:</span> rgsd, <span class="string">price:</span> <span class="number">23</span>
-<span class="string">name:</span> gwert, <span class="string">price:</span> <span class="number">56</span>
-<span class="string">name:</span> ed, <span class="string">price:</span> <span class="number">123</span>
-<span class="string">name:</span> indf, <span class="string">price:</span> <span class="number">123</span>
-<span class="string">name:</span> dfw, <span class="string">price:</span> <span class="number">435</span>
-<span class="string">name:</span> ydfg, <span class="string">price:</span> <span class="number">674</span>
-<span class="string">name:</span> kenfs, <span class="string">price:</span> <span class="number">979</span>
-<span class="string">name:</span> kjsdf, <span class="string">price:</span> <span class="number">3452</span>
+</code></pre><p>按书价排序</p>
+<pre><code>tbooks.<span class="function"><span class="title">sort</span><span class="params">(key = lambda x: x.price)</span></span>
+<span class="function"><span class="title">print</span><span class="params">(tbooks)</span></span> #这里会输出按书价升序排序的序列
 </code></pre><p>对多个关键词自定义排序,方法也比较简单, 对单个关键词排序, 我们lambda表达式中给<em>key</em>返回单个关键词, 那么对多个关键字排序, 只需要在lambda表达式中返回一个元组即可, <em>sorted()</em>会首先按第一个元素排序, 然后第二个, 依次类推… </p>
 <p>下面看看对书本先按价格排序,如果价格相同,那么再按书名字典序排序的示例:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sbooks = sorted(books, key = <span class="keyword">lambda</span> x : (x.price, x.name))</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> sbooks:</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure>
@@ -300,7 +292,7 @@ nums.sort<span class="params">(key = lambda x : x[<span class="number">1</span>]
 <span class="string">name:</span> ydfg, <span class="string">price:</span> <span class="number">674</span>
 <span class="string">name:</span> kenfs, <span class="string">price:</span> <span class="number">979</span>
 <span class="string">name:</span> kjsdf, <span class="string">price:</span> <span class="number">3452</span>
-</code></pre><p>对于按多个关键词排序, 如果我们想对其中某些关键词按降序排序怎么办呢因为默认都是升序的, 当初我查了很久才搞定这问题, 但实际上方法很简单, 直接在lambda表式中在<font color="0080ff"><strong>需要降序排序的关键词前面加一个符号(-)</strong></font>就可以了</p>
+</code></pre><p>对于按多个关键词排序, 如果我们想对其中某些关键词按降序排序怎么办呢因为默认都是升序的, 当初我查了很久才搞定这问题, 但实际上方法很简单, 直接在lambda表式中在<font color="0080ff"><strong>需要降序排序的关键词前面加一个负号(-)</strong></font>就可以了</p>
 <p>同样对于上述例子, 如果想先按姓名长度排序,如果长度相同,那么再按价格降序排序,使用下面的方法即可</p>
 <pre><code>sbooks = sorted<span class="list">(<span class="keyword">books</span>, key = lambda x : <span class="list">(<span class="keyword">len</span><span class="list">(<span class="keyword">x</span>.name)</span>, -x.price)</span>)</span>
 </code></pre><p>输出结果:</p>
