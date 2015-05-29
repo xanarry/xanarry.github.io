@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>排序 | xanarry&#39;s</title>
+  <title>sublime text 3 添加运行python文件的快捷键 | xanarry&#39;s</title>
   <meta name="author" content="xanarry">
   
   <meta name="description" content="xanarry&#39;s blog">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="sublime text 3 添加运行python文件的快捷键"/>
   <meta property="og:site_name" content="xanarry&#39;s"/>
 
   
@@ -44,25 +44,67 @@
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-<h2 class="archive-title tag">排序</h2>
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-05-29T14:13:27.000Z"><a href="/2015/05/29/sublime-text-3-添加运行python文件的快捷键/">2015-05-29</a></time>
+      
+      
+  
+    <h1 class="title">sublime text 3 添加运行python文件的快捷键</h1>
+  
 
-
-  <div class="archive">
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2015-05-25T14:37:01.000Z"><a href="/2015/05/25/python中各种排序方式的使用/">2015-05-25</a></time>
-            
-              <h1 class="title"><a href="/2015/05/25/python中各种排序方式的使用/">python中各种排序方式的使用</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
+    </header>
+    <div class="entry">
+      
+        <p>打开 <strong>preferences</strong> -&gt; <strong>Key Binding User</strong>, 然后将以下代码粘贴上去即可, 设置的<strong>F5</strong>为快捷键</p>
+<pre><code>[ 
+    {
+    "<span class="attribute">keys</span>":<span class="value">[<span class="string">"f5"</span>]</span>,"<span class="attribute">caption</span>": <span class="value"><span class="string">"SublimeREPL:Python - RUN current file"</span></span>,
+    "<span class="attribute">command</span>":<span class="value"><span class="string">"run_existing_window_command"</span></span>, "<span class="attribute">args</span>":
+    <span class="value">{
+        "<span class="attribute">id</span>": <span class="value"><span class="string">"repl_python_run"</span></span>,
+        "<span class="attribute">file</span>": <span class="value"><span class="string">"config/Python/Main.sublime-menu"</span>
+    </span>}</span>}
+]
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/sublime-texe/">sublime texe</a>
   </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/sublime-text/">sublime text</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
@@ -148,7 +190,7 @@ var disqus_shortname = 'xanarry';
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
   dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 }());
 </script>

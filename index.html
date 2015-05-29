@@ -51,6 +51,48 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-05-29T14:13:27.000Z"><a href="/2015/05/29/sublime-text-3-添加运行python文件的快捷键/">2015-05-29</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/29/sublime-text-3-添加运行python文件的快捷键/">sublime text 3 添加运行python文件的快捷键</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>打开 <strong>preferences</strong> -&gt; <strong>Key Binding User</strong>, 然后将以下代码粘贴上去即可, 设置的<strong>F5</strong>为快捷键</p>
+<pre><code>[ 
+    {
+    "<span class="attribute">keys</span>":<span class="value">[<span class="string">"f5"</span>]</span>,"<span class="attribute">caption</span>": <span class="value"><span class="string">"SublimeREPL:Python - RUN current file"</span></span>,
+    "<span class="attribute">command</span>":<span class="value"><span class="string">"run_existing_window_command"</span></span>, "<span class="attribute">args</span>":
+    <span class="value">{
+        "<span class="attribute">id</span>": <span class="value"><span class="string">"repl_python_run"</span></span>,
+        "<span class="attribute">file</span>": <span class="value"><span class="string">"config/Python/Main.sublime-menu"</span>
+    </span>}</span>}
+]
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-05-27T04:28:12.000Z"><a href="/2015/05/27/python递归栈溢出/">2015-05-27</a></time>
       
       
@@ -528,47 +570,6 @@ hexo s <span class="comment">#打开本地服务器测试:localhost:4000</span>
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-25T07:41:45.000Z"><a href="/2015/05/25/python34-访问MySQL数据库/">2015-05-25</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/25/python34-访问MySQL数据库/">python34 访问MySQL数据库</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>本文介绍如何使用MySQL官方提供的工具访问MySQL数据库<br>首先下载<a href="http://dev.mysql.com/downloads/connector/python/" target="_blank" rel="external">connector/python</a>, 这是一个.msi的安装文件,下载后双击安装到电脑, 然后开始连接数据库</p>
-<h3 id="连接方式1">连接方式1</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mysql.connector</span><br><span class="line">cnx = mysql.connector.connect(user = <span class="string">"root"</span>, password = <span class="string">"admin"</span>, host = <span class="string">"127.0.0.1"</span>, database = <span class="string">"world"</span>)</span><br><span class="line">cnx.close()</span><br></pre></td></tr></table></figure>
-<h3 id="连接方式2">连接方式2</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mysql.connector <span class="keyword">import</span> (connection)</span><br><span class="line">cnx = connection.MySQLConnection(user=<span class="string">'scott'</span>, password=<span class="string">'tiger'</span>, host=<span class="string">'127.0.0.1'</span>, database=<span class="string">'employees'</span>)</span><br><span class="line">cnx.close()</span><br></pre></td></tr></table></figure>
-<p>两种连接方式都使用了connector,他们的作用是一样的,通常第一种方式用的更多</p>
-<h3 id="连接方式3">连接方式3</h3><p>如果连接的参数较多,可以使用**运算符直接给connect()传递一个字典,以方便代码的维护</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">config = &#123;</span><br><span class="line">    <span class="string">"user"</span> : <span class="string">"root"</span>, </span><br><span class="line">    <span class="string">"password"</span> : <span class="string">"admin"</span>, </span><br><span class="line">    <span class="string">"host"</span> : <span class="string">"127.0.0.1"</span>, </span><br><span class="line">    <span class="string">"database"</span> : <span class="string">"world"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">cnx = mysql.connector.connect(**config)</span><br><span class="line">cnx.close()</span><br></pre></td></tr></table></figure>
-<p>我们可以访问数据库的过程加上异常处理</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mysql.connector</span><br><span class="line"><span class="keyword">from</span> mysql.connector <span class="keyword">import</span> errorcode</span><br><span class="line">cnx = <span class="keyword">None</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    cnx = mysql.connector.connect(user = <span class="string">"root"</span>, password = <span class="string">"admin"</span>, host = <span class="string">"127.0.0.1"</span>, database = <span class="string">"world"</span>)</span><br><span class="line"><span class="keyword">except</span> mysql.connector.Error <span class="keyword">as</span> err:  </span><br><span class="line">    <span class="keyword">if</span> err.errno == errorcode.ER_ACCESS_DENIED_ERROR:</span><br><span class="line">        print(<span class="string">"账户不存在或者密码错误"</span>)</span><br><span class="line">    <span class="keyword">elif</span> err.errno == errorcode.ER_BAD_DB_ERROR:</span><br><span class="line">        print(<span class="string">"数据库不存在"</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(err)</span><br><span class="line">    print(err)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"连接成功"</span>)</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    cnx.close()</span><br></pre></td></tr></table></figure>  
-<p>连接后使用cnx返回的cursor对象即可访问数据库表中的内容了<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cursor = cnx.cursor()</span><br><span class="line">sql = <span class="string">"select * from city where CountryCode = \"CHN\" order by Name asc limit 1000"</span></span><br><span class="line">cursor.execute(sql)</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> cursor:</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -602,6 +603,8 @@ hexo s <span class="comment">#打开本地服务器测试:localhost:4000</span>
   
     <li><a href="/categories/other/">other</a><small>1</small></li>
   
+    <li><a href="/categories/sublime-texe/">sublime texe</a><small>1</small></li>
+  
   </ul>
 </div>
 
@@ -623,7 +626,7 @@ hexo s <span class="comment">#打开本地服务器测试:localhost:4000</span>
   
     <li><a href="/tags/python字典/">python字典</a><small>1</small></li>
   
-    <li><a href="/tags/sublime-text/">sublime text</a><small>1</small></li>
+    <li><a href="/tags/sublime-text/">sublime text</a><small>2</small></li>
   
     <li><a href="/tags/test/">test</a><small>1</small></li>
   
