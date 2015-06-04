@@ -60,7 +60,7 @@
     </header>
     <div class="entry">
       
-        <p>在windows机器上安装Ubuntu系统后, 开机启动会默认启动Ubuntu, 可以修改过<strong>grub.cfg</strong>文件设置默认启动windows.<br>打开终端:<br>输入: sudo gedit /boot/grub/grub.cfg<br>按下:Ctrl+F, 搜索<em>default</em>, 找到<em>default=0</em>的位置, 将0该为4, 即最后一个启动项windows, 然后再搜索\”timeout\”, 将所有\”timeout=10\”中的10全部改为1<br>保存并退出gedit, 重启系统即可</p>
+        <p>在windows机器上安装Ubuntu系统后, 开机启动会默认启动Ubuntu, 可以修改过<strong>grub.cfg</strong>文件设置默认启动windows.<br>打开终端:<br>输入: <em>sudo gedit /boot/grub/grub.cfg</em><br>按下: Ctrl+F, 搜索”default”, 找到<em>default=0</em>的位置, 将0该为4, 即最后一个启动项windows, 然后再搜索”timeout”, 将所有”timeout=10”中的10全部改为1<br>保存并退出gedit, 重启系统即可</p>
 
       
     </div>
