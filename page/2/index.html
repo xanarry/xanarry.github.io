@@ -51,6 +51,66 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-05-25T14:10:29.000Z"><a href="/2015/05/25/搭建Hexo博客的简单步骤/">2015-05-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/25/搭建Hexo博客的简单步骤/">搭建Hexo博客的简单步骤</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>前期准备,注册github账号,并创建GitHub Pages<br>1:安装<a href="https://nodejs.org/" target="_blank" rel="external">node.js</a><br>2:安装<a href="http://git-scm.com/" target="_blank" rel="external">git</a><br>3:在你的计算机中创建一个工作根目录,比如我是将hexo目录创建在D盘的. <font color="0080ff">D:\hexo</font><br>3:打开工作根目录,右键调出gitbash<br>4:输入npm install -g hexo<br>5:输入hexo init<br>6:输入npm install<br>7:检查ssh_key</p>
+<pre><code>ls -al ~/.ssh
+<span class="comment">#如果没有请输入:</span>
+ssh-keygen -t rsa -C <span class="string">"github注册邮箱"</span>
+<span class="comment">#输入passphrase:要记住,后面用</span>
+ssh-agent <span class="operator">-s</span>
+ssh-add ~/.ssh/id_rsa <span class="comment">#如果本行出错执行下面两行</span>
+<span class="built_in">eval</span> `ssh-agent <span class="operator">-s</span>`
+ssh-add
+<span class="comment">#然后在用户目录中找到.ssh目录中的id_rsa.pub,打开并复制其内容添加到github的ssh key中</span>
+</code></pre><p>8:测试ssh_key是否成功</p>
+<pre><code><span class="title">ssh</span> -T git<span class="variable">@github</span>.com
+<span class="comment">#如果输出hi yourname... 那就正常了</span>
+</code></pre><p>9:添加用户信息</p>
+<pre><code>git config --<span class="built_in">global</span> user.name <span class="string">"cnfeat"</span> <span class="comment">#用户名</span>
+git config --<span class="built_in">global</span> user.email  <span class="string">"cnfeat@gmail.com"</span> <span class="comment">#填写自己的邮箱</span>
+</code></pre><p>10:编辑本地根目录中的配置文件<font color="0080ff">_config.yml</font>,添加github仓库信息</p>
+<pre><code><span class="attribute">deploy</span>:
+<span class="attribute">type</span>: git
+<span class="attribute">repository</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:you_name/your_name.github.io.git
+<span class="attribute">branch</span>: master
+</code></pre><p>11:使用</p>
+<pre><code><span class="title">hexo</span> n <span class="comment">#添加新文章</span>
+hexo g <span class="comment">#生成文章</span>
+hexo d <span class="comment">#发布</span>
+hexo s <span class="comment">#打开本地服务器测试:localhost:4000</span>
+</code></pre><p>注意:如果发布出现deplorer not found git,请使用如下命令,由于显示的原因,提示一下末尾的”—save”也是在命令中的:</p>
+<pre><code>npm <span class="operator"><span class="keyword">install</span> hexo-deployer-git <span class="comment">--save </span></span>
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-05-25T13:56:44.510Z"><a href="/2015/05/25/hexo-的基本使用/">2015-05-25</a></time>
       
       
@@ -395,6 +455,8 @@ B98FC99C 8FAC73EE D<span class="number">2B95564</span> DF450523
   
     <li><a href="/categories/Life/">Life</a><small>1</small></li>
   
+    <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
+  
     <li><a href="/categories/Python/">Python</a><small>8</small></li>
   
     <li><a href="/categories/sublime-text/">sublime text</a><small>2</small></li>
@@ -417,6 +479,8 @@ B98FC99C 8FAC73EE D<span class="number">2B95564</span> DF450523
     <li><a href="/tags/hexo/">hexo</a><small>3</small></li>
   
     <li><a href="/tags/lambda表达式/">lambda表达式</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
     <li><a href="/tags/python/">python</a><small>1</small></li>
   
