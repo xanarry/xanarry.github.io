@@ -51,6 +51,43 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-05-25T14:35:40.000Z"><a href="/2015/05/25/python实现高精度加法/">2015-05-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/25/python实现高精度加法/">python实现高精度加法</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>之前一直使用的c++, c++没有提供高精度的计算方案, 所以大整数的运算都需要手动实现,python已经为我们提供了高精度运算, 这里出于刚学习python作为练习, 代码实现高精度加法运算的原理. 高精度加法的过程就是完全模拟列竖式计算的方式,我们开两个列表,将加数a,假如a=1243,在列表中保存为[1, 2, 4, 3], 加数b, 假如b=12, 在列表中保存为[1, 2], 这样的话两个列表的长度不同, 就会后面代码实现的不便, 因此, 在执行计算前, 我们将两个列表处理为</p>
+<pre><code>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">3</span>]
+[<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]
+</code></pre><p>即使两个数长度一致, 短的在左边补0, 最后再在两个数左端都添加一个0, 这样是为了防止最高位进位后导致进位的值没有地方存储, 我们从右边计算到左边,将计算的每一位数保存到列表a中, 上面两个数相加时2+3=5求余保存到a[4], 取整加到a[3]处理进位,4+1=5求余保存到a[3], 取整加到a[2], 依次类推, 如果两数之和大于10, 则有进位1, 否则就是进位0, 相当于没有进位</p>
+<p>下面请看代码实现:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> reduce<span class="comment">#导入reduce用于将整数列表中的内容转换为字符串</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> len(a) &gt; len(b):<span class="comment">#将输入的数字左端补齐为同样的长度</span></span><br><span class="line">        b = b.zfill(len(a) - len(b) + <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        a = a.zfill(len(b) - len(a) + <span class="number">1</span>)</span><br><span class="line">    <span class="comment">#("0" + str(a))前面加"0"的原因是防止最高位进位是超过列表的容量限制</span></span><br><span class="line">    <span class="comment">#比如说9+9会向前面进一位,如果没有添加额外的0的话进位1就没地方存储</span></span><br><span class="line">    a = list(map(<span class="keyword">lambda</span> x : int(x), (<span class="string">"0"</span> + str(a)).strip()))</span><br><span class="line">    b = list(map(<span class="keyword">lambda</span> x : int(x), (<span class="string">"0"</span> + str(b)).strip()))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(a) - <span class="number">1</span>, <span class="number">0</span>, -<span class="number">1</span>):</span><br><span class="line">        temp = a[i] + b[i];</span><br><span class="line">        a[i - <span class="number">1</span>] += temp // <span class="number">10</span></span><br><span class="line">        a[i] = temp % <span class="number">10</span></span><br><span class="line">    <span class="keyword">return</span> int(reduce(<span class="keyword">lambda</span> x, y : str(x) + str(y), a))<span class="comment">#转换为字符串</span></span><br><span class="line"></span><br><span class="line">a, b = input(<span class="string">"input a: "</span>), input(<span class="string">"input b: "</span>)</span><br><span class="line">print(add(a, b))</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-05-25T14:10:29.000Z"><a href="/2015/05/25/搭建Hexo博客的简单步骤/">2015-05-25</a></time>
       
       
@@ -457,6 +494,8 @@ B98FC99C 8FAC73EE D<span class="number">2B95564</span> DF450523
   
     <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
   
+    <li><a href="/categories/Other/">Other</a><small>1</small></li>
+  
     <li><a href="/categories/Python/">Python</a><small>8</small></li>
   
     <li><a href="/categories/sublime-text/">sublime text</a><small>2</small></li>
@@ -481,6 +520,8 @@ B98FC99C 8FAC73EE D<span class="number">2B95564</span> DF450523
     <li><a href="/tags/lambda表达式/">lambda表达式</a><small>1</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/other/">other</a><small>1</small></li>
   
     <li><a href="/tags/python/">python</a><small>1</small></li>
   
