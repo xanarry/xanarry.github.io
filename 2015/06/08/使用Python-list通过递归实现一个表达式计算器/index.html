@@ -1,0 +1,268 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用Python list通过递归实现一个表达式计算器 | xanarry&#39;s</title>
+  <meta name="author" content="xanarry">
+  
+  <meta name="description" content="xanarry&#39;s blog">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="使用Python list通过递归实现一个表达式计算器"/>
+  <meta property="og:site_name" content="xanarry&#39;s"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="xanarry&#39;s" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">xanarry&#39;s</a></h1>
+  <h2><a href="/">创造就是一个构造过程的过程!</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-08T07:13:27.000Z"><a href="/2015/06/08/使用Python-list通过递归实现一个表达式计算器/">2015-06-08</a></time>
+      
+      
+  
+    <h1 class="title">使用Python list通过递归实现一个表达式计算器</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>因为python list可以同时保存不同的数据, 并且提供丰富的操作方案, 想想可以同时把数字和运算符号都保存到列表中, 于是就诞生了使用列表写个表达式计算器, 思路就是同时将数字和运算符保存到列表, 然后从左向右计算所有乘除号两边的数值, 然后删除两个操作数和一个运算符, 再把运算结果保存到刚才计算的位置, 然后再第二次循环计算剩下的加减法运算, 最有元组只剩下一个数, 输出即结果, </p>
+<p>通过以上的方案已经能计算任意不含括号的加减乘除运算, 但是我想要功能个更NB一点, 要能计算带括号的表达式, 怎么实现呢, 同先计算乘除法一样, 上面计算简单表达式的方法写成一个子函数, 然后再写一个递归函数递归计算带括号的表达式就OK了, 先计算最内部括号中的表达式, 然后将最内部的括号替换为计算后的结果, 在递归外部一层的, 最有留下的就是结果了</p>
+<h3 id="检查符号是否为运算符号">检查符号是否为运算符号</h3><p>‘’’python<br>nums = “0123456789”<br>optrs = “+-*/=”</p>
+<p>def isoperator(expression, index):<br>    ‘’’判断符号是运算符号还算是描述负数的符号’’’<br>    if nums.find(expression[index - 1]) != -1 and optrs.find(expression[index]) != -1:<br>        return True<br>    return False<br>‘’’</p>
+<h3 id="将字符串表达式转换为列表">将字符串表达式转换为列表</h3><p>‘’’python<br>def gen_list(expression):<br>    ‘’’将输入的字符串表达式转换为列表’’’<br>    units = []#保存包含操作符和操作数的列表<br>    start = 0#标记数字起点<br>    expression = (expression if expression[len(expression) - 1] == “=” else expression + “=”)<br>    for i in range(len(expression)):<br>        if (isoperator(expression, i)):<br>            units.append(float(expression[start:i]))<br>            units.append(expression[i])<br>            start = i + 1<br>    return units<br>‘’’</p>
+<h3 id="计算只有简单加减乘除的表达式">计算只有简单加减乘除的表达式</h3><p>‘’’python<br>def base_calculate(expression, isFirst = True):<br>    ‘’’计算只含有加减乘除的基本表达式’’’<br>    i = 0<br>    while i &lt; len(expression) - 3:<br>        a = expression[i]#获取操作数1<br>        b = expression[i + 2]#获取操作数2<br>        optr = expression[i + 1]#或者运算符<br>        tresult = None</p>
+<pre><code>    <span class="keyword">if</span> optr == <span class="string">"*"</span>:
+        tresult = a * b
+    <span class="keyword">elif</span> optr == <span class="string">"/"</span>:
+        tresult = a / b
+    <span class="keyword">elif</span> <span class="keyword">not</span> isFirst <span class="keyword">and</span> optr == <span class="string">"+"</span>:
+        tresult = a + b
+    <span class="keyword">elif</span> <span class="keyword">not</span> isFirst <span class="keyword">and</span> optr == <span class="string">"-"</span>:
+        tresult = a - b
+
+    <span class="keyword">if</span> tresult != <span class="keyword">None</span>:
+        expression[i] = tresult<span class="comment">#将第一个操作数替换问运算结果</span>
+        <span class="keyword">del</span>(expression[i + <span class="number">1</span> : i + <span class="number">3</span>])<span class="comment">#删除运算符号和后一个操作数</span>
+    <span class="keyword">else</span>:
+        i += <span class="number">2</span><span class="comment">#下标偏移</span>
+
+<span class="keyword">if</span> isFirst:
+    <span class="keyword">return</span> base_calculate(expression, <span class="keyword">False</span>)
+<span class="keyword">else</span>:
+    <span class="keyword">return</span> expression[<span class="number">0</span>]<span class="comment">#返回结果</span>
+</code></pre><p>‘’’</p>
+<h3 id="实现递归计算带括号的表达式">实现递归计算带括号的表达式</h3><p>‘’’python<br>def calculate(expression):<br>    ‘’’递归计算带括号的表达式’’’<br>    if expression.find(“(“) == -1:#如果表达式不含符号, 直接返回计算结果<br>        return base_calculate(gen_list(expression))</p>
+<pre><code>parathesis = []<span class="comment">#做符号栈检查括号匹配</span>
+<span class="keyword">for</span> i <span class="keyword">in</span> <span class="type">range</span>(len(expression)):
+    <span class="keyword">if</span> expression[i] == '(':<span class="comment">#遇到左括号, 表达式起点</span>
+        parathesis.append(i)<span class="comment">#保存左括号的下标</span>
+    <span class="keyword">elif</span> expression[i] == ')':<span class="comment">#遇到右括号, 表达式终点, 遇到完整的一段表达式则递归计算</span>
+        <span class="keyword">if</span> len(parathesis) != <span class="number">0</span>:
+            subexp = expression[parathesis[-<span class="number">1</span>] : i + <span class="number">1</span>][<span class="number">1</span> : -<span class="number">1</span>]<span class="comment">#截取子表达式</span>
+            <span class="keyword">if</span> subexp.find(<span class="string">"("</span>) == -<span class="number">1</span>:<span class="comment">#如果子表达式不含有括号了则计算</span>
+                <span class="literal">result</span> = base_calculate(gen_list(subexp))<span class="comment">#计算子表达式的结果</span>
+                pre = expression[<span class="number">0</span> : parathesis[-<span class="number">1</span>]]<span class="comment">#括号前面的表达式</span>
+                post = expression[i + <span class="number">1</span> : ]<span class="comment">#括号后面的表达式</span>
+                expression = pre + str(<span class="literal">result</span>) + post<span class="comment">#拼接为新的表达式</span>
+                <span class="keyword">return</span> calculate(expression)<span class="comment">#递归计算</span>
+            parathesis.pop()<span class="comment">#删除一个左括号</span>
+</code></pre><p>‘’’</p>
+<h3 id="执行入口">执行入口</h3><p>while True:</p>
+<pre><code>#输入表达式, 保证输入合法
+expression = <span class="function"><span class="title">input</span><span class="params">(<span class="string">'input a expression:'</span>)</span></span>
+<span class="function"><span class="title">print</span><span class="params">(calculate(expression)</span></span>)
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Python/">Python</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/python/">python</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/C/">C</a><small>1</small></li>
+  
+    <li><a href="/categories/C/">C++</a><small>1</small></li>
+  
+    <li><a href="/categories/Hexo/">Hexo</a><small>2</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>1</small></li>
+  
+    <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
+  
+    <li><a href="/categories/Other/">Other</a><small>1</small></li>
+  
+    <li><a href="/categories/Python/">Python</a><small>9</small></li>
+  
+    <li><a href="/categories/sublime-text/">sublime text</a><small>2</small></li>
+  
+    <li><a href="/categories/windows/">windows</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/C/">C++</a><small>1</small></li>
+  
+    <li><a href="/tags/MySQL/">MySQL</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>3</small></li>
+  
+    <li><a href="/tags/lambda表达式/">lambda表达式</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/other/">other</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>2</small></li>
+  
+    <li><a href="/tags/python字典/">python字典</a><small>1</small></li>
+  
+    <li><a href="/tags/sublime-text/">sublime text</a><small>2</small></li>
+  
+    <li><a href="/tags/test/">test</a><small>1</small></li>
+  
+    <li><a href="/tags/命令行/">命令行</a><small>1</small></li>
+  
+    <li><a href="/tags/字符串/">字符串</a><small>1</small></li>
+  
+    <li><a href="/tags/排序/">排序</a><small>1</small></li>
+  
+    <li><a href="/tags/生活/">生活</a><small>1</small></li>
+  
+    <li><a href="/tags/高精度/">高精度</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 xanarry
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'xanarry';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?05b8c86ae6be8be1243fc590c74bfde1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</body>
+</html>
