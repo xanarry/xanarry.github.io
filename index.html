@@ -74,7 +74,7 @@
 <p>五. <strong><font color="0070ff"> &lt;&lt; </font></strong>, 左移(双目), 将一个位串向左移动n位, 高位的丢弃, 低位用零补齐</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">           01001101&#10;&#24038;&#31227;3&#20301;:    01101000</span><br></pre></td></tr></table></figure>
 <p>假如定义<strong>a = 5</strong>, 二进制为: 0000 0101<br><strong>a &lt;&lt;= 1;</strong>, 左移1位,变成: 0000 1010, 即十进制10</p>
-<p>六. <strong><font color="0070ff"> &lt;&lt; </font></strong>, 右移(双目), 将一个位串向右移动n位, 高位用零补齐, 低位的丢弃</p>
+<p>六. <strong><font color="0070ff"> &gt;&gt; </font></strong>, 右移(双目), 将一个位串向右移动n位, 高位用零补齐, 低位的丢弃</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">           01001101&#10;&#21491;&#31227;3&#20301;:    00001001</span><br></pre></td></tr></table></figure>
 <p>假如定义<strong>a = 5</strong>, 二进制为: 0000 0101<br><strong>a &lt;&lt;= 1;</strong>, 左移1位,变成: 0000 0010, 即十进制2</p>
 <p>因此, 根据位运算的规则, 可以使用左移将数字扩大2的多少次方倍, 使用右移将数字缩小多少倍. 使用与(&amp;)或(|)运算来做位上的筛选. </p>
