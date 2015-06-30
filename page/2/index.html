@@ -51,6 +51,114 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-05-26T13:26:19.000Z"><a href="/2015/05/26/C语言中字符串的复制与memcpy函数/">2015-05-26</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/26/C语言中字符串的复制与memcpy函数/">C语言中字符串的复制与memcpy函数</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天在线做360实习生笔试题, 发现大多数题还是比较基础的, 但都需要仔细斟酌. 不过我已被虐得面目全非, 操作系统和计算机网络相关的很多知识都不会, 还得努力学习. 不过说重点, 面试题有两个编程题, 第一个是实现hashmap, 第二题是一个字符串的处理, 我主要说说第二题, 题目描述如下:</p>
+<pre><code>实现域名的字段顺序翻转函数,比如输入www<span class="class">.so</span><span class="class">.com</span>, 输出为com<span class="class">.so</span><span class="class">.www</span>, 要求实现的效率尽可能的优化
+</code></pre><p>我在做这个题的时候还剩下不到10分钟, 慌忙中将题目看复杂了,我想成会有<em>www.abc.efg.com</em>这样的情况了, 于是惯性思维促使我使用c++将域名按”.”切片, 然后逆序输出, 写的也烂, 也不是效率最高的, 提交后再看题目发现域名是只有<em>www</em>和<em>域名本体</em>和<em>com</em>三个部分, 当然后面的的<em>com</em>可能是其他的后缀,比如<em>io</em>或者<em>info</em>之类的, 发现直接是<em>memcpy()</em>复制内存片段效率应该会更高, 即首先复制后缀, 然后复制域名本体, 然后再复制<em>www</em>到字符串缓冲区,然后输出就是结果了,于是用c实现了这个方法:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;string.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">trans</span><span class="params">(<span class="keyword">char</span> *res, <span class="keyword">char</span> *a)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="built_in">strcat</span>(a, <span class="string">"."</span>); <span class="comment">//在域名默认加上".", 因为"com", 移动到最前面后后面需要一个"."</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *src = a; <span class="comment">//复制一个常量副本, 因为memcpy()函数的参数中要求常量</span></span><br><span class="line">    <span class="keyword">int</span> len = <span class="built_in">strlen</span>(src) - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> i = len;</span><br><span class="line">    <span class="keyword">while</span>(src[--i] != <span class="string">'.'</span>); <span class="comment">//找到后开始的下标</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">memcpy</span>(res, src + i + <span class="number">1</span>, (len - i) * <span class="keyword">sizeof</span>(<span class="keyword">char</span>)); <span class="comment">//复制后缀到res字符串缓冲区的起点</span></span><br><span class="line">    <span class="built_in">memcpy</span>(res + (len - i), src + <span class="number">4</span>, (i - <span class="number">3</span>) * <span class="keyword">sizeof</span>(<span class="keyword">char</span>)); <span class="comment">//将域名内容复制到res缓冲区的末尾</span></span><br><span class="line">    <span class="built_in">memcpy</span>(res + (len + <span class="number">1</span> - <span class="number">4</span>), src, <span class="number">3</span> * <span class="keyword">sizeof</span>(<span class="keyword">char</span>)); <span class="comment">//继续将"www"复制到res末尾</span></span><br><span class="line">    res[len] = <span class="string">'\0'</span>; <span class="comment">//设置字符串结束标志</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> a[<span class="number">100</span>], res[<span class="number">100</span>];</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%s"</span>, a);</span><br><span class="line">    trans(res, a);</span><br><span class="line">    <span class="built_in">puts</span>(res);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果如下:</p>
+<pre><code>www<span class="class">.baidu</span><span class="class">.com</span>
+com<span class="class">.baidu</span><span class="class">.www</span>
+</code></pre><p>关于c语言中字符串的复制, 通常可以使用<em>strcpy()</em>来实现, 当然也可手动写个循环, 但是复制效率是最低的, 无论是从人的角度还是计算机的角度来说, 第三个就是直接使用<em>memcpy()</em>, 直接将复制目标内存片段到指定位置, 并且复制速度是最快的, 但是<em>strcpy()</em>与<em>memcpy()</em>在用来复制字符串的时候有一个小小的区别就是无论如何<em>strcpy()</em>从字符串的开始只复制到第一个”\0”的位置, 但是由于<em>memcpy()</em>是整个内存片段,所以”\0”也不会被忽略, 虽然最后复制内容输入到屏幕显示的结果是一样的, 我们用个小程序演示一下这个区别:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;string.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> a[<span class="number">20</span>] = <span class="string">"asdf\0uiop"</span>;</span><br><span class="line">    <span class="keyword">char</span> b[<span class="number">20</span>];</span><br><span class="line">    <span class="keyword">char</span> c[<span class="number">20</span>];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">strcpy</span>(b, a);</span><br><span class="line">    <span class="built_in">puts</span>(b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, <span class="built_in">strlen</span>(a));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">5</span>; i &lt; <span class="number">9</span>; i++)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%c"</span>, b[i]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"-----------------------"</span>);</span><br><span class="line">    <span class="built_in">memcpy</span>(c, a, <span class="number">9</span> * <span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br><span class="line">    <span class="built_in">puts</span>(c);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, <span class="built_in">strlen</span>(c));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">5</span>; i &lt; <span class="number">9</span>; i++)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%c"</span>, c[i]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果如下:</p>
+<pre><code>asdf
+4
+S
+
+-<span class="ruby">----------------------
+</span>asdf
+4
+uiop
+请按任意键继续. . .
+</code></pre><p>从结果可以看出,使用<em>strcpy()</em>仅仅复制到了”\0”, 因为输出b的后半部分结果是未定义的,说明并没有复制过来, 但是输出c的后半部分是, 输出了事先定义的结果</p>
+<p>同样, 利用<em>memcpy()</em>函数的特性, 我们可以做一个泛型的交换函数:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;string.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//因为交换的数据类型是未知的, 所以添加一个额外的参数告诉函数复制多长内存片段</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">void</span> *a, <span class="keyword">void</span> *b, <span class="keyword">int</span> size)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> buffer[size];</span><br><span class="line">    <span class="built_in">memcpy</span>(buffer, a, size);</span><br><span class="line">    <span class="built_in">memcpy</span>(a, b, size);</span><br><span class="line">    <span class="built_in">memcpy</span>(b, buffer, size);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> a = <span class="string">'a'</span>, b = <span class="string">'b'</span>;</span><br><span class="line">    swap(&amp;a, &amp;b, <span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a = %c b = %c\n"</span>, a , b);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> x = <span class="number">11</span>, y = <span class="number">99</span>;</span><br><span class="line">    swap(&amp;x, &amp;y, <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"x = %d y = %d\n"</span>, x , y);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出:</p>
+<pre><code><span class="tag">a</span> = <span class="tag">b</span> <span class="tag">b</span> = <span class="tag">a</span>
+x = <span class="number">99</span> y = <span class="number">11</span>
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-05-25T14:37:28.000Z"><a href="/2015/05/25/python字典/">2015-05-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/25/python字典/">python字典</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="1-_简介:">1. 简介:</h2><p>字典是一种<em>键映射到值</em>的数据结构,相当于高级一点的列表, 列表的键只能是0到n的整数,通过数字的索引我们就能访问,修改到相关位置的数据, 字典也一样, 高级的地方就在于, 索引不是系统分配的整数, 而是可以使用自定义的内容来做访问的索引值, 这种特性给编程带来极大的便利,值得注意的是<font color="0080ff"><strong>python字典的键必须是不可变的，所以可以用数字，字符串或元组充当，但是不能使用列表,因为列表中的元素可能被无意修改 值可以是任意数据类型, 还有非常重要的一点就是字典内容的存储顺序是无序的</strong></font>, </p>
+<h2 id="2-_定义:">2. 定义:</h2><p>定义字典时键与值之间用冒号(:)隔开, 键值对之间用逗号(,)隔开, 将所有完整的键值对放在花括号中({}),就实现的字典的初始化定义, 也可以使用dict()将其他内容转为字典.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">d1 = &#123;<span class="string">'one'</span>: <span class="number">1</span>, <span class="string">'two'</span>: <span class="number">2</span>, <span class="string">'three'</span>: <span class="number">3</span>&#125; <span class="comment">#定义字典</span></span><br><span class="line">d2 = &#123;&#125; <span class="comment">#定义空字典</span></span><br><span class="line"><span class="comment">#使用其他数据生成字典</span></span><br><span class="line">d3 = dict(one=<span class="number">1</span>, two=<span class="number">2</span>, three=<span class="number">3</span>)</span><br><span class="line">d4 = dict(zip([<span class="string">'one'</span>, <span class="string">'two'</span>, <span class="string">'three'</span>], [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]))</span><br><span class="line">d5 = dict([(<span class="string">'two'</span>, <span class="number">2</span>), (<span class="string">'one'</span>, <span class="number">1</span>), (<span class="string">'three'</span>, <span class="number">3</span>)])</span><br><span class="line">d6 = dict(&#123;<span class="string">'three'</span>: <span class="number">3</span>, <span class="string">'one'</span>: <span class="number">1</span>, <span class="string">'two'</span>: <span class="number">2</span>&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="3-_访问与修改:">3. 访问与修改:</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">dict0 = &#123;<span class="string">"name"</span>:<span class="string">"Bob"</span>, <span class="string">"sex"</span>:<span class="string">"F"</span>, <span class="string">"age"</span>:<span class="number">21</span>&#125; <span class="comment">#初始化字典</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#向字典中插入新的元素,类似于c++的map</span></span><br><span class="line">dict0[<span class="string">"addr"</span>] = <span class="string">"chongqing"</span> <span class="comment">#想dict0字典中添加地址"addr"项, 值为"chongqing"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#如果使用字典中已经存在的key,那么后面的值将会替换前面的值,这里会将年龄替换为22</span></span><br><span class="line">dict0[<span class="string">"age"</span>] = <span class="number">22</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#访问字典中的键"name"对应的值</span></span><br><span class="line">name = dict0[<span class="string">"name"</span>] <span class="comment">#和列表访问方式一样</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用get()函数访问第几个条目</span></span><br><span class="line">t = dict3.get(<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="3-1_删除条目">3.1 删除条目</h4><pre><code><span class="tag">del</span> dict0[<span class="string">"name"</span>] #删除<span class="string">"name"</span>这一项
+dict0.<span class="function"><span class="title">clear</span><span class="params">()</span></span> #删除字典中的所有内容,即设为空字典
+<span class="tag">del</span> dict0 #直接删除字典,这个东西就从世界上消失了
+t = dict3.<span class="function"><span class="title">pop</span><span class="params">(<span class="number">1</span>)</span></span> #<span class="function"><span class="title">pop</span><span class="params">()</span></span>函数将会删除字典的键值对,并返回该值
+</code></pre><h2 id="4-_遍历字典">4. 遍历字典</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">print(dict0) <span class="comment">#按输出key-value对, 输入内容和定义时一样的</span></span><br><span class="line"><span class="comment">#使用print(d1)输出的内容如下</span></span><br><span class="line">    &#123;<span class="string">'two'</span>: <span class="number">2</span>, <span class="string">'one'</span>: <span class="number">1</span>, <span class="string">'three'</span>: <span class="number">3</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#如果我们使用:</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> dict0:</span><br><span class="line">    print(x)</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出的值只有所有键的值, 而不是字典中所有的键值对, 再额外输出dict0[x], 就能输出键值对了</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> dict0:</span><br><span class="line">    print(x + <span class="string">" : "</span> + repr(dict0[x]))</span><br><span class="line"></span><br><span class="line"><span class="comment">#因为字典中的每项是以tuple存储的, 亦可以使用如下方式遍历输出:</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> dict0:</span><br><span class="line">    print(str(x[<span class="number">0</span>]) + <span class="string">"-&gt;"</span> + str(x[<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出所有键</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> dict0.keys():</span><br><span class="line">    print(x)</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出所有值</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> dict0.values():</span><br><span class="line">    print(x)</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出键值对</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> dict0.items:</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure>
+<h2 id="5-_比较与排序">5. 比较与排序</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#比较两个字典是否相同</span></span><br><span class="line">print(dict1 == dict2)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> operator <span class="keyword">import</span> itemgetter</span><br><span class="line"><span class="comment">#定义新的字典</span></span><br><span class="line">d = &#123;<span class="string">'a'</span>:<span class="number">2</span>, <span class="string">'b'</span>:<span class="number">23</span>, <span class="string">'c'</span>:<span class="number">5</span>, <span class="string">'d'</span>:<span class="number">17</span>, <span class="string">'e'</span>:<span class="number">1</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#对字典按键升序排序</span></span><br><span class="line">print(<span class="string">"按键升序排序"</span>)</span><br><span class="line"><span class="comment">#分别获取容器,容器中单元的排序关键字,下标0,即d[0],表示键,d[1]表示值</span></span><br><span class="line">sd = sorted(d.items(), key = <span class="keyword">lambda</span> d:d[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#对字典按键降序序排序</span></span><br><span class="line">print(<span class="string">"按键降序序排序"</span>)</span><br><span class="line">sd = sorted(d.items(), key = <span class="keyword">lambda</span> d:d[<span class="number">0</span>], reverse = <span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#对字典按值升序排序</span></span><br><span class="line">print(<span class="string">"按值升序排序"</span>)</span><br><span class="line">sd = sorted(d.items(), key = <span class="keyword">lambda</span> d:d[<span class="number">1</span>], reverse = <span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#对字典按值降序排序</span></span><br><span class="line">print(<span class="string">"按值降序排序"</span>)</span><br><span class="line">sd = sorted(d.items(), key = <span class="keyword">lambda</span> d:d[<span class="number">1</span>], reverse = <span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<font color="0080ff"><br><strong>注意:reverse的参数默认是False,即升序排序,要逆序排序请将reverse值该为True,包括sort函数,也可以传递reverse参数设定排序方式</strong></font>
+
+
+<h2 id="6-_其他">6. 其他</h2><p>6.1 输出字典中的item的数量</p>
+<pre><code>print<span class="list">(<span class="keyword">len</span><span class="list">(<span class="keyword">dict1</span>)</span>)</span>
+</code></pre><p>6.2 得到字典的浅复制,即修改复制的字典不会影响到原有的字典</p>
+<pre><code>dict3 = dict1.<span class="function"><span class="title">copy</span><span class="params">()</span></span>
+</code></pre><p>6.3 “key” in “dict name”判断是否已经包含某个键,功能和c++ map对象的count()一致</p>
+<pre><code><span class="built_in">print</span>(<span class="number">1</span> <span class="keyword">in</span> dict0) <span class="comment">#返回bool值</span>
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-05-25T14:37:01.000Z"><a href="/2015/05/25/python中各种排序方式的使用/">2015-05-25</a></time>
       
       
@@ -350,47 +458,6 @@ hexo s <span class="comment">#打开本地服务器测试:localhost:4000</span>
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-05-25T13:56:44.510Z"><a href="/2015/05/25/hexo-的基本使用/">2015-05-25</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/25/hexo-的基本使用/">hexo 的基本使用</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>hexo创建新博客,生成,发布以及本地服务器测试的命令行</p>
-<h2 id="快速入门">快速入门</h2><h3 id="创建一个新的博客">创建一个新的博客</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"新博客的名字"</span></span><br></pre></td></tr></table></figure>
-<p>更多: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="在本地服务器上运行测试博客(localhost:4000)">在本地服务器上运行测试博客(localhost:4000)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>更多: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="生成静态HTML文件">生成静态HTML文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>更多: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="发布到远程服务器">发布到远程服务器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>更多: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2015-05-25T07:41:45.000Z"><a href="/2015/05/25/python34-访问MySQL数据库/">2015-05-25</a></time>
       
       
@@ -518,50 +585,6 @@ hexo s <span class="comment">#打开本地服务器测试:localhost:4000</span>
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-02T05:35:14.000Z"><a href="/2015/05/02/sublime-text-3-注册码/">2015-05-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/02/sublime-text-3-注册码/">sublime text 3 注册码</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>以下为sublime text 3注册码, 3059已经激活, 其他版本应该也可以</p>
-<pre><code>Andrew Weber  
-Single User License  
-EA7E-855605  
-813A03DD 5E4AD<span class="number">9E6 6C0</span>EEB94 BC99798F  
-<span class="number">942194A6 02</span>396E98 E<span class="number">62C9979 4</span>BB979FE  
-<span class="number">91424C9</span>D A45400BF F<span class="number">6747D88 2</span>FB88078  
-90F5CC94 1CDC92DC <span class="number">8457107</span><span class="keyword">A</span> F151657B  
-<span class="number">1D22E383</span> <span class="keyword">A</span><span class="number">997F016</span> <span class="number">42397640 33</span>F41CFC  
-E1D0AE85 A0BBD<span class="number">039 0E9</span>C8D55 E1B89D5D  
-5CDB7036 E56DE1C0 EFCC<span class="number">0840 650</span>CD3A6  
-B98FC99C 8FAC73EE D<span class="number">2B95564</span> DF450523
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -605,6 +628,8 @@ B98FC99C 8FAC73EE D<span class="number">2B95564</span> DF450523
   
     <li><a href="/categories/windows/">windows</a><small>1</small></li>
   
+    <li><a href="/categories/高精度/">高精度</a><small>1</small></li>
+  
   </ul>
 </div>
 
@@ -616,9 +641,9 @@ B98FC99C 8FAC73EE D<span class="number">2B95564</span> DF450523
   
     <li><a href="/tags/C/">C++</a><small>1</small></li>
   
-    <li><a href="/tags/C-C/">C/C++</a><small>0</small></li>
-  
     <li><a href="/tags/MySQL/">MySQL</a><small>1</small></li>
+  
+    <li><a href="/tags/c-高精度/">c++ 高精度</a><small>1</small></li>
   
     <li><a href="/tags/hexo/">hexo</a><small>3</small></li>
   
