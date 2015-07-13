@@ -51,6 +51,169 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-07-13T08:17:30.000Z"><a href="/2015/07/13/汇编嵌套循环/">2015-07-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/07/13/汇编嵌套循环/">汇编嵌套循环</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-07-13T08:16:47.000Z"><a href="/2015/07/13/汇编除法运算/">2015-07-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/07/13/汇编除法运算/">汇编除法运算</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-07-13T08:15:54.000Z"><a href="/2015/07/13/汇编寄存器概要/">2015-07-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/07/13/汇编寄存器概要/">汇编寄存器概要</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-07-13T08:14:32.000Z"><a href="/2015/07/13/汇编语言的基本结构/">2015-07-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/07/13/汇编语言的基本结构/">汇编语言的基本结构</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-07-13T08:12:41.000Z"><a href="/2015/07/13/使用位运算转换大小写/">2015-07-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/07/13/使用位运算转换大小写/">使用位运算转换大小写</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>大小写字母的ASCII码差值为32, 32是2的5次方, 因此如果将ASCII的值使用二进制编码表示会不会有奇特的关系呢?<br>看看如下列表<br>ch  dec  bin            ch   dec   bin<br>a   97   0110 0001  -&gt;  A    65    0100 0010<br>b   98   0110 0010  -&gt;  B    66    0100 0010<br>c   99   0110 0011  -&gt;  C    67    0100 0011<br>d   100  0110 0100  -&gt;  D    68    0100 0100<br>e   101  0110 0101  -&gt;  E    69    0100 0101<br>从列表可以看出, 二进制ASCII码的低四位是一致的, 唯一的差别就在于第5位(从0开始数, 2的5次方正好是32)<br>小写字母的是1, 大写字母的是0, </p>
+<p>于是我们在编程中可以使用为运算直接将这一位置为1或者置为0实现大小写的转换, 所以, 将大小字母转换为小写字母即保留其他位, 使用”或0010 0000”(代码即”!32”)实现转换, 同样, 如果要将第小写转为大小, 用”与1101 1111”(代码即”&amp;-33”)把5位设为0即可.</p>
+<p>以下给的c++使用以上方法转换的代码片段<br>char ch = ‘A’;//定义ch的的值为’A’<br>ch != 32;//将ch转换为小写’a’<br>ch &amp;= -33;//将小写的’a’转换为’A’</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-06-30T07:43:49.000Z"><a href="/2015/06/30/C++-高精度类/">2015-06-30</a></time>
       
       
@@ -250,197 +413,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-06-08T07:01:25.000Z"><a href="/2015/06/08/一点奇淫技巧-让浏览器变代码编辑器/">2015-06-08</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/06/08/一点奇淫技巧-让浏览器变代码编辑器/">一点奇淫技巧-让浏览器变代码编辑器</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>将以下代码粘贴到浏览器地址栏中即可以再浏览器中编辑相关的类型代码(请使用chrome或者Firefox):</p>
-<h3 id="C/C++">C/C++</h3><pre><code>data:text/html, <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">css</span>%<span class="attribute">22</span>&gt;</span><span class="css"><span class="id">#e</span><span class="rules">{<span class="rule"><span class="attribute">position</span>:<span class="value">absolute</span></span>;<span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>;}</span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">%22e%22</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">%22http:</span>//<span class="attribute">d1n0x3qji82z53.cloudfront.net</span>/<span class="attribute">src-min-noconflict</span>/<span class="attribute">ace.js</span>%<span class="attribute">22</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">javascript</span>%<span class="attribute">22</span> <span class="attribute">charset</span>=<span class="value">%22utf-8%22</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="apache"><span class="keyword">var</span> e=ace.edit(<span class="number">%22</span>e<span class="number">%22</span>);e.setTheme(<span class="number">%22</span>ace/theme/monokai<span class="number">%22</span>);e.getSession().setMode(<span class="number">%22</span>ace/mode/c_cpp<span class="number">%22</span>);</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-</code></pre><h3 id="Java:">Java:</h3><pre><code>data:text/html, <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">css</span>%<span class="attribute">22</span>&gt;</span><span class="css"><span class="id">#e</span><span class="rules">{<span class="rule"><span class="attribute">position</span>:<span class="value">absolute</span></span>;<span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>;}</span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">%22e%22</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">%22http:</span>//<span class="attribute">d1n0x3qji82z53.cloudfront.net</span>/<span class="attribute">src-min-noconflict</span>/<span class="attribute">ace.js</span>%<span class="attribute">22</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">javascript</span>%<span class="attribute">22</span> <span class="attribute">charset</span>=<span class="value">%22utf-8%22</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="apache"><span class="keyword">var</span> e=ace.edit(<span class="number">%22</span>e<span class="number">%22</span>);e.setTheme(<span class="number">%22</span>ace/theme/monokai<span class="number">%22</span>);e.getSession().setMode(<span class="number">%22</span>ace/mode/java<span class="number">%22</span>);</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-</code></pre><h3 id="JavaScript:">JavaScript:</h3><pre><code>data:text/html, <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">css</span>%<span class="attribute">22</span>&gt;</span><span class="css"><span class="id">#e</span><span class="rules">{<span class="rule"><span class="attribute">position</span>:<span class="value">absolute</span></span>;<span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>;}</span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">%22e%22</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">%22http:</span>//<span class="attribute">d1n0x3qji82z53.cloudfront.net</span>/<span class="attribute">src-min-noconflict</span>/<span class="attribute">ace.js</span>%<span class="attribute">22</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">javascript</span>%<span class="attribute">22</span> <span class="attribute">charset</span>=<span class="value">%22utf-8%22</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="apache"><span class="keyword">var</span> e=ace.edit(<span class="number">%22</span>e<span class="number">%22</span>);e.setTheme(<span class="number">%22</span>ace/theme/monokai<span class="number">%22</span>);e.getSession().setMode(<span class="number">%22</span>ace/mode/javascript<span class="number">%22</span>);</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-</code></pre><h3 id="Ruby:">Ruby:</h3><pre><code>data:text/html, <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">css</span>%<span class="attribute">22</span>&gt;</span><span class="css"><span class="id">#e</span><span class="rules">{<span class="rule"><span class="attribute">position</span>:<span class="value">absolute</span></span>;<span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>;}</span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">%22e%22</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">%22http:</span>//<span class="attribute">d1n0x3qji82z53.cloudfront.net</span>/<span class="attribute">src-min-noconflict</span>/<span class="attribute">ace.js</span>%<span class="attribute">22</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">javascript</span>%<span class="attribute">22</span> <span class="attribute">charset</span>=<span class="value">%22utf-8%22</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="apache"><span class="keyword">var</span> e=ace.edit(<span class="number">%22</span>e<span class="number">%22</span>);e.setTheme(<span class="number">%22</span>ace/theme/monokai<span class="number">%22</span>);e.getSession().setMode(<span class="number">%22</span>ace/mode/ruby<span class="number">%22</span>);</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-</code></pre><h3 id="Python:">Python:</h3><pre><code>data:text/html, <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">css</span>%<span class="attribute">22</span>&gt;</span><span class="css"><span class="id">#e</span><span class="rules">{<span class="rule"><span class="attribute">position</span>:<span class="value">absolute</span></span>;<span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>;}</span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">%22e%22</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">%22http:</span>//<span class="attribute">d1n0x3qji82z53.cloudfront.net</span>/<span class="attribute">src-min-noconflict</span>/<span class="attribute">ace.js</span>%<span class="attribute">22</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">javascript</span>%<span class="attribute">22</span> <span class="attribute">charset</span>=<span class="value">%22utf-8%22</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="mel">var e=ace.edit(<span class="variable">%22e</span><span class="variable">%22</span>);e.setTheme(<span class="variable">%22ace</span>/theme/monokai<span class="variable">%22</span>);e.getSession().setMode(<span class="variable">%22ace</span>/mode/<span class="keyword">python</span><span class="variable">%22</span>);</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-</code></pre><h3 id="PHP:">PHP:</h3><pre><code>data:text/html, <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">css</span>%<span class="attribute">22</span>&gt;</span><span class="css"><span class="id">#e</span><span class="rules">{<span class="rule"><span class="attribute">position</span>:<span class="value">absolute</span></span>;<span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>;}</span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">%22e%22</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">%22http:</span>//<span class="attribute">d1n0x3qji82z53.cloudfront.net</span>/<span class="attribute">src-min-noconflict</span>/<span class="attribute">ace.js</span>%<span class="attribute">22</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">javascript</span>%<span class="attribute">22</span> <span class="attribute">charset</span>=<span class="value">%22utf-8%22</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="apache"><span class="keyword">var</span> e=ace.edit(<span class="number">%22</span>e<span class="number">%22</span>);e.setTheme(<span class="number">%22</span>ace/theme/monokai<span class="number">%22</span>);e.getSession().setMode(<span class="number">%22</span>ace/mode/php<span class="number">%22</span>);</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-</code></pre><p>内容转自: <a href="http://blog.jobbole.com/32823/" target="_blank" rel="external">一行代码，浏览器变临时编辑器</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-06-04T04:08:04.000Z"><a href="/2015/06/04/修改Ubuntu的默认启动项/">2015-06-04</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/06/04/修改Ubuntu的默认启动项/">修改Ubuntu的默认启动项</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>在windows机器上安装Ubuntu系统后, 开机启动会默认启动Ubuntu, 可以修改过<strong>grub.cfg</strong>文件设置默认启动windows.<br>打开终端:<br>输入: <em>sudo gedit /boot/grub/grub.cfg</em></p>
-<p>按下: Ctrl+F, 搜索”default”, 找到<em>default=0</em>的位置, 将0该为4, 即最后一个启动项windows, 然后再搜索”timeout”, 将所有”timeout=10”中的10全部改为1</p>
-<p>保存并退出gedit, 重启系统即可</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-31T00:29:55.000Z"><a href="/2015/05/31/使用命令行启动或者关闭windows的服务/">2015-05-31</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/31/使用命令行启动或者关闭windows的服务/">使用命令行启动或者关闭windows的服务</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <ol>
-<li><p>使用 net start/stop 命令启动服务程序或关闭服务程序<br>net start ServiceName（服务名称）<br>net stop ServiceName（服务名称）</p>
-</li>
-<li><p>使用 sc 命令启动服务程序或关闭服务程序<br>sc start ServiceName（服务名称）<br>sc stop ServiceName（服务名称）</p>
-</li>
-</ol>
-<p>如果服务名称中带有空格，需要用双引号引起来</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-29T14:13:27.000Z"><a href="/2015/05/29/sublime-text-3-添加运行python文件的快捷键/">2015-05-29</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/29/sublime-text-3-添加运行python文件的快捷键/">sublime text 3 添加运行python文件的快捷键</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>打开 <strong>preferences</strong> -&gt; <strong>Key Binding User</strong>, 然后将以下代码粘贴上去即可, 设置的<strong>F5</strong>为快捷键</p>
-<pre><code>[ 
-    {
-    "<span class="attribute">keys</span>":<span class="value">[<span class="string">"f5"</span>]</span>,"<span class="attribute">caption</span>": <span class="value"><span class="string">"SublimeREPL:Python - RUN current file"</span></span>,
-    "<span class="attribute">command</span>":<span class="value"><span class="string">"run_existing_window_command"</span></span>, "<span class="attribute">args</span>":
-    <span class="value">{
-        "<span class="attribute">id</span>": <span class="value"><span class="string">"repl_python_run"</span></span>,
-        "<span class="attribute">file</span>": <span class="value"><span class="string">"config/Python/Main.sublime-menu"</span>
-    </span>}</span>}
-]
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-27T04:28:12.000Z"><a href="/2015/05/27/python递归栈溢出/">2015-05-27</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/27/python递归栈溢出/">python递归栈溢出</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>使用python写的递归程序如果递归太深, 那么极有可能因为超过系统默认的递归深度限制而出现</p>
-<pre><code><span class="label">RuntimeError:</span> maximum recursion depth exceeded <span class="keyword">in</span> comparison
-</code></pre><p>的错误, 解决方法很简单, 人为将系统设定的递归深度设置为一个较大的值即可:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.setrecursionlimit(<span class="number">1000000</span>) <span class="comment">#括号中的值为递归深度</span></span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -482,6 +454,8 @@
   
     <li><a href="/categories/windows/">windows</a><small>1</small></li>
   
+    <li><a href="/categories/位运算/">位运算</a><small>1</small></li>
+  
   </ul>
 </div>
 
@@ -513,7 +487,7 @@
   
     <li><a href="/tags/test/">test</a><small>1</small></li>
   
-    <li><a href="/tags/位运算/">位运算</a><small>1</small></li>
+    <li><a href="/tags/位运算/">位运算</a><small>2</small></li>
   
     <li><a href="/tags/命令行/">命令行</a><small>1</small></li>
   
