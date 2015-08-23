@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用Python脚本将酷狗音乐的缓存文件修改为可播放 | xanarry&#39;s</title>
+  <meta name="author" content="xanarry">
+  
+  <meta name="description" content="xanarry&#39;s blog">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="使用Python脚本将酷狗音乐的缓存文件修改为可播放"/>
+  <meta property="og:site_name" content="xanarry&#39;s"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="xanarry&#39;s" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">xanarry&#39;s</a></h1>
+  <h2><a href="/">创造就是一个构造过程的过程!</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-08-09T03:50:58.000Z"><a href="/2015/08/09/使用Python脚本将酷狗音乐的缓存文件修改为可播放/">2015-08-09</a></time>
+      
+      
+  
+    <h1 class="title">使用Python脚本将酷狗音乐的缓存文件修改为可播放</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>假期回老家后比较郁闷的一件事就是没有网, 因为在学校一直使用的是酷狗的在线播放, 所有说连电脑里面里MP3音乐也没有, 由于之前我发现将酷狗酷狗音乐缓存文件后缀直接改成”mp3”就能播放, 所以需要将修改酷狗音乐的缓存文件的后缀, 对于重命名大量缓存文件, 可以使用命令行<strong>ren *.kgtemp *.mp3</strong>直接搞定, 另外一种就是编程处理了, 显然编程显得小题大做, 但是还是决定使用Python脚本处理, 因为脚本可以同时从歌词目录从将一部分歌曲的名字获取过来并设置. </p>
+<p>下面是处理的脚本文件, Python34<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"></span><br><span class="line">patterCache = <span class="string">"kgtemp"</span></span><br><span class="line">patterLyric = <span class="string">"krc"</span></span><br><span class="line">suffixLen = <span class="number">36</span></span><br><span class="line">newDir = <span class="string">"tempMP3"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#遍历所有目录搜索酷狗音乐的目录</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">searchPath</span><span class="params">(dire)</span>:</span></span><br><span class="line">    <span class="string">'''seal recursive function inside searchPath, ensure that most variable are locablbe'''</span></span><br><span class="line">    <span class="comment">#files means the number of files</span></span><br><span class="line">    <span class="comment">#unknown means the count of files with name's encode is not gbk, and can't output</span></span><br><span class="line">    <span class="comment">#only define like as follow can be modify</span></span><br><span class="line">    print(<span class="string">"searching..."</span>)</span><br><span class="line">    res = &#123;<span class="string">"lyrics"</span>: <span class="keyword">None</span>, <span class="string">"caches"</span> : <span class="keyword">None</span>&#125;</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">traverse</span><span class="params">(dire)</span>:</span></span><br><span class="line">        <span class="string">'''recursive function with file counter and output file's path'''</span></span><br><span class="line">        <span class="keyword">try</span>:<span class="comment">#give up unreadable direction</span></span><br><span class="line">            os.chdir(dire)</span><br><span class="line">        <span class="keyword">except</span> Exception:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="comment">#traverse all files or direcions in current direction</span></span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> os.listdir(dire):</span><br><span class="line">            <span class="comment">#derection then recursive search</span></span><br><span class="line">            <span class="keyword">if</span> os.path.isdir(x) <span class="keyword">and</span> x != <span class="string">"$RECYCLE.BIN"</span>:</span><br><span class="line">                    traverse(os.path.abspath(x))  </span><br><span class="line">            <span class="comment">#find kugou cache path          </span></span><br><span class="line">            <span class="keyword">elif</span> x[-len(patterCache) : ] == patterCache:</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> res[<span class="string">"caches"</span>]:</span><br><span class="line">                    res[<span class="string">"caches"</span>] = os.getcwd()</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            <span class="comment">#find kugou lyric path</span></span><br><span class="line">            <span class="keyword">elif</span> x[-len(patterLyric) : ] == patterLyric:</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> res[<span class="string">"lyrics"</span>]:</span><br><span class="line">                    res[<span class="string">"lyrics"</span>] = os.getcwd()</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">        os.chdir(<span class="string">".."</span>)</span><br><span class="line">        <span class="comment">#if has find the path of both lyric and cache, then return</span></span><br><span class="line">        <span class="keyword">if</span> res[<span class="string">"lyrics"</span>] <span class="keyword">and</span> res[<span class="string">"caches"</span>]:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">    traverse(dire)</span><br><span class="line"></span><br><span class="line">    print(<span class="string">"finish searching!"</span>)</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">modify</span><span class="params">(cacheDir, lyricDir)</span>:</span></span><br><span class="line">    <span class="string">'''copy all cache in new direction and rename all file, set sufix as mp3'''</span></span><br><span class="line">    <span class="comment">#change working dir to lyric dir</span></span><br><span class="line">    os.chdir(lyricDir)</span><br><span class="line">    names = &#123;&#125;</span><br><span class="line">    print(<span class="string">"copy name list from lyrics"</span>)</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> os.listdir(): <span class="comment">#get all lyric file name</span></span><br><span class="line">        names[x[-suffixLen : -len(patterLyric) - <span class="number">1</span>]] = x[ : -suffixLen - <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment">#change working dir </span></span><br><span class="line">    os.chdir(cacheDir)</span><br><span class="line">    print(<span class="string">"check and create new direction"</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(<span class="string">"../"</span> + newDir):</span><br><span class="line">        os.mkdir(<span class="string">"../"</span> + newDir)</span><br><span class="line"></span><br><span class="line">    print(<span class="string">"copying..."</span>)</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> os.listdir():</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(<span class="string">"../"</span> + newDir + item):</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="comment">#copy cache to new direciont</span></span><br><span class="line">                shutil.copy(item, <span class="string">"../"</span> + newDir)</span><br><span class="line">                core = item[ : -len(patterCache) - <span class="number">1</span>]</span><br><span class="line">                <span class="keyword">if</span> core <span class="keyword">in</span> names:<span class="comment">#rename cache if has lyric file</span></span><br><span class="line">                    os.rename(<span class="string">"../"</span> + newDir + item, <span class="string">"../"</span> + newDir + names[core] + <span class="string">".mp3"</span>)</span><br><span class="line">                <span class="keyword">else</span>:<span class="comment">#set sufix to mp3</span></span><br><span class="line">                    os.rename(<span class="string">"../"</span> + newDir + item, <span class="string">"../"</span> + newDir + core + <span class="string">".mp3"</span>)</span><br><span class="line">            <span class="keyword">except</span> Exception:</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">verify</span><span class="params">(dire)</span>:</span></span><br><span class="line">    <span class="string">'''traverse all files in new direction to check whether has file not change its sufix'''</span></span><br><span class="line">    print(<span class="string">"verifying"</span>)</span><br><span class="line">    os.chdir(dire)</span><br><span class="line">    os.chdir(<span class="string">"../"</span> + newDir)</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> os.listdir():</span><br><span class="line">        <span class="keyword">if</span> item[-<span class="number">3</span> : ] != <span class="string">"mp3"</span>:</span><br><span class="line">            os.rename(item, item[ : -len(patterCache) - <span class="number">1</span>] + <span class="string">".mp3"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">##################entry######################</span></span><br><span class="line">loc = str(input(<span class="string">"请输入酷狗音乐的缓存磁盘:"</span>))</span><br><span class="line"><span class="keyword">while</span> <span class="keyword">not</span> loc.isalpha():</span><br><span class="line">    print(loc, <span class="string">"is not valid, input again:"</span>)</span><br><span class="line">    loc = str(input(<span class="string">"请输入酷狗音乐的缓存磁盘:"</span>))</span><br><span class="line">loc += <span class="string">":\\"</span></span><br><span class="line"></span><br><span class="line">res = searchPath(loc)</span><br><span class="line">print(<span class="string">"cache dir:"</span>, res[<span class="string">"caches"</span>])</span><br><span class="line">print(<span class="string">"lyric dir:"</span>, res[<span class="string">"lyrics"</span>])</span><br><span class="line">modify(res[<span class="string">"caches"</span>], res[<span class="string">"lyrics"</span>])</span><br><span class="line">verify(res[<span class="string">"caches"</span>])</span><br><span class="line">os.chdir(res[<span class="string">"caches"</span>])</span><br><span class="line">os.chdir(<span class="string">"../"</span> + newDir)</span><br><span class="line">print(<span class="string">"done check mp3 file in"</span>, os.getcwd())</span><br></pre></td></tr></table></figure> </p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Python/">Python</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/其他/">其他</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/C/">C</a><small>1</small></li>
+  
+    <li><a href="/categories/CPP/">CPP</a><small>3</small></li>
+  
+    <li><a href="/categories/Hexo/">Hexo</a><small>2</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>1</small></li>
+  
+    <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
+  
+    <li><a href="/categories/Operating-System/">Operating System</a><small>1</small></li>
+  
+    <li><a href="/categories/Other/">Other</a><small>1</small></li>
+  
+    <li><a href="/categories/Python/">Python</a><small>10</small></li>
+  
+    <li><a href="/categories/sublime-text/">sublime text</a><small>2</small></li>
+  
+    <li><a href="/categories/windows/">windows</a><small>1</small></li>
+  
+    <li><a href="/categories/位运算/">位运算</a><small>1</small></li>
+  
+    <li><a href="/categories/汇编/">汇编</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/C/">C++</a><small>1</small></li>
+  
+    <li><a href="/tags/MySQL/">MySQL</a><small>1</small></li>
+  
+    <li><a href="/tags/c-高精度/">c++高精度</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>3</small></li>
+  
+    <li><a href="/tags/lambda表达式/">lambda表达式</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/other/">other</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>2</small></li>
+  
+    <li><a href="/tags/python字典/">python字典</a><small>1</small></li>
+  
+    <li><a href="/tags/sublime-text/">sublime text</a><small>2</small></li>
+  
+    <li><a href="/tags/test/">test</a><small>1</small></li>
+  
+    <li><a href="/tags/位运算/">位运算</a><small>2</small></li>
+  
+    <li><a href="/tags/其他/">其他</a><small>1</small></li>
+  
+    <li><a href="/tags/命令行/">命令行</a><small>1</small></li>
+  
+    <li><a href="/tags/字符串/">字符串</a><small>1</small></li>
+  
+    <li><a href="/tags/学习/">学习</a><small>1</small></li>
+  
+    <li><a href="/tags/排序/">排序</a><small>1</small></li>
+  
+    <li><a href="/tags/汇编/">汇编</a><small>1</small></li>
+  
+    <li><a href="/tags/生活/">生活</a><small>1</small></li>
+  
+    <li><a href="/tags/高精度/">高精度</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 xanarry
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'xanarry';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?05b8c86ae6be8be1243fc590c74bfde1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</body>
+</html>
