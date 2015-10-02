@@ -66,9 +66,14 @@
 </li>
 <li><p>使用tar命令解压jdk文件</p>
 </li>
-<li><p>移动解压后的jdk文件夹到你想要放到的位置, 我放到/usr/lib/中的:<br>sudo mv jdk1.8.0_60 /usr/lib</p>
+<li><p>移动解压后的jdk文件夹到你想要放到的位置, 我放到/usr/lib/中的:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv jdk1.<span class="number">8.0</span>_60 /usr/lib</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>添加jdk路径到环境变量中<br>sudo gedit /etc/profile<br>添加：</p>
+</ol>
+<ol>
+<li><p>添加jdk路径到环境变量中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/profile</span><br></pre></td></tr></table></figure>
+<p>添加：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/lib/jvm/jdk1.<span class="number">8.0</span>_60  <span class="comment">## 这里要注意目录要换成自己解压的jdk 目录</span></span><br><span class="line"><span class="built_in">export</span> JRE_HOME=<span class="variable">$&#123;JAVA_HOME&#125;</span>/jre  </span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$&#123;JAVA_HOME&#125;</span>/lib:<span class="variable">$&#123;JRE_HOME&#125;</span>/lib  </span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$&#123;JAVA_HOME&#125;</span>/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
