@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>python | xanarry&#39;s</title>
+  <title>ubuntu 安装MySQL | xanarry&#39;s</title>
   <meta name="author" content="xanarry">
   
   <meta name="description" content="xanarry&#39;s blog">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="ubuntu 安装MySQL"/>
   <meta property="og:site_name" content="xanarry&#39;s"/>
 
   
@@ -44,37 +44,79 @@
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-<h2 class="archive-title tag">python</h2>
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-10-02T14:44:32.000Z"><a href="/2015/10/02/ubuntu-安装MySQL/">2015-10-02</a></time>
+      
+      
+  
+    <h1 class="title">ubuntu 安装MySQL</h1>
+  
 
+    </header>
+    <div class="entry">
+      
+        <h1 id="install_mysql56_on_ubuntu14-04">install mysql56 on ubuntu14.04</h1><ol>
+<li><p>go to www.mysql.com and download mysql server file</p>
+</li>
+<li><p>enter the direction of the download file</p>
+</li>
+<li><p>extract mysql tar file</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf mysql-server_5.<span class="number">6.26</span>-<span class="number">1</span>ubuntu14.<span class="number">04</span>_i386.deb-bundle.tar</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>install dependencies</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i mysql-common_5.<span class="number">6.26</span>-<span class="number">1</span>ubuntu14.<span class="number">04</span>_i386.deb</span><br><span class="line">sudo apt-get install libaio1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>install mysql server</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i mysql-community-server_5.<span class="number">6.26</span>-<span class="number">1</span>ubuntu14.<span class="number">04</span>_i386.deb</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>install mysql client otherwise you can not use mysql command line in the terminal</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i mysql-community-client_5.<span class="number">6.26</span>-<span class="number">1</span>ubuntu14.<span class="number">04</span>_i386.deb</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="stop_&amp;_start_the_service_of_mysql">stop &amp; start the service of mysql</h1><p>start:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/mysql start</span><br><span class="line"><span class="string">''</span><span class="string">'</span><br><span class="line">stop:</span><br><span class="line">``` bash</span><br><span class="line">sudo /etc/init.d/mysql stop</span></span><br></pre></td></tr></table></figure></p>
+<p>or:<br>start:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service mysql start</span><br></pre></td></tr></table></figure></p>
+<p>stop :<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service mysql stop</span><br></pre></td></tr></table></figure></p>
+<p>done</p>
 
-  <div class="archive">
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2015-06-08T07:13:27.000Z"><a href="/2015/06/08/使用Python-list通过递归实现一个表达式计算器/">2015-06-08</a></time>
-            
-              <h1 class="title"><a href="/2015/06/08/使用Python-list通过递归实现一个表达式计算器/">使用Python list通过递归实现一个表达式计算器</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2015-05-27T04:28:12.000Z"><a href="/2015/05/27/python递归栈溢出/">2015-05-27</a></time>
-            
-              <h1 class="title"><a href="/2015/05/27/python递归栈溢出/">python递归栈溢出</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Linux/">Linux</a>
   </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/MySQL/">MySQL</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
@@ -188,7 +230,7 @@ var disqus_shortname = 'xanarry';
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
   dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 }());
 </script>

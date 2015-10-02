@@ -51,6 +51,60 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-10-02T14:44:32.000Z"><a href="/2015/10/02/ubuntu-安装MySQL/">2015-10-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/10/02/ubuntu-安装MySQL/">ubuntu 安装MySQL</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="install_mysql56_on_ubuntu14-04">install mysql56 on ubuntu14.04</h1><ol>
+<li><p>go to www.mysql.com and download mysql server file</p>
+</li>
+<li><p>enter the direction of the download file</p>
+</li>
+<li><p>extract mysql tar file</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf mysql-server_5.<span class="number">6.26</span>-<span class="number">1</span>ubuntu14.<span class="number">04</span>_i386.deb-bundle.tar</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>install dependencies</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i mysql-common_5.<span class="number">6.26</span>-<span class="number">1</span>ubuntu14.<span class="number">04</span>_i386.deb</span><br><span class="line">sudo apt-get install libaio1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>install mysql server</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i mysql-community-server_5.<span class="number">6.26</span>-<span class="number">1</span>ubuntu14.<span class="number">04</span>_i386.deb</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>install mysql client otherwise you can not use mysql command line in the terminal</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i mysql-community-client_5.<span class="number">6.26</span>-<span class="number">1</span>ubuntu14.<span class="number">04</span>_i386.deb</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="stop_&amp;_start_the_service_of_mysql">stop &amp; start the service of mysql</h1><p>start:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/mysql start</span><br><span class="line"><span class="string">''</span><span class="string">'</span><br><span class="line">stop:</span><br><span class="line">``` bash</span><br><span class="line">sudo /etc/init.d/mysql stop</span></span><br></pre></td></tr></table></figure></p>
+<p>or:<br>start:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service mysql start</span><br></pre></td></tr></table></figure></p>
+<p>stop :<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service mysql stop</span><br></pre></td></tr></table></figure></p>
+<p>done</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-10-02T14:34:40.000Z"><a href="/2015/10/02/windows-安装MySQL压缩包/">2015-10-02</a></time>
       
       
@@ -380,61 +434,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-06-10T07:27:54.000Z"><a href="/2015/06/10/位运算/">2015-06-10</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/06/10/位运算/">位运算</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>位运算一直不太熟悉, 所以今天重新看了看位运算, 此文做个简单的总结</p>
-<p>计算机的所有数据都是转化为二进制按位存储的, 二位运算就是一系列直接操纵位序列的运算, 简单的说就是直接操纵二进制数据, 位运算的类型有一下6种:</p>
-<p>一. <strong><font color="0070ff"> &amp; </font></strong>, 与运算(双目), 类似于求交集, 对于两个位串, 如果同一个位置的两位同时为1则取1, 否则取0</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    01001101&#10; &#38;  10011011&#10;-----------------&#10;    00001001</span><br></pre></td></tr></table></figure>
-<p>二. <strong><font color="0070ff"> | </font></strong>, 或运算(双目), 类似于求交集, 即对于两个位串, 如果同一个位置的两位其中一个为1那么取1, 两个位都为0则取0</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    01001101&#10; |  10011011&#10;-----------------&#10;    11011111</span><br></pre></td></tr></table></figure>
-<p>三. <strong><font color="0070ff"> ^ </font></strong>, 异或运算(双目), 对于两个位串, 如果同一个位置其中一个为1, 但不都为1则取1, 否则取0</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    01001101&#10; ^  10011011&#10;-----------------&#10;    11010110</span><br></pre></td></tr></table></figure>
-<p>四. <strong><font color="0070ff"> ~ </font></strong>, 取反(单目), 对于一个位串, 对每一位取反</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">           01001101&#10;&#21462;&#21453;&#24471;&#21040;:   10110010</span><br></pre></td></tr></table></figure>
-<p>五. <strong><font color="0070ff"> &lt;&lt; </font></strong>, 左移(双目), 将一个位串向左移动n位, 高位的丢弃, 低位用零补齐</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">           01001101&#10;&#24038;&#31227;3&#20301;:    01101000</span><br></pre></td></tr></table></figure>
-<p>假如定义<strong>a = 5</strong>, 二进制为: 0000 0101<br><strong>a &lt;&lt;= 1;</strong>, 左移1位,变成: 0000 1010, 即十进制10</p>
-<p>六. <strong><font color="0070ff"> &gt;&gt; </font></strong>, 右移(双目), 将一个位串向右移动n位, 高位用零补齐, 低位的丢弃</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">           01001101&#10;&#21491;&#31227;3&#20301;:    00001001</span><br></pre></td></tr></table></figure>
-<p>假如定义<strong>a = 5</strong>, 二进制为: 0000 0101<br><strong>a &gt;&gt;= 1;</strong>, 左移1位,变成: 0000 0010, 即十进制2</p>
-<p>因此, 根据位运算的规则, 可以使用左移将数字扩大2的多少次方倍, 使用右移将数字缩小多少倍. 使用与(&amp;)或(|)运算来做位上的筛选. </p>
-<p>通过以上特性, 可以使用位运算写一个将十进制转为二进制的函数, 方法为每次取十进制的数的最低位, 然后右移一位, 然后再取最低位, 最后得到的串即为二进制数</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*处理32位整数*/</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">itob</span><span class="params">(<span class="keyword">int</span> a)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> bin[<span class="number">65</span>];<span class="comment">//保存没一位的数字</span></span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">8</span> * <span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">    <span class="comment">//不断右移取低位, 一共取32位</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = len - <span class="number">1</span>; i&gt;= <span class="number">0</span>; i--, a &gt;&gt;= <span class="number">1</span>)<span class="comment">//右移</span></span><br><span class="line">        bin[i] = (a &amp; <span class="number">1</span>);<span class="comment">//使用"0000 0000 0000 0000 0000 0000 0000 0001"筛选最低位</span></span><br><span class="line">    bin[len] = <span class="string">'\0'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">string</span> res = <span class="string">""</span>;<span class="comment">//将字符数组转为字符串并加上空格分割符, 4位一段</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i &amp;&amp; i % <span class="number">4</span> == <span class="number">0</span>)</span><br><span class="line">            res += <span class="string">" "</span>;</span><br><span class="line">        res += <span class="keyword">char</span>(bin[i] + <span class="string">'0'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//返回形如:xxxx xxxx xxxx xxxx 的二进制数</span></span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>还有根据计算机表示二进制数的方式, 我们可以直接得到一个类型的最大值:</p>
-<p>以一个32位带符号整数位例子:</p>
-<p><font color="0070ff">x</font>xxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx</p>
-<p>其中最高位为<strong>u</strong>符号位, 所以实际上表示数字本身的只有后面31位, 因为要找出最大值, 那么在二进制上的每一位肯定都是1, 处理最高位, 那么值肯定是<strong><font color="0070ff">0</font>111 1111 1111 1111 1111 1111 1111  1111</strong>将二进制4位分一段, 采用16进制表示, 后面七段都是1111, 即16进制F, 最高位上只有三位<strong>111</strong>表示值, 写成16进制即<strong>7</strong>, 那么这个带符号的最大是肯定就是<strong>0x7FFFFFFF</strong>, 对应32位十进制:<strong>2147483647</strong></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -464,7 +463,7 @@
   
     <li><a href="/categories/Life/">Life</a><small>1</small></li>
   
-    <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
+    <li><a href="/categories/Linux/">Linux</a><small>2</small></li>
   
     <li><a href="/categories/MySQL/">MySQL</a><small>1</small></li>
   
@@ -493,7 +492,7 @@
   
     <li><a href="/tags/C/">C++</a><small>1</small></li>
   
-    <li><a href="/tags/MySQL/">MySQL</a><small>2</small></li>
+    <li><a href="/tags/MySQL/">MySQL</a><small>3</small></li>
   
     <li><a href="/tags/c-高精度/">c++高精度</a><small>1</small></li>
   
