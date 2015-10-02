@@ -51,6 +51,60 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-10-02T14:34:40.000Z"><a href="/2015/10/02/windows-安装MySQL压缩包/">2015-10-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/10/02/windows-安装MySQL压缩包/">windows 安装MySQL压缩包</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li><p><a href="http://www.mysql.com/" target="_blank" rel="external">下载MySQL</a></p>
+</li>
+<li><p>解压MySQL并且进入MySQL的bin目标</p>
+</li>
+<li><p>执行: mysqld —explicit_defaults_timestamp=true #初始化数据库</p>
+</li>
+<li><p>执行: mysqld —console #启动数据库服务</p>
+</li>
+<li><p>执行: mysql -u root mysql #启动数据库<br>执行: use mysql<br>执行: update user set password= PASSWORD(“设置密码”) where user=”root” #设置管理员密码<br>执行: n #立即刷新</p>
+</li>
+<li><p>注册MySQL服务到Windows<br>执行: mysqld — install MySQL #最后一个参数是服务名, 可随意定义</p>
+</li>
+<li>为了不用每次都切换目录使用MySQL, 将MySQL的bin目录路径添加到环境变量</li>
+</ol>
+<p>注意: 如果Windows无法启动MySQL的服务, 请检查注册表: HKEY_LOCAL_MACHINE-SYSTEM-CurrentControlSet-services-mysql右边的ImagePath属性, 看改值是否指向MySQL解压缩文件的路径, 如果不是请修改</p>
+<h1 id="禁止命令行直接是有”mysql”登录">禁止命令行直接是有”mysql”登录</h1><ol>
+<li>以root身份登录MySQL</li>
+<li>use user</li>
+<li>delete from user where user=””;</li>
+<li>flush privileges<br>OK, 生效</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-08-09T03:50:58.000Z"><a href="/2015/08/09/使用Python脚本将酷狗音乐的缓存文件修改为可播放/">2015-08-09</a></time>
       
       
@@ -381,42 +435,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-06-09T15:29:38.000Z"><a href="/2015/06/09/操作系统学习的开始/">2015-06-09</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/06/09/操作系统学习的开始/">操作系统学习的开始</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>半个月前做了一套在线笔试题, 被虐的受刺激了. </p>
-<p>操作系统的和计算机网络的内容完全不会, 马上就大三了, 虽然学校大三才开这些课, 但是要想成为大神是不能靠上课学的, 还有感觉从大一到现在主要的学习都是在编程上面去了, 在理论基础上还有很对东西不足, 我可不想让这些东西成为后续发展的瓶颈, 实际上我最大瓶颈还是数学.</p>
-<p>说实话我对数学还是有点兴趣的, 但是数学水平还相当不给力, 线代概率课还大多数时间睡觉了, 看来是自找的, 不过, 有时间还的好好学学数学. 作为理论学习的开始, 于是就开始学习操作系统的计划, 书籍为&lt;&lt;现代操作系统&gt;&gt;英文版的, 非常不错的专业书籍, 嗯, 其实到现在都看了100多页了, 同时也学习英语了.</p>
-<p>这周末考六级, 一点都还没有看呢, 自认为平时的英语阅读量还行, 所有就没怎么复习了, 这是自信还是自负, 哈哈, 考试完后再说吧. 还有一点就当是写日记了吧, 这两天在看红黑树, 红黑树的插入能在纸上画图实现的, 但在代码实现时又是困难重重, 所以到晚上还没没实现, 搞得整个人都郁闷了, 于是来写这个博文, 这么没有逻辑的博文, 算是扯淡了, 哈哈, 除了红黑树, 还打算后面陆续学Splay-tree, KD-tree, B-tree, B+-tree, R-tree, 线段树, skip-list, 二项堆, fibonacci堆, 都是比较高大上的数据结构, 任务沉重, 先睡觉了, 不然又是在浪费青春了.  </p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -448,6 +466,8 @@
   
     <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
   
+    <li><a href="/categories/MySQL/">MySQL</a><small>1</small></li>
+  
     <li><a href="/categories/Operating-System/">Operating System</a><small>1</small></li>
   
     <li><a href="/categories/Other/">Other</a><small>1</small></li>
@@ -473,7 +493,7 @@
   
     <li><a href="/tags/C/">C++</a><small>1</small></li>
   
-    <li><a href="/tags/MySQL/">MySQL</a><small>1</small></li>
+    <li><a href="/tags/MySQL/">MySQL</a><small>2</small></li>
   
     <li><a href="/tags/c-高精度/">c++高精度</a><small>1</small></li>
   

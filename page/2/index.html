@@ -51,6 +51,42 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-06-09T15:29:38.000Z"><a href="/2015/06/09/操作系统学习的开始/">2015-06-09</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/06/09/操作系统学习的开始/">操作系统学习的开始</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>半个月前做了一套在线笔试题, 被虐的受刺激了. </p>
+<p>操作系统的和计算机网络的内容完全不会, 马上就大三了, 虽然学校大三才开这些课, 但是要想成为大神是不能靠上课学的, 还有感觉从大一到现在主要的学习都是在编程上面去了, 在理论基础上还有很对东西不足, 我可不想让这些东西成为后续发展的瓶颈, 实际上我最大瓶颈还是数学.</p>
+<p>说实话我对数学还是有点兴趣的, 但是数学水平还相当不给力, 线代概率课还大多数时间睡觉了, 看来是自找的, 不过, 有时间还的好好学学数学. 作为理论学习的开始, 于是就开始学习操作系统的计划, 书籍为&lt;&lt;现代操作系统&gt;&gt;英文版的, 非常不错的专业书籍, 嗯, 其实到现在都看了100多页了, 同时也学习英语了.</p>
+<p>这周末考六级, 一点都还没有看呢, 自认为平时的英语阅读量还行, 所有就没怎么复习了, 这是自信还是自负, 哈哈, 考试完后再说吧. 还有一点就当是写日记了吧, 这两天在看红黑树, 红黑树的插入能在纸上画图实现的, 但在代码实现时又是困难重重, 所以到晚上还没没实现, 搞得整个人都郁闷了, 于是来写这个博文, 这么没有逻辑的博文, 算是扯淡了, 哈哈, 除了红黑树, 还打算后面陆续学Splay-tree, KD-tree, B-tree, B+-tree, R-tree, 线段树, skip-list, 二项堆, fibonacci堆, 都是比较高大上的数据结构, 任务沉重, 先睡觉了, 不然又是在浪费青春了.  </p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-06-08T07:13:27.000Z"><a href="/2015/06/08/使用Python-list通过递归实现一个表达式计算器/">2015-06-08</a></time>
       
       
@@ -519,39 +555,6 @@ tnums = <span class="function"><span class="title">sorted</span><span class="par
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-25T14:36:04.000Z"><a href="/2015/05/25/python实现高精度乘法/">2015-05-25</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/25/python实现高精度乘法/">python实现高精度乘法</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>方法还是将两个乘数转为两个包含乘数每位数字的list,<br>因为在计算中两个list中的数据要反复使用,所以定义第三个list来保存乘法的运算结果,然后使用两重循序模拟列竖式计算出乘法运算的结果, 因为乘法运算每次运算时需要向前移动一位表示扩大10倍,所以定义变量pos标记计算时移动的位数, 每次移动一位<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> reduce</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">multiply</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    a = list(map(<span class="keyword">lambda</span> x : int(x), a.strip()))</span><br><span class="line">    b = list(map(<span class="keyword">lambda</span> x : int(x), b.strip()))</span><br><span class="line">    c = list(map(<span class="keyword">lambda</span> x : <span class="number">0</span>, (<span class="string">"0"</span> + str(a) + str(b)).strip()))</span><br><span class="line">    index = len(c) - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(a) - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">        pos = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(len(b) - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            temp = a[i] * b[j] + c[index - pos] <span class="comment">#两个乘数相乘,并加上在此前一次的进位</span></span><br><span class="line">            c[index - pos] = temp % <span class="number">10</span> <span class="comment">#保存运算求余结果</span></span><br><span class="line">            c[index - pos - <span class="number">1</span>] += temp // <span class="number">10</span> <span class="comment">#处理进位,进位可以是0或者大于0的数</span></span><br><span class="line">            pos += <span class="number">1</span></span><br><span class="line">        index -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> int(reduce(<span class="keyword">lambda</span> x, y : str(x) + str(y), c)) <span class="comment">#将list中的内容转换为字符串</span></span><br><span class="line"></span><br><span class="line">a = input(<span class="string">"input a: "</span>)</span><br><span class="line">b = input(<span class="string">"input b: "</span>)</span><br><span class="line">print(multiply(a, b))</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -585,6 +588,8 @@ tnums = <span class="function"><span class="title">sorted</span><span class="par
   
     <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
   
+    <li><a href="/categories/MySQL/">MySQL</a><small>1</small></li>
+  
     <li><a href="/categories/Operating-System/">Operating System</a><small>1</small></li>
   
     <li><a href="/categories/Other/">Other</a><small>1</small></li>
@@ -610,7 +615,7 @@ tnums = <span class="function"><span class="title">sorted</span><span class="par
   
     <li><a href="/tags/C/">C++</a><small>1</small></li>
   
-    <li><a href="/tags/MySQL/">MySQL</a><small>1</small></li>
+    <li><a href="/tags/MySQL/">MySQL</a><small>2</small></li>
   
     <li><a href="/tags/c-高精度/">c++高精度</a><small>1</small></li>
   

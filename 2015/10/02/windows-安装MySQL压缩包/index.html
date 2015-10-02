@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>windows 安装MySQL压缩包 | xanarry&#39;s</title>
+  <meta name="author" content="xanarry">
+  
+  <meta name="description" content="xanarry&#39;s blog">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="windows 安装MySQL压缩包"/>
+  <meta property="og:site_name" content="xanarry&#39;s"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="xanarry&#39;s" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">xanarry&#39;s</a></h1>
+  <h2><a href="/">创造就是一个构造过程的过程!</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-10-02T14:34:40.000Z"><a href="/2015/10/02/windows-安装MySQL压缩包/">2015-10-02</a></time>
+      
+      
+  
+    <h1 class="title">windows 安装MySQL压缩包</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li><p><a href="http://www.mysql.com/" target="_blank" rel="external">下载MySQL</a></p>
+</li>
+<li><p>解压MySQL并且进入MySQL的bin目标</p>
+</li>
+<li><p>执行: mysqld —explicit_defaults_timestamp=true #初始化数据库</p>
+</li>
+<li><p>执行: mysqld —console #启动数据库服务</p>
+</li>
+<li><p>执行: mysql -u root mysql #启动数据库<br>执行: use mysql<br>执行: update user set password= PASSWORD(“设置密码”) where user=”root” #设置管理员密码<br>执行: n #立即刷新</p>
+</li>
+<li><p>注册MySQL服务到Windows<br>执行: mysqld — install MySQL #最后一个参数是服务名, 可随意定义</p>
+</li>
+<li>为了不用每次都切换目录使用MySQL, 将MySQL的bin目录路径添加到环境变量</li>
+</ol>
+<p>注意: 如果Windows无法启动MySQL的服务, 请检查注册表: HKEY_LOCAL_MACHINE-SYSTEM-CurrentControlSet-services-mysql右边的ImagePath属性, 看改值是否指向MySQL解压缩文件的路径, 如果不是请修改</p>
+<h1 id="禁止命令行直接是有”mysql”登录">禁止命令行直接是有”mysql”登录</h1><ol>
+<li>以root身份登录MySQL</li>
+<li>use user</li>
+<li>delete from user where user=””;</li>
+<li>flush privileges<br>OK, 生效</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/MySQL/">MySQL</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/MySQL/">MySQL</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/C/">C</a><small>1</small></li>
+  
+    <li><a href="/categories/CPP/">CPP</a><small>3</small></li>
+  
+    <li><a href="/categories/Hexo/">Hexo</a><small>2</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>1</small></li>
+  
+    <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
+  
+    <li><a href="/categories/MySQL/">MySQL</a><small>1</small></li>
+  
+    <li><a href="/categories/Operating-System/">Operating System</a><small>1</small></li>
+  
+    <li><a href="/categories/Other/">Other</a><small>1</small></li>
+  
+    <li><a href="/categories/Python/">Python</a><small>10</small></li>
+  
+    <li><a href="/categories/sublime-text/">sublime text</a><small>2</small></li>
+  
+    <li><a href="/categories/windows/">windows</a><small>1</small></li>
+  
+    <li><a href="/categories/位运算/">位运算</a><small>1</small></li>
+  
+    <li><a href="/categories/汇编/">汇编</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/C/">C++</a><small>1</small></li>
+  
+    <li><a href="/tags/MySQL/">MySQL</a><small>2</small></li>
+  
+    <li><a href="/tags/c-高精度/">c++高精度</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>3</small></li>
+  
+    <li><a href="/tags/lambda表达式/">lambda表达式</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/other/">other</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>2</small></li>
+  
+    <li><a href="/tags/python字典/">python字典</a><small>1</small></li>
+  
+    <li><a href="/tags/sublime-text/">sublime text</a><small>2</small></li>
+  
+    <li><a href="/tags/test/">test</a><small>1</small></li>
+  
+    <li><a href="/tags/位运算/">位运算</a><small>2</small></li>
+  
+    <li><a href="/tags/其他/">其他</a><small>1</small></li>
+  
+    <li><a href="/tags/命令行/">命令行</a><small>1</small></li>
+  
+    <li><a href="/tags/字符串/">字符串</a><small>1</small></li>
+  
+    <li><a href="/tags/学习/">学习</a><small>1</small></li>
+  
+    <li><a href="/tags/排序/">排序</a><small>1</small></li>
+  
+    <li><a href="/tags/汇编/">汇编</a><small>1</small></li>
+  
+    <li><a href="/tags/生活/">生活</a><small>1</small></li>
+  
+    <li><a href="/tags/高精度/">高精度</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 xanarry
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'xanarry';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?05b8c86ae6be8be1243fc590c74bfde1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</body>
+</html>
