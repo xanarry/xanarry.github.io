@@ -60,9 +60,15 @@
     </header>
     <div class="entry">
       
-        <h1 id="get乱码">get乱码</h1><p>在jsp文件中指明了使用utf-8编码则在servlet中使用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String name = new String(req.getParameter(<span class="string">"name"</span>).getBytes(<span class="string">"ISO-8859-1"</span>), <span class="string">"UTF-8"</span>);</span><br></pre></td></tr></table></figure></p>
+        <ol>
+<li>get乱码<br>在jsp文件中指明了使用utf-8编码则在servlet中使用<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String name = new String(req.getParameter(<span class="string">"name"</span>).getBytes(<span class="string">"ISO-8859-1"</span>), <span class="string">"UTF-8"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 <p>才能保证中文不会乱码, 因为网页本身使用utf-8编码, get方法使用URL传输参数,那么通过utf-8编码后的字符串会再次经过浏览器的编码方式(通常为iOS-8859-1)编码, 所有在解码是需要先翻译ISO-8859-1的编码方式, 再使用utf-8解码, 就能得到正确的中文字符</p>
-<h1 id="post乱码">post乱码</h1><p>post是直接发送网页编码后的字符, 所以在接收post方法的参数时使用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request.setCharacterEncoding(<span class="string">"UTF-8"</span>);</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>post乱码<br>post是直接发送网页编码后的字符, 所以在接收post方法的参数时使用<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request.setCharacterEncoding(<span class="string">"UTF-8"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 <p>在获取参数就是正常的中文了</p>
 <p>注意: <em>以上的UTF-8是因为网友中设置的编码为utf-8, 如果网页设置编码为GBK, 那么相应的把以上所有的utf-8改为GBK</em></p>
 
