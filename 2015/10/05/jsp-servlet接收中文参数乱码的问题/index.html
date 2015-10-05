@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>命令行 | xanarry&#39;s</title>
+  <title>jsp servlet接收中文参数乱码的问题 | xanarry&#39;s</title>
   <meta name="author" content="xanarry">
   
   <meta name="description" content="xanarry&#39;s blog">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="jsp servlet接收中文参数乱码的问题"/>
   <meta property="og:site_name" content="xanarry&#39;s"/>
 
   
@@ -44,25 +44,66 @@
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-<h2 class="archive-title tag">命令行</h2>
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-10-05T01:56:46.000Z"><a href="/2015/10/05/jsp-servlet接收中文参数乱码的问题/">2015-10-05</a></time>
+      
+      
+  
+    <h1 class="title">jsp servlet接收中文参数乱码的问题</h1>
+  
 
+    </header>
+    <div class="entry">
+      
+        <h1 id="get乱码">get乱码</h1><pre><code>在jsp文件中指明了使用utf-8编码则在servlet中使用
+<span class="comment"><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String name = new String(req.getParameter(<span class="string">"name"</span>).getBytes(<span class="string">"ISO-8859-1"</span>), <span class="string">"UTF-8"</span>);</span><br></pre></td></tr></table></figure></span>
 
-  <div class="archive">
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2015-05-31T00:29:55.000Z"><a href="/2015/05/31/使用命令行启动或者关闭windows的服务/">2015-05-31</a></time>
-            
-              <h1 class="title"><a href="/2015/05/31/使用命令行启动或者关闭windows的服务/">使用命令行启动或者关闭windows的服务</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
+才能保证中文不会乱码, 因为网页本身使用utf-8编码, get方法使用URL传输参数, 那么通过utf-8编码后的字符串会再次经过浏览器的编码方式(通常为iOS-8859-1)编码, 所有在解码是需要先翻译ISO-8859-1的编码方式, 再使用utf-8解码, 就能得到正确的中文字符
+</code></pre><h1 id="post乱码">post乱码</h1><pre><code>post是直接发送网页编码后的字符, 所以在接收post方法的参数时使用
+<span class="comment"><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request.setCharacterEncoding(<span class="string">"UTF-8"</span>);</span><br></pre></td></tr></table></figure></span>
+
+在获取参数就是正常的中文了
+</code></pre><p>注意: <em>以上的UTF-8是因为网友中设置的编码为utf-8, 如果网页设置编码为GBK, 那么相应的把以上所有的utf-8改为GBK</em></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/jsp/">jsp</a>
   </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/jsp/">jsp</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
@@ -182,7 +223,7 @@ var disqus_shortname = 'xanarry';
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
   dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 }());
 </script>
