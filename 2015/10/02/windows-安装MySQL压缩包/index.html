@@ -75,13 +75,10 @@
 </li>
 <li>为了不用每次都切换目录使用MySQL, 将MySQL的bin目录路径添加到环境变量</li>
 </ol>
+<p>windows启动和停止MySQL服务的命令行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net start mysql</span><br><span class="line">net stop mysql</span><br></pre></td></tr></table></figure></p>
 <p>注意: 如果Windows无法启动MySQL的服务, 请检查注册表: HKEY_LOCAL_MACHINE-SYSTEM-CurrentControlSet-services-mysql右边的ImagePath属性, 看改值是否指向MySQL解压缩文件的路径, 如果不是请修改</p>
-<h1 id="禁止命令行直接使用”mysql”命令登录">禁止命令行直接使用”mysql”命令登录</h1><ol>
-<li>以root身份登录MySQL</li>
-<li>use user</li>
-<li>delete from user where user=””;</li>
-<li>flush privileges<br>OK, 生效</li>
-</ol>
+<h1 id="禁止命令行直接使用”mysql”命令登录">禁止命令行直接使用”mysql”命令登录</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">以root身份登录MySQL</span><br><span class="line">use user</span><br><span class="line">delete from user <span class="built_in">where</span> user=<span class="string">""</span>;</span><br><span class="line">flush privileges</span><br></pre></td></tr></table></figure>
+<p>OK, 生效</p>
 
       
     </div>
