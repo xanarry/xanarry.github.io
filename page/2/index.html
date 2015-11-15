@@ -51,6 +51,138 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-11-15T06:38:07.000Z"><a href="/2015/11/15/mysql表的连接/">2015-11-15</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/11/15/mysql表的连接/">mysql表的连接</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="概述">概述</h1><h3 id="连接从类型上来说有两种连接,_一种是内连接(inner_join),_另一种是外连接(outer_join)">连接从类型上来说有两种连接, 一种是<em>内连接(inner join)</em>, 另一种是<em>外连接(outer join)</em></h3><h3 id="内连接就是只连接同时存在与两个表中的内容,忽略掉所有不匹配的信息,_比如说自然连接就是内连接,_只是省略了inner关键字">内连接就是只连接同时存在与两个表中的内容,忽略掉所有不匹配的信息, 比如说自然连接就是内连接, 只是省略了inner关键字</h3><h3 id="natural_join是将两个表中相同属性的值做比较,_如果相同则放在一起,_如果,_两个表中有多个相同的属性,_那么则要求两个属性的值都相同才能链接到一起,_如果只想通过一个属性join,请使用A_join_B_using(culum)">natural join是将两个表中相同属性的值做比较, 如果相同则放在一起, 如果, 两个表中有多个相同的属性, 那么则要求两个属性的值都相同才能链接到一起, 如果只想通过一个属性join,请使用A join B using(culum)</h3><p>假如A表与B表有共同的属性ID, 自然链接可以使用以下三种写法:</p>
+<pre><code><span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> A <span class="keyword">natural</span> <span class="keyword">join</span> B;</span>
+<span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> A, B <span class="keyword">where</span> A.ID = B.ID;</span>
+<span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> A <span class="keyword">join</span> B <span class="keyword">using</span>(ID);</span>
+</code></pre><h3 id="外连接就是连接两个表中所有的内容,_对于没有其中一端匹配的记录,_使用NULL元组补齐显示"><em>外连接</em>就是连接两个表中所有的内容, 对于没有其中一端匹配的记录, 使用NULL元组补齐显示</h3><p>因为连接针对是两个表的,所以外连接就分成两种情况, 一种是左外连接, 或者叫左连接, 另外一种叫右外连接, 又叫右连接</p>
+<h3 id="左外连接就是当两个表进行连接时,_对于存在于左边表中的元组,_如果右边表中无法找到与之匹配的信息,_那么就使用NULL代替显示的右边的信息"><em>左外连接</em>就是当两个表进行连接时, 对于存在于左边表中的元组, 如果右边表中无法找到与之匹配的信息, 那么就使用NULL代替显示的右边的信息</h3><h3 id="反之,_右连接就是当两个表进行连接时,_对于存在于右边表中的元组,_如果左边表中无法找到与之匹配的信息,_那么就使用NULL代替显示的左边边的信息">反之, <em>右连接</em>就是当两个表进行连接时, 对于存在于右边表中的元组, 如果左边表中无法找到与之匹配的信息, 那么就使用NULL代替显示的左边边的信息</h3><h3 id="简而言之,_就是是什么链接就保留哪一边表中的原始信息,_而用NULL代替另外一边的信息">简而言之, 就是是什么链接就保留哪一边表中的原始信息, 而用NULL代替另外一边的信息</h3><font color="red">注意: MySQL中没有全连接</font>
+
+<h2 id="以下使用两个表来看看连接的效果是什么样的">以下使用两个表来看看连接的效果是什么样的</h2><h3 id="person表,_含有每个人的ID和姓名">person表, 含有每个人的ID和姓名</h3><pre><code><span class="header">mysql&gt; select * from person;
++------+---------+</span>
+<span class="header">| id   | name    |
++------+---------+</span>
+| 111  | xanarry |
+| 111  | xanarry |
+| 222  | marry   |
+| 333  | bob     |
+| 444  | carly   |
+| 555  | tom     |
+<span class="header">| 666  | jerry   |
++------+---------+</span>
+7 rows in set (0.00 sec)
+</code></pre><h3 id="salary表,_含有每个ID对应的工资money">salary表, 含有每个ID对应的工资money</h3><pre><code><span class="header">mysql&gt; select * from salary;
++------+-------+</span>
+<span class="header">| id   | money |
++------+-------+</span>
+| 444  |  1232 |
+| 555  |  3213 |
+| 666  |  4231 |
+| 777  |  2552 |
+| 888  |  6742 |
+<span class="header">| 999  |  8724 |
++------+-------+</span>
+6 rows in set (0.00 sec)
+</code></pre><h3 id="这是自然连接的效果,_可以看出,_任意表中与另外一个表不匹配的信息都被过滤掉了,_使用inner与不使用输出结果是一致的">这是自然连接的效果, 可以看出, 任意表中与另外一个表不匹配的信息都被过滤掉了, 使用inner与不使用输出结果是一致的</h3><pre><code><span class="header">mysql&gt; select * from person join salary using(id);
++------+-------+-------+</span>
+<span class="header">| id   | name  | money |
++------+-------+-------+</span>
+| 444  | carly |  1232 |
+| 555  | tom   |  3213 |
+<span class="header">| 666  | jerry |  4231 |
++------+-------+-------+</span>
+3 rows in set (0.01 sec)
+</code></pre><p>使用inner关键词</p>
+<pre><code><span class="header">mysql&gt; select * from person inner join salary using(id);
++------+-------+-------+</span>
+<span class="header">| id   | name  | money |
++------+-------+-------+</span>
+| 444  | carly |  1232 |
+| 555  | tom   |  3213 |
+<span class="header">| 666  | jerry |  4231 |
++------+-------+-------+</span>
+3 rows in set (0.00 sec)
+</code></pre><h3 id="左链接,_同样,_在使用左右连接是是否使用outer关键词都能得到一样的效果">左链接, 同样, 在使用左右连接是是否使用outer关键词都能得到一样的效果</h3><h3 id="可以看出输出了左边表中id为111,222,333的内容,_但是右边表中没有内容与这几项匹配,_所以使用NULL代替输出">可以看出输出了左边表中id为111,222,333的内容, 但是右边表中没有内容与这几项匹配, 所以使用NULL代替输出</h3><pre><code>mysql&gt; select <span class="keyword">*</span> from person left join salary using(id);
++------+---------+-------+
+|<span class="string"> id   </span>|<span class="string"> name    </span>|<span class="string"> money </span>|
++------+---------+-------+
+|<span class="string"> 444  </span>|<span class="string"> carly   </span>|<span class="string">  1232 </span>|
+|<span class="string"> 555  </span>|<span class="string"> tom     </span>|<span class="string">  3213 </span>|
+|<span class="string"> 666  </span>|<span class="string"> jerry   </span>|<span class="string">  4231 </span>|
+|<span class="string"> 111  </span>|<span class="string"> xanarry </span>|<span class="string">  NULL </span>|
+|<span class="string"> 111  </span>|<span class="string"> xanarry </span>|<span class="string">  NULL </span>|
+|<span class="string"> 222  </span>|<span class="string"> marry   </span>|<span class="string">  NULL </span>|
+|<span class="string"> 333  </span>|<span class="string"> bob     </span>|<span class="string">  NULL </span>|
++------+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql&gt; select <span class="keyword">*</span> from person left outer join salary using(id);
++------+---------+-------+
+|<span class="string"> id   </span>|<span class="string"> name    </span>|<span class="string"> money </span>|
++------+---------+-------+
+|<span class="string"> 444  </span>|<span class="string"> carly   </span>|<span class="string">  1232 </span>|
+|<span class="string"> 555  </span>|<span class="string"> tom     </span>|<span class="string">  3213 </span>|
+|<span class="string"> 666  </span>|<span class="string"> jerry   </span>|<span class="string">  4231 </span>|
+|<span class="string"> 111  </span>|<span class="string"> xanarry </span>|<span class="string">  NULL </span>|
+|<span class="string"> 111  </span>|<span class="string"> xanarry </span>|<span class="string">  NULL </span>|
+|<span class="string"> 222  </span>|<span class="string"> marry   </span>|<span class="string">  NULL </span>|
+|<span class="string"> 333  </span>|<span class="string"> bob     </span>|<span class="string">  NULL </span>|
++------+---------+-------+
+7 rows in set (0.00 sec)
+</code></pre><h3 id="右链接,_同样,_在使用左右连接是是否使用outer关键词都能得到一样的效果">右链接, 同样, 在使用左右连接是是否使用outer关键词都能得到一样的效果</h3><h3 id="可以看出输出了右边边表中id为777,888,999的内容,_但是左边边表中没有内容与这几项匹配,_所以使用NULL代替输出">可以看出输出了右边边表中id为777,888,999的内容, 但是左边边表中没有内容与这几项匹配, 所以使用NULL代替输出</h3><pre><code><span class="header">mysql&gt; select * from person right join salary using(id);
++------+-------+-------+</span>
+<span class="header">| id   | money | name  |
++------+-------+-------+</span>
+| 444  |  1232 | carly |
+| 555  |  3213 | tom   |
+| 666  |  4231 | jerry |
+| 777  |  2552 | NULL  |
+| 888  |  6742 | NULL  |
+<span class="header">| 999  |  8724 | NULL  |
++------+-------+-------+</span>
+6 rows in set (0.00 sec)
+</code></pre><h2 id="使用嵌套子查询实现join查询的方法">使用嵌套子查询实现join查询的方法</h2><h3 id="实现左连接的方法:">实现左连接的方法:</h3><h4 id="1-先使用自然连接;">1.先使用自然连接;</h4><h4 id="2-然后再通过嵌套子查询将左表中不存在与右表的元组输出,_列数不够的用NULL补齐">2.然后再通过嵌套子查询将左表中不存在与右表的元组输出, 列数不够的用NULL补齐</h4><h4 id="3-输出上面两个查询的交集(union)">3.输出上面两个查询的交集(union)</h4><p>例子:<br>假如A表有3列, B表有三列, 有共同列ID, 那么两个表的左连接为</p>
+<pre><code><span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> A <span class="keyword">natural</span> <span class="keyword">left</span> <span class="keyword">join</span> B;</span>
+</code></pre><p>使用子查询实现</p>
+<pre><code><span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> A <span class="keyword">natural</span> <span class="keyword">join</span> B
+<span class="keyword">union</span>
+<span class="keyword">select</span> A.1列, A.2列, A.3列, <span class="literal">NULL</span>, <span class="literal">NULL</span> <span class="keyword">from</span> A
+<span class="keyword">where</span> A.id 
+<span class="keyword">not</span> <span class="keyword">in</span>
+(<span class="keyword">select</span> ID <span class="keyword">from</span> B);</span>
+</code></pre><p>同样右连接只需要交换顺序即可</p>
+<h3 id="全连接的则使用两个union求自然连接,_只存在于左边和只存在于右边的并集">全连接的则使用两个union求自然连接, 只存在于左边和只存在于右边的并集</h3>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-11-15T06:36:20.000Z"><a href="/2015/11/15/mysql数据库和表的操作/">2015-11-15</a></time>
       
       
@@ -460,48 +592,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-07-13T08:16:47.000Z"><a href="/2015/07/13/汇编除法运算/">2015-07-13</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/07/13/汇编除法运算/">汇编除法运算</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>汇编的除法指令是”div”, 实际上相对高级语言的除法, 汇编指令的div是同时得到商和余数的, 结果分别保存在不同的寄存器.</p>
-<ol>
-<li>除数: 有8位和16位两种, 在一个寄存器或者内存单元中</li>
-<li>被除数: 如果除数是8位则被除数为16位, 默认放在AX中, 如果除数是16位, 则被除数为32位, 默认高位放在DX, 低位放在AX</li>
-<li>结果: 如果除数是8位, 那么执行div后, 余数存放在AH, 商存放在AL中; 如果除数是16位, 那么AX保存商, DX保存余数<br>注意: 被除数的位数一定是除数的两倍</li>
-</ol>
-<p>指令格式:<br>1: div registre<br>2: div 内存单元</p>
-<p>一个除数为8位的例子(96除以10)</p>
-<p>mov ax 60h ;dec 96 = hex 60<br>mov bh 0ah ;dec 10 = hex ah, 代码中数字起始位位字母要在最前加0<br>div bh     ;执行后ax为:0609, 即高位ah=06(余数), 低位al=09(商)</p>
-<p>执行div后ax的高低位就可以后后续的计算了</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -556,6 +646,8 @@
     <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   
     <li><a href="/categories/汇编/">汇编</a><small>1</small></li>
+  
+    <li><a href="/categories/网络/">网络</a><small>1</small></li>
   
   </ul>
 </div>
@@ -613,6 +705,8 @@
     <li><a href="/tags/爬虫/">爬虫</a><small>1</small></li>
   
     <li><a href="/tags/生活/">生活</a><small>1</small></li>
+  
+    <li><a href="/tags/网络/">网络</a><small>1</small></li>
   
     <li><a href="/tags/高精度/">高精度</a><small>3</small></li>
   

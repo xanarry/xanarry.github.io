@@ -51,6 +51,48 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-07-13T08:16:47.000Z"><a href="/2015/07/13/汇编除法运算/">2015-07-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/07/13/汇编除法运算/">汇编除法运算</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>汇编的除法指令是”div”, 实际上相对高级语言的除法, 汇编指令的div是同时得到商和余数的, 结果分别保存在不同的寄存器.</p>
+<ol>
+<li>除数: 有8位和16位两种, 在一个寄存器或者内存单元中</li>
+<li>被除数: 如果除数是8位则被除数为16位, 默认放在AX中, 如果除数是16位, 则被除数为32位, 默认高位放在DX, 低位放在AX</li>
+<li>结果: 如果除数是8位, 那么执行div后, 余数存放在AH, 商存放在AL中; 如果除数是16位, 那么AX保存商, DX保存余数<br>注意: 被除数的位数一定是除数的两倍</li>
+</ol>
+<p>指令格式:<br>1: div registre<br>2: div 内存单元</p>
+<p>一个除数为8位的例子(96除以10)</p>
+<p>mov ax 60h ;dec 96 = hex 60<br>mov bh 0ah ;dec 10 = hex ah, 代码中数字起始位位字母要在最前加0<br>div bh     ;执行后ax为:0609, 即高位ah=06(余数), 低位al=09(商)</p>
+<p>执行div后ax的高低位就可以后后续的计算了</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-07-13T08:15:54.000Z"><a href="/2015/07/13/汇编寄存器概要/">2015-07-13</a></time>
       
       
@@ -389,41 +431,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-06-04T04:08:04.000Z"><a href="/2015/06/04/修改Ubuntu的默认启动项/">2015-06-04</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/06/04/修改Ubuntu的默认启动项/">修改Ubuntu的默认启动项</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>在windows机器上安装Ubuntu系统后, 开机启动会默认启动Ubuntu, 可以修改过<strong>grub.cfg</strong>文件设置默认启动windows.<br>打开终端:<br>输入: <em>sudo gedit /boot/grub/grub.cfg</em></p>
-<p>按下: Ctrl+F, 搜索”default”, 找到<em>default=0</em>的位置, 将0该为4, 即最后一个启动项windows, 然后再搜索”timeout”, 将所有”timeout=10”中的10全部改为1</p>
-<p>保存并退出gedit, 重启系统即可</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -478,6 +485,8 @@
     <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   
     <li><a href="/categories/汇编/">汇编</a><small>1</small></li>
+  
+    <li><a href="/categories/网络/">网络</a><small>1</small></li>
   
   </ul>
 </div>
@@ -535,6 +544,8 @@
     <li><a href="/tags/爬虫/">爬虫</a><small>1</small></li>
   
     <li><a href="/tags/生活/">生活</a><small>1</small></li>
+  
+    <li><a href="/tags/网络/">网络</a><small>1</small></li>
   
     <li><a href="/tags/高精度/">高精度</a><small>3</small></li>
   
