@@ -51,6 +51,46 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-05-07T13:11:27.000Z"><a href="/2015/05/07/最大公约数的新理解/">2015-05-07</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/07/最大公约数的新理解/">最大公约数的新理解</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天在做一道题时要用到最大公约数,数据据范围是任意整数,也就是说正负数,包括0都要能正确无误的的计算出最大公约数,我才突然发现我之前求公约数函数有很大的局限性,即只能求两个正整数的公约数,我之前的方法就是始终用大的数去除以小的数,然后不断求余迭代,直到余数为0,然后输出公约数.</p>
+<p>这是我之前求公约数的方法</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (a &lt; b)</span><br><span class="line">        swap(a, b);</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">int</span> t = a % b)</span><br><span class="line">    &#123;</span><br><span class="line">        a = b;</span><br><span class="line">        b = t;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从代码就能看出, 一旦遇到0, 程序就不能正常运行了.参考了一下他人的代码才发现比较大小的过程是没有必要的, 因为在一次循环后大小顺序已经交换了.假如现在求12和16的公约数, 首先是执行<font color="0080ff">12/16=0…12</font>, 然后迭代一次, 自然就得到了<font color="0080ff">16/12=1…4</font>的过程.处理这个问题还有一个更重要的地方就是如果遇到其中一个数0, 那么公约数就是另外一个, 因为0是不能作为约数的, 所有循环中的条件就应该检查被除数b是否为0, 而不是检查a除以b的余数是否为0.</p>
+<p>综上, 得到了新的公约数算法,以下分别是循环版和递归版的算法:</p>
+<h3 id="循环版本">循环版本</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> t = a % b;</span><br><span class="line">        a = b;</span><br><span class="line">        b = t;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="递归版本(短小精悍的代码)">递归版本(短小精悍的代码)</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> !b ? a : gcd(b, a % b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就能计算任意两个整数的公约数, 之前写的代码简直太挫了…</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-05-02T05:35:14.000Z"><a href="/2015/05/02/sublime-text-3-注册码/">2015-05-02</a></time>
       
       
@@ -223,7 +263,7 @@ B98FC99C 8FAC73EE D<span class="number">2B95564</span> DF450523
   
     <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
   
-    <li><a href="/categories/MySQL/">MySQL</a><small>1</small></li>
+    <li><a href="/categories/MySQL/">MySQL</a><small>2</small></li>
   
     <li><a href="/categories/Operating-System/">Operating System</a><small>1</small></li>
   
@@ -254,7 +294,7 @@ B98FC99C 8FAC73EE D<span class="number">2B95564</span> DF450523
   
     <li><a href="/tags/C/">C++</a><small>1</small></li>
   
-    <li><a href="/tags/MySQL/">MySQL</a><small>3</small></li>
+    <li><a href="/tags/MySQL/">MySQL</a><small>4</small></li>
   
     <li><a href="/tags/c-高精度/">c++高精度</a><small>1</small></li>
   

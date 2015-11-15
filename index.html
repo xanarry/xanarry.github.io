@@ -51,6 +51,48 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-11-15T05:36:00.000Z"><a href="/2015/11/15/mysql的插入-查询-修改和删除/">2015-11-15</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/11/15/mysql的插入-查询-修改和删除/">mysql的插入,查询,修改和删除</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="insert语句(插入)">insert语句(插入)</h1><p>insert语句比较简单, 其语法为:<br>    insert into 表名 (属性1, 属性2, 属性3, …) values (值1, 值2, 值3, …);<br>或者<br>    insert into 表名 values (值1, 值2, 值3, …);<br>两者的区别是第一种在插入时, 每个值和属性一一对应插入, 第二种插入则将每个值依次插入到表中的每个属性上(从第一个到最后一个), 如果值的数量小于属性的数量, 那么后面的属性将会被空闲 </p>
+<h1 id="SELECT语句(查询)">SELECT语句(查询)</h1><p>首先看看MySQL SELECT语句的官方语法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT&#10;    [ALL | DISTINCT | DISTINCTROW ]&#10;    [HIGH_PRIORITY]&#10;    [STRAIGHT_JOIN]&#10;    [SQL_SMALL_RESULT] [SQL_BIG_RESULT] [SQL_BUFFER_RESULT]&#10;    [SQL_CACHE | SQL_NO_CACHE] [SQL_CALC_FOUND_ROWS]&#10;    SELECT_expr [, SELECT_expr ...]&#10;    [FROM table_references&#10;    [PARTITION partition_list]&#10;    [WHERE where_condition]&#10;    [GROUP BY &#123;col_name | expr | position&#125;&#10;    [ASC | DESC], ... [WITH ROLLUP]]&#10;    [HAVING where_condition]&#10;    [ORDER BY &#123;col_name | expr | position&#125;&#10;    [ASC | DESC], ...]&#10;    [LIMIT &#123;[offset,] row_count | row_count OFFSET offset&#125;]&#10;    [PROCEDURE procedure_name(argument_list)]&#10;    [INTO OUTFILE &#39;file_name&#39;&#10;    [CHARACTER SET charset_name]&#10;    export_options&#10;    | INTO DUMPFILE &#39;file_name&#39;&#10;    | INTO var_name [, var_name]]&#10;    [FOR UPDATE | LOCK IN SHARE MODE]]</span><br></pre></td></tr></table></figure></p>
+<p>归纳SELECT的用法, 其语法结构为<br>    SELECT 属性列表 FROM 表名 WHERE 条件语句<br>属性列表可以是任意多个, 使用*<em>\</em>表示选择全部属性<br>表名为单表或者多表联合的结果<br>在条件语句中,可以对查询结果进行筛选,排序等操作</p>
+<p>SELECT的更名运算<br>对属性重命名<br>    SELECT oldname1 AS newname1, oldname2 AS newname2 FROM table;<br>将会下显示结果中使用新的名字代替旧的名字, 其中AS不是必须的, 可以直接写成oldname newname</p>
+<p>对表重命名:<br>    SELECT T.ID, T.name FROM user AS T;</p>
+<p>对选择结果排序使用ORDER BY 属性名1 排序方式(ASC|DESC), 属性名2 排序方式(ASC|DESC)<br>    SELECT * FROM student ORDER BY score DESC, name ASC;<br>表示对student按分数降序排序, 按名字升序排序</p>
+<p>SELECT查询数据时的默认参数为 ALL, 即,如果查询结果中有重复的元祖, 默认会把全部元组输出, 如果不想有重复元组输出, 在SELECT 后面加一个关键词<em>distinct</em>就可以了<br>    SELECT DISTINCT sex FROM student;</p>
+<h1 id="UPDATE语句(修改)">UPDATE语句(修改)</h1><p>UPDATE 表名 SET 属性名1=新值, 属性名2=新值 WHERE 约束条件</p>
+<h1 id="DELETE语句(删除)">DELETE语句(删除)</h1><pre><code><span class="operator"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> 表名 <span class="keyword">WHERE</span> 条件</span>
+</code></pre><p>如果DELETE语句没有加条件, 将会删除表中的所有数据</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-10-05T01:56:46.000Z"><a href="/2015/10/05/jsp-servlet接收中文参数乱码的问题/">2015-10-05</a></time>
       
       
@@ -422,41 +464,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-07-13T08:12:41.000Z"><a href="/2015/07/13/使用位运算转换大小写/">2015-07-13</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/07/13/使用位运算转换大小写/">使用位运算转换大小写</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>大小写字母的ASCII码差值为32, 32是2的5次方, 因此如果将ASCII的值使用二进制编码表示会不会有奇特的关系呢?<br>看看如下列表<br>ch  dec  bin            ch   dec   bin<br>a   97   0110 0001  -&gt;  A    65    0100 0010<br>b   98   0110 0010  -&gt;  B    66    0100 0010<br>c   99   0110 0011  -&gt;  C    67    0100 0011<br>d   100  0110 0100  -&gt;  D    68    0100 0100<br>e   101  0110 0101  -&gt;  E    69    0100 0101<br>从列表可以看出, 二进制ASCII码的低四位是一致的, 唯一的差别就在于第5位(从0开始数, 2的5次方正好是32)<br>小写字母的是1, 大写字母的是0, </p>
-<p>于是我们在编程中可以使用为运算直接将这一位置为1或者置为0实现大小写的转换, 所以, 将大小字母转换为小写字母即保留其他位, 使用”或0010 0000”(代码即”!32”)实现转换, 同样, 如果要将第小写转为大小, 用”与1101 1111”(代码即”&amp;-33”)把5位设为0即可.</p>
-<p>以下给的c++使用以上方法转换的代码片段<br>char ch = ‘A’;//定义ch的的值为’A’<br>ch != 32;//将ch转换为小写’a’<br>ch &amp;= -33;//将小写的’a’转换为’A’</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -488,7 +495,7 @@
   
     <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
   
-    <li><a href="/categories/MySQL/">MySQL</a><small>1</small></li>
+    <li><a href="/categories/MySQL/">MySQL</a><small>2</small></li>
   
     <li><a href="/categories/Operating-System/">Operating System</a><small>1</small></li>
   
@@ -519,7 +526,7 @@
   
     <li><a href="/tags/C/">C++</a><small>1</small></li>
   
-    <li><a href="/tags/MySQL/">MySQL</a><small>3</small></li>
+    <li><a href="/tags/MySQL/">MySQL</a><small>4</small></li>
   
     <li><a href="/tags/c-高精度/">c++高精度</a><small>1</small></li>
   
