@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>python爬虫抓取新华网新闻并自动生成word文档 | xanarry&#39;s</title>
+  <meta name="author" content="xanarry">
+  
+  <meta name="description" content="xanarry&#39;s blog">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="python爬虫抓取新华网新闻并自动生成word文档"/>
+  <meta property="og:site_name" content="xanarry&#39;s"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="xanarry&#39;s" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">xanarry&#39;s</a></h1>
+  <h2><a href="/">创造就是一个构造过程的过程!</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-11-15T06:08:35.000Z"><a href="/2015/11/15/python爬虫抓取新华网新闻并自动生成word文档/">2015-11-15</a></time>
+      
+      
+  
+    <h1 class="title">python爬虫抓取新华网新闻并自动生成word文档</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>认识一个在学校广播电台的学妹, 听她说她们每天都要在网上找新闻, 国际, 国内, 和校内各五篇, 然后将其做成word文档打印, 个人感觉这种活非常浪费时间, 应该写个程序帮我们自动完成. 后来没事的时候就写了这个python程序实现这个功能.</p>
+<p>程序用python3.4编写, 使用到了urllib, 加另外两个三方库, BeautifulSoup(解析网页, 很好用的一个工具)和python-docx(生成word文档,这个库功能还不是特别强大)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">from</span> docx <span class="keyword">import</span> Document</span><br><span class="line"><span class="keyword">from</span> docx.shared <span class="keyword">import</span> Pt</span><br><span class="line"><span class="keyword">from</span> docx.enum.text <span class="keyword">import</span> WD_ALIGN_PARAGRAPH</span><br><span class="line"></span><br><span class="line">national = <span class="string">"国内"</span></span><br><span class="line">international = <span class="string">"国际"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_html_soup</span><span class="params">(url)</span>:</span><span class="comment">#获取解编码后的HTML</span></span><br><span class="line">    html = <span class="keyword">None</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        response = urllib.request.urlopen(url, timeout = <span class="number">10</span>)</span><br><span class="line">        html = response.read().decode(encoding = <span class="string">"utf8"</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        print(e, <span class="string">"please check your network situation"</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line">    soup = BeautifulSoup(str(html), <span class="string">"lxml"</span>)</span><br><span class="line">    <span class="keyword">return</span> soup</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">page_url</span><span class="params">(url, page_num)</span>:</span><span class="comment">#生成带页面的URL</span></span><br><span class="line">    <span class="keyword">if</span> page_num == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> url</span><br><span class="line">    index = url.rfind(<span class="string">"."</span>)</span><br><span class="line">    <span class="keyword">return</span> url[<span class="number">0</span> : index] + <span class="string">"_"</span> + str(page_num) + url[index : ]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_title_link</span><span class="params">(url, pattern)</span>:</span><span class="comment">#获取新闻的标题和正文链接</span></span><br><span class="line">    soup = get_html_soup(url)</span><br><span class="line">    news_link = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    scroll_list = BeautifulSoup(str(soup.find(<span class="string">"div"</span>, attrs = pattern)), <span class="string">"lxml"</span>)</span><br><span class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> scroll_list.find_all(<span class="string">"a"</span>):</span><br><span class="line">        <span class="keyword">if</span> len(link.get_text().strip()) &gt; <span class="number">0</span> <span class="keyword">and</span> link.get(<span class="string">"href"</span>).find(<span class="string">"http"</span>) != -<span class="number">1</span>:</span><br><span class="line">            news_link[link.get_text()] = link.get(<span class="string">'href'</span>)</span><br><span class="line">    <span class="keyword">return</span> news_link</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_news_body</span><span class="params">(url)</span>:</span><span class="comment">#抓取新闻主体内容</span></span><br><span class="line">    first = <span class="keyword">True</span></span><br><span class="line">    content_text = []</span><br><span class="line">    page_num = <span class="number">1</span></span><br><span class="line">    article_div = <span class="string">""</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#使用循环处理有分页的新闻</span></span><br><span class="line">    <span class="keyword">while</span> first == <span class="keyword">True</span> <span class="keyword">or</span> article_div.find(<span class="string">"下一页&lt;/a&gt;"</span>) != -<span class="number">1</span>:</span><br><span class="line">        soup = get_html_soup(page_url(url, page_num))</span><br><span class="line">        <span class="keyword">if</span> soup == <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">        article_div = str(soup.find(<span class="string">"div"</span>, attrs = &#123;<span class="string">"class"</span>: <span class="string">"article"</span>&#125;))</span><br><span class="line">        soup = BeautifulSoup(str(article_div), <span class="string">"lxml"</span>)</span><br><span class="line">        <span class="keyword">for</span> content <span class="keyword">in</span> soup.find_all(<span class="string">"p"</span>):</span><br><span class="line">            <span class="keyword">if</span> len(content.get_text().strip()) &gt; <span class="number">0</span>:</span><br><span class="line">                content_text.append(<span class="string">"    "</span> + content.get_text().strip())</span><br><span class="line">        page_num += <span class="number">1</span></span><br><span class="line">        first = <span class="keyword">False</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> content_text:</span><br><span class="line">        <span class="keyword">if</span> x == <span class="string">"    None"</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line">    <span class="keyword">return</span> content_text</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">clean_chinese_character</span><span class="params">(text)</span>:</span></span><br><span class="line">    <span class="string">'''处理特殊的中文符号,将其全部替换为'-' 否则在保存时Windows无法将有的中文符号作为路径'''</span></span><br><span class="line">    chars = chars = [<span class="string">"/"</span>, <span class="string">"\""</span>, <span class="string">"'"</span>, <span class="string">"·"</span>, <span class="string">"。"</span>,<span class="string">"？"</span>, <span class="string">"！"</span>, <span class="string">"，"</span>, <span class="string">"、"</span>, <span class="string">"；"</span>, <span class="string">"："</span>, <span class="string">"‘"</span>, <span class="string">"’"</span>, <span class="string">"“"</span>, <span class="string">"”"</span>, <span class="string">"（"</span>, <span class="string">"）"</span>, <span class="string">"…"</span>, <span class="string">"–"</span>, <span class="string">"．"</span>, <span class="string">"《"</span>, <span class="string">"》"</span>];</span><br><span class="line">    new_text = <span class="string">""</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(text)):</span><br><span class="line">        <span class="keyword">if</span> text[i] <span class="keyword">not</span> <span class="keyword">in</span> chars:</span><br><span class="line">            new_text += text[i]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            new_text += <span class="string">"_"</span></span><br><span class="line">    <span class="keyword">return</span> new_text;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_docx</span><span class="params">(news_type, title, content)</span>:</span></span><br><span class="line">    <span class="string">'''这里使用python-docx库将新闻的内容生成word文件'''</span></span><br><span class="line">    document = Document()</span><br><span class="line">    paragraph = document.add_paragraph(title)</span><br><span class="line">    paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER</span><br><span class="line">    paragraph.bold = <span class="keyword">True</span></span><br><span class="line">   </span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> content:</span><br><span class="line">        paragraph = document.add_paragraph(x)</span><br><span class="line"></span><br><span class="line">    style = paragraph.style</span><br><span class="line">    font = style.font</span><br><span class="line">    font.size = Pt(<span class="number">15</span>)</span><br><span class="line">    font.name = <span class="string">"consolas"</span></span><br><span class="line"></span><br><span class="line">    name = news_type + <span class="string">"-"</span> + clean_chinese_character(title) + <span class="string">".docx"</span></span><br><span class="line">    document.save(news_type + <span class="string">"/"</span> + name)</span><br><span class="line"></span><br><span class="line"><span class="comment">########################################################################</span></span><br><span class="line">national_news = <span class="string">"http://www.news.cn/politics/"</span></span><br><span class="line">national_news_pattern = &#123;<span class="string">"id"</span>: <span class="string">"hideData0"</span>&#125;</span><br><span class="line"></span><br><span class="line">international_news = <span class="string">"http://www.news.cn/world/"</span></span><br><span class="line">international_news_pattern = &#123;<span class="string">"class"</span>: <span class="string">"partR domPC"</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#删除旧目录</span></span><br><span class="line">print(<span class="string">"deleting old dir"</span>)</span><br><span class="line"><span class="keyword">if</span> os.path.exists(international):</span><br><span class="line">    shutil.rmtree(international)</span><br><span class="line"><span class="keyword">if</span> os.path.exists(national):</span><br><span class="line">    shutil.rmtree(national)</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建新目录</span></span><br><span class="line">print(<span class="string">"creating dir: "</span>, international)</span><br><span class="line">os.mkdir(international)</span><br><span class="line">print(<span class="string">"creating dir: "</span>, national)</span><br><span class="line">os.mkdir(national)</span><br><span class="line"></span><br><span class="line"><span class="comment">#获取新闻的标题和链接</span></span><br><span class="line">international_news_list = get_title_link(international_news, international_news_pattern)</span><br><span class="line">print(<span class="string">"\ngetting international news content"</span>)</span><br><span class="line"><span class="comment">#获取新闻的内容主体并写入文件</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> international_news_list:</span><br><span class="line">    paras = get_news_body(international_news_list[x])</span><br><span class="line">    <span class="keyword">if</span> paras != <span class="keyword">None</span> <span class="keyword">and</span> len(paras) &gt; <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">"writing:"</span>, clean_chinese_character(x), international_news_list[x])</span><br><span class="line">        create_docx(international, x, paras)</span><br><span class="line"></span><br><span class="line">national_news_list = get_title_link(national_news, national_news_pattern);</span><br><span class="line">print(<span class="string">"\ngetting national news content"</span>)</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> national_news_list:</span><br><span class="line">    paras = get_news_body(national_news_list[x])</span><br><span class="line">    <span class="keyword">if</span> paras != <span class="keyword">None</span> <span class="keyword">and</span> len(paras) &gt; <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">"writing:"</span>, clean_chinese_character(x), national_news_list[x])</span><br><span class="line">        create_docx(national, x, paras)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"All done, have a nice day"</span>)</span><br></pre></td></tr></table></figure>
+<p>代码的核心是beautifulsoup库的使用, 这的确是个很好用的工具, 大家有兴趣应该学学</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Python/">Python</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/爬虫/">爬虫</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/C/">C</a><small>1</small></li>
+  
+    <li><a href="/categories/CPP/">CPP</a><small>3</small></li>
+  
+    <li><a href="/categories/Hexo/">Hexo</a><small>2</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>1</small></li>
+  
+    <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
+  
+    <li><a href="/categories/MySQL/">MySQL</a><small>2</small></li>
+  
+    <li><a href="/categories/Operating-System/">Operating System</a><small>1</small></li>
+  
+    <li><a href="/categories/Other/">Other</a><small>1</small></li>
+  
+    <li><a href="/categories/Python/">Python</a><small>11</small></li>
+  
+    <li><a href="/categories/jsp/">jsp</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>2</small></li>
+  
+    <li><a href="/categories/sublime-text/">sublime text</a><small>2</small></li>
+  
+    <li><a href="/categories/windows/">windows</a><small>1</small></li>
+  
+    <li><a href="/categories/位运算/">位运算</a><small>1</small></li>
+  
+    <li><a href="/categories/汇编/">汇编</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/C/">C++</a><small>1</small></li>
+  
+    <li><a href="/tags/MySQL/">MySQL</a><small>4</small></li>
+  
+    <li><a href="/tags/c-高精度/">c++高精度</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>3</small></li>
+  
+    <li><a href="/tags/jsp/">jsp</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda表达式/">lambda表达式</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>2</small></li>
+  
+    <li><a href="/tags/other/">other</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>2</small></li>
+  
+    <li><a href="/tags/python字典/">python字典</a><small>1</small></li>
+  
+    <li><a href="/tags/sublime-text/">sublime text</a><small>2</small></li>
+  
+    <li><a href="/tags/test/">test</a><small>1</small></li>
+  
+    <li><a href="/tags/位运算/">位运算</a><small>2</small></li>
+  
+    <li><a href="/tags/其他/">其他</a><small>1</small></li>
+  
+    <li><a href="/tags/命令行/">命令行</a><small>1</small></li>
+  
+    <li><a href="/tags/字符串/">字符串</a><small>1</small></li>
+  
+    <li><a href="/tags/学习/">学习</a><small>1</small></li>
+  
+    <li><a href="/tags/排序/">排序</a><small>1</small></li>
+  
+    <li><a href="/tags/汇编/">汇编</a><small>1</small></li>
+  
+    <li><a href="/tags/爬虫/">爬虫</a><small>1</small></li>
+  
+    <li><a href="/tags/生活/">生活</a><small>1</small></li>
+  
+    <li><a href="/tags/高精度/">高精度</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 xanarry
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'xanarry';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?05b8c86ae6be8be1243fc590c74bfde1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</body>
+</html>
