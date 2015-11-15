@@ -255,9 +255,11 @@ mysql&gt; create function sum100()
     </header>
     <div class="entry">
       
-        <h2 id="导入数据（注意sql文件的路径）">导入数据（注意sql文件的路径）</h2><h3 id="方法一:">方法一:</h3><p>登陆数据库并选择库,然后执行<br>    mysql&gt;source /home/abc/abc.sql;</p>
-<h3 id="方法二：">方法二：</h3><p>mysql -u用户名 -p密码 数据库名 &lt; 数据库名.sql<br>    mysql -uabc_f -p abc &lt; abc.sql</p>
-<h2 id="导出sql">导出sql</h2><h3 id="1:导出数据和表结构：">1:导出数据和表结构：</h3><pre><code>mysqldump -u用户名 -p密码 数据库名 &gt; 数据库名<span class="class">.sql</span>
+        <h2 id="导入数据（注意sql文件的路径）">导入数据（注意sql文件的路径）</h2><h3 id="方法一:">方法一:</h3><p>登陆数据库并选择库,然后执行</p>
+<pre><code>mysql&gt;<span class="keyword">source</span> /home/<span class="keyword">abc</span>/<span class="keyword">abc</span>.sql;
+</code></pre><h3 id="方法二：">方法二：</h3><pre><code>mysql -u用户名 -p密码 数据库名 &lt; 数据库名<span class="class">.sql</span>
+mysql -uabc_f -<span class="tag">p</span> abc &lt; abc.sql
+</code></pre><h2 id="导出sql">导出sql</h2><h3 id="1:导出数据和表结构：">1:导出数据和表结构：</h3><pre><code>mysqldump -u用户名 -p密码 数据库名 &gt; 数据库名<span class="class">.sql</span>
 mysqldump -u root -<span class="tag">p</span> dbname &gt; dbname.sql
 </code></pre><h3 id="2:只导出表结构">2:只导出表结构</h3><pre><code>mysqldump -<span class="keyword">u</span>用户名 -p密码 -<span class="keyword">d</span> 数据库名 &gt; 数据库名.sql
 mysqldump -<span class="keyword">u</span> root -p -<span class="keyword">d</span> dbname &gt; dbname.sql
