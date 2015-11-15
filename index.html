@@ -102,7 +102,11 @@
 <p>两者的区别是第一种在插入时, 每个值和属性一一对应插入, 第二种插入则将每个值依次插入到表中的每个属性上(从第一个到最后一个), 如果值的数量小于属性的数量, 那么后面的属性将会被空闲 </p>
 <h1 id="SELECT语句(查询)">SELECT语句(查询)</h1><p>首先看看MySQL SELECT语句的官方语法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT&#10;    [ALL | DISTINCT | DISTINCTROW ]&#10;    [HIGH_PRIORITY]&#10;    [STRAIGHT_JOIN]&#10;    [SQL_SMALL_RESULT] [SQL_BIG_RESULT] [SQL_BUFFER_RESULT]&#10;    [SQL_CACHE | SQL_NO_CACHE] [SQL_CALC_FOUND_ROWS]&#10;    SELECT_expr [, SELECT_expr ...]&#10;    [FROM table_references&#10;    [PARTITION partition_list]&#10;    [WHERE where_condition]&#10;    [GROUP BY &#123;col_name | expr | position&#125;&#10;    [ASC | DESC], ... [WITH ROLLUP]]&#10;    [HAVING where_condition]&#10;    [ORDER BY &#123;col_name | expr | position&#125;&#10;    [ASC | DESC], ...]&#10;    [LIMIT &#123;[offset,] row_count | row_count OFFSET offset&#125;]&#10;    [PROCEDURE procedure_name(argument_list)]&#10;    [INTO OUTFILE &#39;file_name&#39;&#10;    [CHARACTER SET charset_name]&#10;    export_options&#10;    | INTO DUMPFILE &#39;file_name&#39;&#10;    | INTO var_name [, var_name]]&#10;    [FOR UPDATE | LOCK IN SHARE MODE]]</span><br></pre></td></tr></table></figure></p>
 <p>归纳SELECT的用法, 其语法结构为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT &#23646;&#24615;&#21015;&#34920; FROM &#34920;&#21517; WHERE &#26465;&#20214;&#35821;&#21477;</span><br></pre></td></tr></table></figure></p>
-<p>属性列表可以是任意多个, 使用*<em>\</em>表示选择全部属性<br>表名为单表或者多表联合的结果<br>在条件语句中,可以对查询结果进行筛选,排序等操作</p>
+<ol>
+<li>属性列表可以是任意多个, 使用*<em>\</em>表示选择全部属性</li>
+<li>表名为单表或者多表联合的结果</li>
+<li>在条件语句中,可以对查询结果进行筛选,排序等操作</li>
+</ol>
 <p>SELECT的更名运算<br>对属性重命名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT oldname1 AS newname1, oldname2 AS newname2 FROM table;</span><br></pre></td></tr></table></figure></p>
 <p>将会下显示结果中使用新的名字代替旧的名字, 其中AS不是必须的, 可以直接写成oldname newname</p>
 <p>对表重命名:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT T.ID, T.name FROM user AS T;</span><br></pre></td></tr></table></figure></p>
