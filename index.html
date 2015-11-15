@@ -100,8 +100,8 @@
 </code></pre><font color="red"> 修改视图中的数据是允许, 并且会写入到原始表中</font>
 
 <h2 id="查看视图">查看视图</h2><pre><code><span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> information_schema.VIEWS;</span>
-</code></pre><h3 id="单是对视图更新将会更新实表中的数据">单是对视图更新将会更新实表中的数据</h3><pre><code>这是一个连接person和salary的视图
-<span class="header">mysql&gt; select * from salary_view;
+</code></pre><h3 id="单是对视图更新将会更新实表中的数据">单是对视图更新将会更新实表中的数据</h3><p>这是一个连接person和salary的视图</p>
+<pre><code><span class="header">mysql&gt; select * from salary_view;
 +------+-------+--------+</span>
 <span class="header">| pid  | pname | salary |
 +------+-------+--------+</span>
@@ -109,14 +109,12 @@
 <span class="header">| 666  | jerry |   4231 |
 +------+-------+--------+</span>
 2 rows in set (0.00 sec)
-
-我们对视图进行更新
-mysql&gt; update salary<span class="emphasis">_view set pname = 'xxxxxx' where pname="tom";
-Query OK, 1 row affected (0.00 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
-
-</span>再次查看视图的结果, 可以看出视图的数据发生了改变
-<span class="header">mysql&gt; select * from salary_view;
+</code></pre><p>我们对视图进行更新</p>
+<pre><code>mysql&gt; update salary_view set pname = <span class="string">'xxxxxx'</span> where pname=<span class="string">"tom"</span>;
+Query OK, <span class="number">1</span> row affected (<span class="number">0.00</span> sec)
+Rows <span class="string">matched:</span> <span class="number">1</span>  <span class="string">Changed:</span> <span class="number">1</span>  <span class="string">Warnings:</span> <span class="number">0</span>
+</code></pre><p>再次查看视图的结果, 可以看出视图的数据发生了改变</p>
+<pre><code><span class="header">mysql&gt; select * from salary_view;
 +------+--------+--------+</span>
 <span class="header">| pid  | pname  | salary |
 +------+--------+--------+</span>
@@ -124,9 +122,8 @@ Rows matched: 1  Changed: 1  Warnings: 0
 <span class="header">| 666  | jerry  |   4231 |
 +------+--------+--------+</span>
 2 rows in set (0.00 sec)
-
-那么原始表person呢, 很明显出现的xxxxxx那一个值, 
-<span class="header">mysql&gt; select * from person;
+</code></pre><p>那么原始表person呢, 很明显出现的xxxxxx那一个值</p>
+<pre><code><span class="header">mysql&gt; select * from person;
 +------+---------+</span>
 <span class="header">| id   | name    |
 +------+---------+</span>
