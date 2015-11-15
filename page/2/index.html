@@ -51,6 +51,63 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-11-15T06:36:20.000Z"><a href="/2015/11/15/mysql数据库和表的操作/">2015-11-15</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/11/15/mysql数据库和表的操作/">mysql数据库和表的操作</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="创建数据库">创建数据库</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE databasename DEFAULT CHARSET=&#23383;&#31526;&#38598;;</span><br></pre></td></tr></table></figure>
+<h2 id="选择数据库">选择数据库</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USE databasename;</span><br></pre></td></tr></table></figure>
+<h1 id="创建表">创建表</h1><p>语法如下:   </p>
+<pre><code><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tablename(
+    属性名 类型 约束条件,
+    属性名 类型 约束条件,
+    ...
+) 整个表的约束条件;</span>
+</code></pre><p>一个具体的例子:(以下创建一个学生表, 主键为id, )</p>
+<pre><code><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> student (
+        id <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT, #设置自增
+        name <span class="built_in">VARCHAR</span>(<span class="number">10</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,
+        sex <span class="built_in">CHAR</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,
+        age <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,
+        addr <span class="built_in">VARCHAR</span>(<span class="number">100</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,
+        <span class="keyword">no</span> <span class="built_in">CHAR</span>(<span class="number">10</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,
+        <span class="keyword">PRIMARY</span> <span class="keyword">KEY</span>(id) #设置主键
+        <span class="keyword">foreign</span> <span class="keyword">key</span> id <span class="keyword">references</span> 引用表名(id) <span class="keyword">on</span> <span class="keyword">delete</span> casecade
+)   DUFAULT <span class="keyword">CHARSET</span>=utf8 <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span>;</span> #设置表的相关配置, 比如此处设置编码使用utf8, 使用innodb引擎
+</code></pre><p>创建表的另外两个方法:</p>
+<h3 id="假如我们要创建一个和已有表一模一样的表">假如我们要创建一个和已有表一模一样的表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table new_table_name like a_exist_table_name;</span><br></pre></td></tr></table></figure>
+<h3 id="通过select的结果创建一个含有数据的表(这个表通常作为临时使用)">通过select的结果创建一个含有数据的表(这个表通常作为临时使用)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table new_table_name as (select * from a_table_name);</span><br></pre></td></tr></table></figure>
+<h2 id="查看表中的定义的所有属性和其类型">查看表中的定义的所有属性和其类型</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DESC &#34920;&#21517;</span><br></pre></td></tr></table></figure>
+<p><font color="red">关于创建表是的完整性约束mysql并不支持check, 虽然将check写入语句会被解析, 但是会被所有引擎忽略掉, 这是官方的说明. 如果需要实现类似的功能可以使用触发器实现,default 关键词是可用的, 注意default后面没有等号, 直接跟默认值<font></font></font></p>
+<h1 id="修改表结构">修改表结构</h1><h2 id="1-删除表">1.删除表</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP tablename</span><br></pre></td></tr></table></figure>
+<h2 id="2-更改表的结构">2.更改表的结构</h2><h3 id="使用”alter”语句更表的结构和属性">使用”alter”语句更表的结构和属性</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE tablename ADD (&#23646;&#24615;&#21517; &#25968;&#25454;&#31867;&#22411; &#32422;&#26463;&#26465;&#20214; first or after &#23646;&#24615;&#21517;) or &#32034;&#24341; or &#22806;&#38190;     #&#25554;&#20837;&#26032;&#30340;&#23646;&#24615;&#10;ALTER TABLE tablename DROP &#23646;&#24615;&#21517; or &#20027;&#38190; or &#32034;&#24341; or &#22806;&#38190; #&#21024;&#20854;&#20013;&#30340;&#19968;&#39033;&#23646;&#24615;&#10;ALTER TABLE tablename MODIFY &#23646;&#24615;&#21517; &#26032;&#30340;&#25968;&#25454;&#31867;&#22411;&#10;alter table tablename change &#23646;&#24615;&#21517;, &#26032;&#30340;&#23646;&#24615;&#21517;, &#26032;&#30340;&#25968;&#25454;&#31867;&#22411;&#10;#&#37325;&#21629;&#21517;&#34920;&#10;ALTER TABLE tablename RENAME AS &#26032;&#34920;&#21517;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-11-15T06:08:35.000Z"><a href="/2015/11/15/python爬虫抓取新华网新闻并自动生成word文档/">2015-11-15</a></time>
       
       
@@ -445,38 +502,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-07-13T08:15:54.000Z"><a href="/2015/07/13/汇编寄存器概要/">2015-07-13</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/07/13/汇编寄存器概要/">汇编寄存器概要</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -528,7 +553,7 @@
   
     <li><a href="/categories/位运算/">位运算</a><small>1</small></li>
   
-    <li><a href="/categories/数据库/">数据库</a><small>2</small></li>
+    <li><a href="/categories/数据库/">数据库</a><small>3</small></li>
   
     <li><a href="/categories/汇编/">汇编</a><small>1</small></li>
   
@@ -555,7 +580,7 @@
   
     <li><a href="/tags/lambda表达式/">lambda表达式</a><small>1</small></li>
   
-    <li><a href="/tags/linux/">linux</a><small>2</small></li>
+    <li><a href="/tags/linux/">linux</a><small>3</small></li>
   
     <li><a href="/tags/other/">other</a><small>1</small></li>
   

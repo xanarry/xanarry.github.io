@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>字符串 | xanarry&#39;s</title>
+  <title>linux安装mysql c语言开发库 | xanarry&#39;s</title>
   <meta name="author" content="xanarry">
   
   <meta name="description" content="xanarry&#39;s blog">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="linux安装mysql c语言开发库"/>
   <meta property="og:site_name" content="xanarry&#39;s"/>
 
   
@@ -44,25 +44,61 @@
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-<h2 class="archive-title tag">字符串</h2>
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-11-15T08:30:16.000Z"><a href="/2015/11/15/linux安装mysql-c语言开发库/">2015-11-15</a></time>
+      
+      
+  
+    <h1 class="title">linux安装mysql c语言开发库</h1>
+  
 
+    </header>
+    <div class="entry">
+      
+        <p>默认可能没有安装mysql的链接库, 使用下面语句安装<br>    sudo apt-get install libmysqlclient-dev</p>
+<p>使用下面两条命令查看库文件的位置和头文件的位置<br>    mysql_config —libs<br>    mysql_config —cflags</p>
+<p>然后就可以使用<br>    gcc in.c -o -lmysqlclient<br>编译</p>
+<p>使用集成开发工具要添加库的路径到工具上</p>
 
-  <div class="archive">
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2015-05-26T13:26:19.000Z"><a href="/2015/05/26/C语言中字符串的复制与memcpy函数/">2015-05-26</a></time>
-            
-              <h1 class="title"><a href="/2015/05/26/C语言中字符串的复制与memcpy函数/">C语言中字符串的复制与memcpy函数</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/数据库/">数据库</a>
   </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/linux/">linux</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
@@ -190,7 +226,7 @@ var disqus_shortname = 'xanarry';
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
   dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 }());
 </script>
