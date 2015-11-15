@@ -62,8 +62,10 @@
       
         <h3 id="视图不是真正存在的表,_数据库存储视图的定义,_在实际使用时及时生成结果">视图不是真正存在的表, 数据库存储视图的定义, 在实际使用时及时生成结果</h3><h3 id="其属性名可以显示的给出:_create_view_v_name(c1,_c2,_c3)_as_,_给定属性的数量要和查询语句输出的数量一致">其属性名可以显示的给出: create view v_name(c1, c2, c3) as <query statment="">, 给定属性的数量要和查询语句输出的数量一致</query></h3><h3 id="视图可以用来再次定义下一个视图">视图可以用来再次定义下一个视图</h3><h3 id="视图的数据能根据原始表中的数据的更改而自动更新">视图的数据能根据原始表中的数据的更改而自动更新</h3><h3 id="通常来说不能向视图删除插入数据,_除非视图中的所有数据都来自同一个表,_不然出以下错">通常来说不能向视图删除插入数据, 除非视图中的所有数据都来自同一个表, 不然出以下错</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1393 (HY000): Can not modify more than one base table through a join view &#39;test.salary_view&#39;</span><br></pre></td></tr></table></figure>
 <h3 id="对于来自多个表的视图进行删除同样也是不行的,_这是错误提示">对于来自多个表的视图进行删除同样也是不行的, 这是错误提示</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1395 (HY000): Can not delete from join view &#39;test.salary_view&#39;</span><br></pre></td></tr></table></figure>
-<h2 id="创建视图的语法:_create_view_v_name_as">创建视图的语法: create view v_name as <any ligal="" query="" statment=""></any></h2><pre><code>&lt;<span class="attribute">font</span> <span class="attribute">color</span>=<span class="string">"red"</span>&gt; 修改视图中的数据是允许, 并且会写入到原始表中&lt;/<span class="attribute">font</span>&gt;
-</code></pre><h2 id="查看视图">查看视图</h2><pre><code><span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> information_schema.VIEWS;</span>
+<h2 id="创建视图的语法:">创建视图的语法:</h2><pre><code><span class="operator"><span class="keyword">create</span> <span class="keyword">view</span> v_name <span class="keyword">as</span> &lt;<span class="keyword">any</span> ligal <span class="keyword">query</span> statment&gt;</span>
+</code></pre><font color="red"> 修改视图中的数据是允许, 并且会写入到原始表中</font>
+
+<h2 id="查看视图">查看视图</h2><pre><code><span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> information_schema.VIEWS;</span>
 </code></pre><h3 id="单是对视图更新将会更新实表中的数据">单是对视图更新将会更新实表中的数据</h3><pre><code>这是一个连接person和salary的视图
 <span class="header">mysql&gt; select * from salary_view;
 +------+-------+--------+</span>
