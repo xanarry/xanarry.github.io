@@ -1,0 +1,293 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>mysql之视图 | xanarry&#39;s</title>
+  <meta name="author" content="xanarry">
+  
+  <meta name="description" content="xanarry&#39;s blog">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="mysql之视图"/>
+  <meta property="og:site_name" content="xanarry&#39;s"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="xanarry&#39;s" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">xanarry&#39;s</a></h1>
+  <h2><a href="/">创造就是一个构造过程的过程!</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-11-15T06:39:15.000Z"><a href="/2015/11/15/mysql之视图/">2015-11-15</a></time>
+      
+      
+  
+    <h1 class="title">mysql之视图</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="视图不是真正存在的表,_数据库存储视图的定义,_在实际使用时及时生成结果">视图不是真正存在的表, 数据库存储视图的定义, 在实际使用时及时生成结果</h3><h3 id="其属性名可以显示的给出:_create_view_v_name(c1,_c2,_c3)_as_,_给定属性的数量要和查询语句输出的数量一致">其属性名可以显示的给出: create view v_name(c1, c2, c3) as <query statment="">, 给定属性的数量要和查询语句输出的数量一致</query></h3><h3 id="视图可以用来再次定义下一个视图">视图可以用来再次定义下一个视图</h3><h3 id="视图的数据能根据原始表中的数据的更改而自动更新">视图的数据能根据原始表中的数据的更改而自动更新</h3><h3 id="通常来说不能向视图删除插入数据,_除非视图中的所有数据都来自同一个表,_不然出以下错">通常来说不能向视图删除插入数据, 除非视图中的所有数据都来自同一个表, 不然出以下错</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1393 (HY000): Can not modify more than one base table through a join view &#39;test.salary_view&#39;</span><br></pre></td></tr></table></figure>
+<h3 id="对于来自多个表的视图进行删除同样也是不行的,_这是错误提示">对于来自多个表的视图进行删除同样也是不行的, 这是错误提示</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1395 (HY000): Can not delete from join view &#39;test.salary_view&#39;</span><br></pre></td></tr></table></figure>
+<h2 id="创建视图的语法:_create_view_v_name_as">创建视图的语法: create view v_name as <any ligal="" query="" statment=""></any></h2><pre><code>&lt;<span class="attribute">font</span> <span class="attribute">color</span>=<span class="string">"red"</span>&gt; 修改视图中的数据是允许, 并且会写入到原始表中&lt;/<span class="attribute">font</span>&gt;
+</code></pre><h2 id="查看视图">查看视图</h2><pre><code><span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> information_schema.VIEWS;</span>
+</code></pre><h3 id="单是对视图更新将会更新实表中的数据">单是对视图更新将会更新实表中的数据</h3><pre><code>这是一个连接person和salary的视图
+<span class="header">mysql&gt; select * from salary_view;
++------+-------+--------+</span>
+<span class="header">| pid  | pname | salary |
++------+-------+--------+</span>
+| 888  | tom   |   6742 |
+<span class="header">| 666  | jerry |   4231 |
++------+-------+--------+</span>
+2 rows in set (0.00 sec)
+
+我们对视图进行更新
+mysql&gt; update salary<span class="emphasis">_view set pname = 'xxxxxx' where pname="tom";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+</span>再次查看视图的结果, 可以看出视图的数据发生了改变
+<span class="header">mysql&gt; select * from salary_view;
++------+--------+--------+</span>
+<span class="header">| pid  | pname  | salary |
++------+--------+--------+</span>
+| 888  | xxxxxx |   6742 |
+<span class="header">| 666  | jerry  |   4231 |
++------+--------+--------+</span>
+2 rows in set (0.00 sec)
+
+那么原始表person呢, 很明显出现的xxxxxx那一个值, 
+<span class="header">mysql&gt; select * from person;
++------+---------+</span>
+<span class="header">| id   | name    |
++------+---------+</span>
+| 111  | xanarry |
+| 111  | xanarry |
+| 222  | marry   |
+| 333  | bob     |
+| 444  | carly   |
+| 888  | xxxxxx  |
+<span class="header">| 666  | jerry   |
++------+---------+</span>
+7 rows in set (0.00 sec)
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/MySQL/">MySQL</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/MySQL/">MySQL</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/C/">C</a><small>1</small></li>
+  
+    <li><a href="/categories/CPP/">CPP</a><small>3</small></li>
+  
+    <li><a href="/categories/Hexo/">Hexo</a><small>2</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>1</small></li>
+  
+    <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
+  
+    <li><a href="/categories/MySQL/">MySQL</a><small>7</small></li>
+  
+    <li><a href="/categories/Operating-System/">Operating System</a><small>1</small></li>
+  
+    <li><a href="/categories/Other/">Other</a><small>1</small></li>
+  
+    <li><a href="/categories/Python/">Python</a><small>11</small></li>
+  
+    <li><a href="/categories/jsp/">jsp</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>2</small></li>
+  
+    <li><a href="/categories/sublime-text/">sublime text</a><small>2</small></li>
+  
+    <li><a href="/categories/windows/">windows</a><small>1</small></li>
+  
+    <li><a href="/categories/位运算/">位运算</a><small>1</small></li>
+  
+    <li><a href="/categories/汇编/">汇编</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/C/">C++</a><small>1</small></li>
+  
+    <li><a href="/tags/MySQL/">MySQL</a><small>8</small></li>
+  
+    <li><a href="/tags/Mysql/">Mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/c-高精度/">c++高精度</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>3</small></li>
+  
+    <li><a href="/tags/jsp/">jsp</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda表达式/">lambda表达式</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>2</small></li>
+  
+    <li><a href="/tags/other/">other</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>2</small></li>
+  
+    <li><a href="/tags/python字典/">python字典</a><small>1</small></li>
+  
+    <li><a href="/tags/sublime-text/">sublime text</a><small>2</small></li>
+  
+    <li><a href="/tags/test/">test</a><small>1</small></li>
+  
+    <li><a href="/tags/位运算/">位运算</a><small>2</small></li>
+  
+    <li><a href="/tags/其他/">其他</a><small>1</small></li>
+  
+    <li><a href="/tags/命令行/">命令行</a><small>1</small></li>
+  
+    <li><a href="/tags/字符串/">字符串</a><small>1</small></li>
+  
+    <li><a href="/tags/学习/">学习</a><small>1</small></li>
+  
+    <li><a href="/tags/排序/">排序</a><small>1</small></li>
+  
+    <li><a href="/tags/汇编/">汇编</a><small>1</small></li>
+  
+    <li><a href="/tags/爬虫/">爬虫</a><small>1</small></li>
+  
+    <li><a href="/tags/生活/">生活</a><small>1</small></li>
+  
+    <li><a href="/tags/高精度/">高精度</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 xanarry
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'xanarry';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?05b8c86ae6be8be1243fc590c74bfde1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</body>
+</html>

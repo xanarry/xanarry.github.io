@@ -51,6 +51,211 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-05-25T14:36:04.000Z"><a href="/2015/05/25/python实现高精度乘法/">2015-05-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/25/python实现高精度乘法/">python实现高精度乘法</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>方法还是将两个乘数转为两个包含乘数每位数字的list,<br>因为在计算中两个list中的数据要反复使用,所以定义第三个list来保存乘法的运算结果,然后使用两重循序模拟列竖式计算出乘法运算的结果, 因为乘法运算每次运算时需要向前移动一位表示扩大10倍,所以定义变量pos标记计算时移动的位数, 每次移动一位<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> reduce</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">multiply</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    a = list(map(<span class="keyword">lambda</span> x : int(x), a.strip()))</span><br><span class="line">    b = list(map(<span class="keyword">lambda</span> x : int(x), b.strip()))</span><br><span class="line">    c = list(map(<span class="keyword">lambda</span> x : <span class="number">0</span>, (<span class="string">"0"</span> + str(a) + str(b)).strip()))</span><br><span class="line">    index = len(c) - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(a) - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">        pos = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(len(b) - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            temp = a[i] * b[j] + c[index - pos] <span class="comment">#两个乘数相乘,并加上在此前一次的进位</span></span><br><span class="line">            c[index - pos] = temp % <span class="number">10</span> <span class="comment">#保存运算求余结果</span></span><br><span class="line">            c[index - pos - <span class="number">1</span>] += temp // <span class="number">10</span> <span class="comment">#处理进位,进位可以是0或者大于0的数</span></span><br><span class="line">            pos += <span class="number">1</span></span><br><span class="line">        index -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> int(reduce(<span class="keyword">lambda</span> x, y : str(x) + str(y), c)) <span class="comment">#将list中的内容转换为字符串</span></span><br><span class="line"></span><br><span class="line">a = input(<span class="string">"input a: "</span>)</span><br><span class="line">b = input(<span class="string">"input b: "</span>)</span><br><span class="line">print(multiply(a, b))</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-05-25T14:35:52.000Z"><a href="/2015/05/25/python实现高精度减法/">2015-05-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/25/python实现高精度减法/">python实现高精度减法</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>减法的实现同加法基本一致, 也是模拟竖式计算, 额外的处理了一下输入数值大小的问题,否则不然代码量可以更少. 在此不再做过多陈述, 从代码看问题吧!<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> reduce</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cmpare</span><span class="params">(a, b)</span>:</span><span class="comment">#定义函数比较两个数值大小</span></span><br><span class="line">    <span class="keyword">if</span> (len(a) != len(b)):</span><br><span class="line">        <span class="keyword">return</span> len(a) - len(b)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(a)):</span><br><span class="line">            <span class="keyword">if</span> a[i] != b[i]:</span><br><span class="line">                <span class="keyword">return</span> a[i] - b[i]</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">minus</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    optr = <span class="string">"+"</span>;</span><br><span class="line">    <span class="keyword">if</span> (cmpare(a, b) &lt; <span class="number">0</span>):</span><br><span class="line">        optr = <span class="string">'-'</span><span class="comment">#如果减数大于被减数,设置符号为负号</span></span><br><span class="line">        temp = a<span class="comment">#并且交换两个数,保证始终用大数减小数</span></span><br><span class="line">        a = b</span><br><span class="line">        b = temp</span><br><span class="line">        </span><br><span class="line">    a = list(map(<span class="keyword">lambda</span> x : int(x), (<span class="string">"0"</span> + str(a)).strip()))</span><br><span class="line">    b = list(map(<span class="keyword">lambda</span> x : int(x), (<span class="string">"0"</span> + str(b)).strip()))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> len(a) &gt; len(b):</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> range(len(a) - len(b)):</span><br><span class="line">            b.insert(<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> range(len(b) - len(a)):</span><br><span class="line">            a.insert(<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(a) - <span class="number">1</span>, <span class="number">0</span>, -<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> (a[i] &gt;= b[i]):</span><br><span class="line">            a[i] -= b[i]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            a[i] = a[i] + <span class="number">10</span> - b[i]</span><br><span class="line">            a[i - <span class="number">1</span>] -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> int(optr + reduce(<span class="keyword">lambda</span> x, y : str(x) + str(y), a))</span><br><span class="line"></span><br><span class="line">a = input(<span class="string">"input a: "</span>)</span><br><span class="line">b = input(<span class="string">"input b: "</span>)</span><br><span class="line">print(minus(a, b))</span><br></pre></td></tr></table></figure></p>
+<p><em>注意: 输入仅限两个正整数, 输入不分大小</em></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-05-25T14:35:40.000Z"><a href="/2015/05/25/python实现高精度加法/">2015-05-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/25/python实现高精度加法/">python实现高精度加法</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>之前一直使用的c++, c++没有提供高精度的计算方案, 所以大整数的运算都需要手动实现,python已经为我们提供了高精度运算, 这里出于刚学习python作为练习, 代码实现高精度加法运算的原理. 高精度加法的过程就是完全模拟列竖式计算的方式,我们开两个列表,将加数a,假如a=1243,在列表中保存为[1, 2, 4, 3], 加数b, 假如b=12, 在列表中保存为[1, 2], 这样的话两个列表的长度不同, 就会后面代码实现的不便, 因此, 在执行计算前, 我们将两个列表处理为</p>
+<pre><code>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">3</span>]
+[<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]
+</code></pre><p>即使两个数长度一致, 短的在左边补0, 最后再在两个数左端都添加一个0, 这样是为了防止最高位进位后导致进位的值没有地方存储, 我们从右边计算到左边,将计算的每一位数保存到列表a中, 上面两个数相加时2+3=5求余保存到a[4], 取整加到a[3]处理进位,4+1=5求余保存到a[3], 取整加到a[2], 依次类推, 如果两数之和大于10, 则有进位1, 否则就是进位0, 相当于没有进位</p>
+<p>下面请看代码实现:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> reduce<span class="comment">#导入reduce用于将整数列表中的内容转换为字符串</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> len(a) &gt; len(b):<span class="comment">#将输入的数字左端补齐为同样的长度</span></span><br><span class="line">        b = b.zfill(len(a) - len(b) + <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        a = a.zfill(len(b) - len(a) + <span class="number">1</span>)</span><br><span class="line">    <span class="comment">#("0" + str(a))前面加"0"的原因是防止最高位进位是超过列表的容量限制</span></span><br><span class="line">    <span class="comment">#比如说9+9会向前面进一位,如果没有添加额外的0的话进位1就没地方存储</span></span><br><span class="line">    a = list(map(<span class="keyword">lambda</span> x : int(x), (<span class="string">"0"</span> + str(a)).strip()))</span><br><span class="line">    b = list(map(<span class="keyword">lambda</span> x : int(x), (<span class="string">"0"</span> + str(b)).strip()))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(a) - <span class="number">1</span>, <span class="number">0</span>, -<span class="number">1</span>):</span><br><span class="line">        temp = a[i] + b[i];</span><br><span class="line">        a[i - <span class="number">1</span>] += temp // <span class="number">10</span></span><br><span class="line">        a[i] = temp % <span class="number">10</span></span><br><span class="line">    <span class="keyword">return</span> int(reduce(<span class="keyword">lambda</span> x, y : str(x) + str(y), a))<span class="comment">#转换为字符串</span></span><br><span class="line"></span><br><span class="line">a, b = input(<span class="string">"input a: "</span>), input(<span class="string">"input b: "</span>)</span><br><span class="line">print(add(a, b))</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-05-25T14:10:29.000Z"><a href="/2015/05/25/搭建Hexo博客的简单步骤/">2015-05-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/25/搭建Hexo博客的简单步骤/">搭建Hexo博客的简单步骤</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>前期准备,注册github账号,并创建GitHub Pages<br>1:安装<a href="https://nodejs.org/" target="_blank" rel="external">node.js</a><br>2:安装<a href="http://git-scm.com/" target="_blank" rel="external">git</a><br>3:在你的计算机中创建一个工作根目录,比如我是将hexo目录创建在D盘的. <font color="0080ff">D:\hexo</font><br>3:打开工作根目录,右键调出gitbash<br>4:输入npm install -g hexo<br>5:输入hexo init<br>6:输入npm install<br>7:检查ssh_key</p>
+<pre><code>ls -al ~/.ssh
+<span class="comment">#如果没有请输入:</span>
+ssh-keygen -t rsa -C <span class="string">"github注册邮箱"</span>
+<span class="comment">#输入passphrase:要记住,后面用</span>
+ssh-agent <span class="operator">-s</span>
+ssh-add ~/.ssh/id_rsa <span class="comment">#如果本行出错执行下面两行</span>
+<span class="built_in">eval</span> `ssh-agent <span class="operator">-s</span>`
+ssh-add
+<span class="comment">#然后在用户目录中找到.ssh目录中的id_rsa.pub,打开并复制其内容添加到github的ssh key中</span>
+</code></pre><p>8:测试ssh_key是否成功</p>
+<pre><code><span class="title">ssh</span> -T git<span class="variable">@github</span>.com
+<span class="comment">#如果输出hi yourname... 那就正常了</span>
+</code></pre><p>9:添加用户信息</p>
+<pre><code>git config --<span class="built_in">global</span> user.name <span class="string">"cnfeat"</span> <span class="comment">#用户名</span>
+git config --<span class="built_in">global</span> user.email  <span class="string">"cnfeat@gmail.com"</span> <span class="comment">#填写自己的邮箱</span>
+</code></pre><p>10:编辑本地根目录中的配置文件<font color="0080ff">_config.yml</font>,添加github仓库信息</p>
+<pre><code><span class="attribute">deploy</span>:
+<span class="attribute">type</span>: git
+<span class="attribute">repository</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:you_name/your_name.github.io.git
+<span class="attribute">branch</span>: master
+</code></pre><p>11:使用</p>
+<pre><code><span class="title">hexo</span> n <span class="comment">#添加新文章</span>
+hexo g <span class="comment">#生成文章</span>
+hexo d <span class="comment">#发布</span>
+hexo s <span class="comment">#打开本地服务器测试:localhost:4000</span>
+</code></pre><p>注意:如果发布出现deplorer not found git,请使用如下命令,由于显示的原因,提示一下末尾的”—save”也是在命令中的:</p>
+<pre><code>npm <span class="operator"><span class="keyword">install</span> hexo-deployer-git <span class="comment">--save </span></span>
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-05-25T07:41:45.000Z"><a href="/2015/05/25/python34-访问MySQL数据库/">2015-05-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/25/python34-访问MySQL数据库/">python34 访问MySQL数据库</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文介绍如何使用MySQL官方提供的工具访问MySQL数据库<br>首先下载<a href="http://dev.mysql.com/downloads/connector/python/" target="_blank" rel="external">connector/python</a>, 这是一个.msi的安装文件,下载后双击安装到电脑, 然后开始连接数据库</p>
+<h3 id="连接方式1">连接方式1</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mysql.connector</span><br><span class="line">cnx = mysql.connector.connect(user = <span class="string">"root"</span>, password = <span class="string">"admin"</span>, host = <span class="string">"127.0.0.1"</span>, database = <span class="string">"world"</span>)</span><br><span class="line">cnx.close()</span><br></pre></td></tr></table></figure>
+<h3 id="连接方式2">连接方式2</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mysql.connector <span class="keyword">import</span> (connection)</span><br><span class="line">cnx = connection.MySQLConnection(user=<span class="string">'scott'</span>, password=<span class="string">'tiger'</span>, host=<span class="string">'127.0.0.1'</span>, database=<span class="string">'employees'</span>)</span><br><span class="line">cnx.close()</span><br></pre></td></tr></table></figure>
+<p>两种连接方式都使用了connector,他们的作用是一样的,通常第一种方式用的更多</p>
+<h3 id="连接方式3">连接方式3</h3><p>如果连接的参数较多,可以使用**运算符直接给connect()传递一个字典,以方便代码的维护</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">config = &#123;</span><br><span class="line">    <span class="string">"user"</span> : <span class="string">"root"</span>, </span><br><span class="line">    <span class="string">"password"</span> : <span class="string">"admin"</span>, </span><br><span class="line">    <span class="string">"host"</span> : <span class="string">"127.0.0.1"</span>, </span><br><span class="line">    <span class="string">"database"</span> : <span class="string">"world"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">cnx = mysql.connector.connect(**config)</span><br><span class="line">cnx.close()</span><br></pre></td></tr></table></figure>
+<p>我们可以访问数据库的过程加上异常处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mysql.connector</span><br><span class="line"><span class="keyword">from</span> mysql.connector <span class="keyword">import</span> errorcode</span><br><span class="line">cnx = <span class="keyword">None</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    cnx = mysql.connector.connect(user = <span class="string">"root"</span>, password = <span class="string">"admin"</span>, host = <span class="string">"127.0.0.1"</span>, database = <span class="string">"world"</span>)</span><br><span class="line"><span class="keyword">except</span> mysql.connector.Error <span class="keyword">as</span> err:  </span><br><span class="line">    <span class="keyword">if</span> err.errno == errorcode.ER_ACCESS_DENIED_ERROR:</span><br><span class="line">        print(<span class="string">"账户不存在或者密码错误"</span>)</span><br><span class="line">    <span class="keyword">elif</span> err.errno == errorcode.ER_BAD_DB_ERROR:</span><br><span class="line">        print(<span class="string">"数据库不存在"</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(err)</span><br><span class="line">    print(err)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"连接成功"</span>)</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    cnx.close()</span><br></pre></td></tr></table></figure>  
+<p>连接后使用cnx返回的cursor对象即可访问数据库表中的内容了<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cursor = cnx.cursor()</span><br><span class="line">sql = <span class="string">"select * from city where CountryCode = \"CHN\" order by Name asc limit 1000"</span></span><br><span class="line">cursor.execute(sql)</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> cursor:</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-05-12T08:08:51.000Z"><a href="/2015/05/12/python-lambda表达式/">2015-05-12</a></time>
       
       
@@ -251,44 +456,13 @@ B98FC99C 8FAC73EE D<span class="number">2B95564</span> DF450523
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-04-28T14:10:36.000Z"><a href="/2015/04/28/测试/">2015-04-28</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/04/28/测试/">测试</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h1 id="Hello_worldssssss:">Hello worldssssss:</h1><h2 id="so_this_is_just_a_test_blog,_because_it’s_the_first_time_I_use_hexo!_I_think_it’s_a_very_cool_blog_provider,_especially_for_coders,_geeks-_And_I’m_learning_more_about_this_system-_So_for_more_posted_blogs_of_mine,_please_visit_my_CSDN_blog_Success_in_life_is_a_matter_not_so_much_of_talent_and_opportunity_as_of">so this is just a test blog, because it’s the first time I use <a href="http://hexo.io/" target="_blank" rel="external">hexo</a>! I think it’s a very cool blog provider, especially for coders, geeks. And I’m learning more about this system. So for more posted blogs of mine, please visit my <a href="http://blog.csdn.net/xiongyangg" target="_blank" rel="external">CSDN blog</a> Success in life is a matter not so much of talent and opportunity as of</h2><p>concentration and perseverance.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
     <a href="/page/3/" class="alignleft prev">上一页</a>
   
+  
+    <a href="/page/5/" class="alignright next">下一页</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -315,7 +489,7 @@ B98FC99C 8FAC73EE D<span class="number">2B95564</span> DF450523
   
     <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
   
-    <li><a href="/categories/MySQL/">MySQL</a><small>2</small></li>
+    <li><a href="/categories/MySQL/">MySQL</a><small>7</small></li>
   
     <li><a href="/categories/Operating-System/">Operating System</a><small>1</small></li>
   
@@ -346,7 +520,9 @@ B98FC99C 8FAC73EE D<span class="number">2B95564</span> DF450523
   
     <li><a href="/tags/C/">C++</a><small>1</small></li>
   
-    <li><a href="/tags/MySQL/">MySQL</a><small>4</small></li>
+    <li><a href="/tags/MySQL/">MySQL</a><small>8</small></li>
+  
+    <li><a href="/tags/Mysql/">Mysql</a><small>1</small></li>
   
     <li><a href="/tags/c-高精度/">c++高精度</a><small>1</small></li>
   

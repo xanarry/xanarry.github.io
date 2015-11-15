@@ -51,6 +51,445 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-11-15T06:53:46.000Z"><a href="/2015/11/15/mysql的内建字符串函数/">2015-11-15</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/11/15/mysql的内建字符串函数/">mysql的内建字符串函数</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>以下函数在使用时函数名不分大小写<br>ASCII() Return numeric value of left-most character<br>BIN()   Return a string containing binary representation of a number<br>BIT_LENGTH()    Return length of argument in bits<br>CHAR_LENGTH()   Return number of characters in argument<br>CHAR()  Return the character for each integer passed<br>CHARACTER_LENGTH()  Synonym for CHAR_LENGTH()<br>CONCAT_WS() Return concatenate with separator<br>CONCAT()    Return concatenated string<br>ELT()   Return string at index number<br>EXPORT_SET()    Return a string such that for every bit set in the value bits, you get an on string and for every unset bit, you get an off string<br>FIELD() Return the index (position) of the first argument in the subsequent arguments<br>FIND_IN_SET()   Return the index position of the first argument within the second argument<br>FORMAT()    Return a number formatted to specified number of decimal places<br>HEX()   Return a hexadecimal representation of a decimal or string value<br>INSERT()    Insert a substring at the specified position up to the specified number of characters<br>INSTR() Return the index of the first occurrence of substring<br>LCASE() Synonym for LOWER()<br>LEFT()  Return the leftmost number of characters as specified<br>LENGTH()    Return the length of a string in bytes<br>LIKE    Simple pattern matching<br>LOAD_FILE() Load the named file<br>LOCATE()    Return the position of the first occurrence of substring<br>LOWER() Return the argument in lowercase<br>LPAD()  Return the string argument, left-padded with the specified string<br>LTRIM() Remove leading spaces<br>MAKE_SET()  Return a set of comma-separated strings that have the corresponding bit in bits set<br>MATCH   Perform full-text search<br>MID()   Return a substring starting from the specified position<br>NOT LIKE    Negation of simple pattern matching<br>NOT REGEXP  Negation of REGEXP<br>OCT()   Return a string containing octal representation of a number<br>OCTET_LENGTH()  Synonym for LENGTH()<br>ORD()   Return character code for leftmost character of the argument<br>POSITION()  Synonym for LOCATE()<br>QUOTE() Escape the argument for use in an SQL statement<br>REGEXP  Pattern matching using regular expressions<br>REPEAT()    Repeat a string the specified number of times<br>REPLACE()   Replace occurrences of a specified string<br>REVERSE()   Reverse the characters in a string<br>RIGHT() Return the specified rightmost number of characters<br>RLIKE   Synonym for REGEXP<br>RPAD()  Append string the specified number of times<br>RTRIM() Remove trailing spaces<br>SOUNDEX()   Return a soundex string<br>SOUNDS LIKE Compare sounds<br>SPACE() Return a string of the specified number of spaces<br>STRCMP()    Compare two strings<br>SUBSTR()    Return the substring as specified<br>SUBSTRING_INDEX()   Return a substring from a string before the specified number of occurrences of the delimiter<br>SUBSTRING() Return the substring as specified<br>TRIM()  Remove leading and trailing spaces<br>UCASE() Synonym for UPPER()<br>UNHEX() Return a string containing hex representation of a number<br>UPPER() Convert to uppercase</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-11-15T06:39:15.000Z"><a href="/2015/11/15/mysql之视图/">2015-11-15</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/11/15/mysql之视图/">mysql之视图</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="视图不是真正存在的表,_数据库存储视图的定义,_在实际使用时及时生成结果">视图不是真正存在的表, 数据库存储视图的定义, 在实际使用时及时生成结果</h3><h3 id="其属性名可以显示的给出:_create_view_v_name(c1,_c2,_c3)_as_,_给定属性的数量要和查询语句输出的数量一致">其属性名可以显示的给出: create view v_name(c1, c2, c3) as <query statment="">, 给定属性的数量要和查询语句输出的数量一致</query></h3><h3 id="视图可以用来再次定义下一个视图">视图可以用来再次定义下一个视图</h3><h3 id="视图的数据能根据原始表中的数据的更改而自动更新">视图的数据能根据原始表中的数据的更改而自动更新</h3><h3 id="通常来说不能向视图删除插入数据,_除非视图中的所有数据都来自同一个表,_不然出以下错">通常来说不能向视图删除插入数据, 除非视图中的所有数据都来自同一个表, 不然出以下错</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1393 (HY000): Can not modify more than one base table through a join view &#39;test.salary_view&#39;</span><br></pre></td></tr></table></figure>
+<h3 id="对于来自多个表的视图进行删除同样也是不行的,_这是错误提示">对于来自多个表的视图进行删除同样也是不行的, 这是错误提示</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1395 (HY000): Can not delete from join view &#39;test.salary_view&#39;</span><br></pre></td></tr></table></figure>
+<h2 id="创建视图的语法:_create_view_v_name_as">创建视图的语法: create view v_name as <any ligal="" query="" statment=""></any></h2><pre><code>&lt;<span class="attribute">font</span> <span class="attribute">color</span>=<span class="string">"red"</span>&gt; 修改视图中的数据是允许, 并且会写入到原始表中&lt;/<span class="attribute">font</span>&gt;
+</code></pre><h2 id="查看视图">查看视图</h2><pre><code><span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> information_schema.VIEWS;</span>
+</code></pre><h3 id="单是对视图更新将会更新实表中的数据">单是对视图更新将会更新实表中的数据</h3><pre><code>这是一个连接person和salary的视图
+<span class="header">mysql&gt; select * from salary_view;
++------+-------+--------+</span>
+<span class="header">| pid  | pname | salary |
++------+-------+--------+</span>
+| 888  | tom   |   6742 |
+<span class="header">| 666  | jerry |   4231 |
++------+-------+--------+</span>
+2 rows in set (0.00 sec)
+
+我们对视图进行更新
+mysql&gt; update salary<span class="emphasis">_view set pname = 'xxxxxx' where pname="tom";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+</span>再次查看视图的结果, 可以看出视图的数据发生了改变
+<span class="header">mysql&gt; select * from salary_view;
++------+--------+--------+</span>
+<span class="header">| pid  | pname  | salary |
++------+--------+--------+</span>
+| 888  | xxxxxx |   6742 |
+<span class="header">| 666  | jerry  |   4231 |
++------+--------+--------+</span>
+2 rows in set (0.00 sec)
+
+那么原始表person呢, 很明显出现的xxxxxx那一个值, 
+<span class="header">mysql&gt; select * from person;
++------+---------+</span>
+<span class="header">| id   | name    |
++------+---------+</span>
+| 111  | xanarry |
+| 111  | xanarry |
+| 222  | marry   |
+| 333  | bob     |
+| 444  | carly   |
+| 888  | xxxxxx  |
+<span class="header">| 666  | jerry   |
++------+---------+</span>
+7 rows in set (0.00 sec)
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-11-15T06:38:42.000Z"><a href="/2015/11/15/mysql的函数与过程/">2015-11-15</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/11/15/mysql的函数与过程/">mysql的函数与过程</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="函数">函数</h1><h2 id="查看函数">查看函数</h2><pre><code><span class="operator"><span class="keyword">show</span> <span class="keyword">function</span> <span class="keyword">status</span>;</span>
+<span class="operator"><span class="keyword">select</span> <span class="string">'name'</span> <span class="keyword">from</span> mysql.proc <span class="keyword">where</span> db= <span class="string">'test'</span> <span class="keyword">and</span> <span class="string">'type'</span>=<span class="string">'function'</span>;</span>
+</code></pre><h2 id="mysql函数的创建">mysql函数的创建</h2><pre><code>基本格式如下
+<span class="operator"><span class="keyword">create</span> <span class="keyword">function</span> 函数名(参数 类型, 参数 类型...)
+<span class="keyword">returns</span> 返回类型
+<span class="keyword">begin</span>
+    <span class="keyword">declare</span> 变量 类型, 变量 类型
+    函数体
+<span class="keyword">end</span>
+(<span class="keyword">begin</span>与<span class="keyword">end</span>之间的为函数体, 语句之间使用分号隔开)</span>
+</code></pre><h2 id="函数的删除">函数的删除</h2><pre><code><span class="operator"><span class="keyword">drop</span> <span class="keyword">function</span> function_name;</span>
+</code></pre><h2 id="函数的创建">函数的创建</h2><h3 id="以下创建helloworld的函数,_作用仅仅是返回一个字符串">以下创建helloworld的函数, 作用仅仅是返回一个字符串</h3><pre><code>mysql&gt; delimiter #
+mysql&gt; create function helloworld()
+    -<span class="ruby">&gt; returns varchar(<span class="number">20</span>)
+</span>    -<span class="ruby">&gt; <span class="keyword">begin</span>
+</span>    -<span class="ruby">&gt; <span class="keyword">return</span> <span class="string">"hello world"</span>;
+</span>    -<span class="ruby">&gt; <span class="keyword">end</span>
+</span>    -<span class="ruby">&gt; <span class="comment">#</span>
+</span>Query OK, 0 rows affected (0.01 sec)
+</code></pre><h3 id="这是输出结果">这是输出结果</h3><pre><code><span class="header">mysql&gt; select helloworld()#
++--------------+</span>
+<span class="header">| helloworld() |
++--------------+</span>
+<span class="header">| hello world  |
++--------------+</span>
+1 row in set (0.00 sec)
+</code></pre><h3 id="再看看带参数的函数定义,_注意这里参数名的参数类型是相反的,_和一般编程语言的定义不同">再看看带参数的函数定义, 注意这里参数名的参数类型是相反的, 和一般编程语言的定义不同</h3><pre><code>mysql&gt; create function sayhello(name varchar(10))
+    -<span class="ruby">&gt; returns varchar(<span class="number">100</span>)
+</span>    -<span class="ruby">&gt; <span class="keyword">begin</span>
+</span>    -<span class="ruby">&gt; <span class="keyword">return</span> concat(<span class="string">"hello "</span>, name);
+</span>    -<span class="ruby">&gt; <span class="keyword">end</span>
+</span>    -<span class="ruby">&gt; <span class="comment">#</span>
+</span>Query OK, 0 rows affected (0.00 sec)
+</code></pre><h3 id="输出结果">输出结果</h3><pre><code><span class="header">mysql&gt; select sayhello("xanarry")#
++---------------------+</span>
+<span class="header">| sayhello("xanarry") |
++---------------------+</span>
+<span class="header">| hello xanarry       |
++---------------------+</span>
+1 row in set (0.00 sec)
+</code></pre><h3 id="定义多个参数的函数,_并在函数中使用定义的变量">定义多个参数的函数, 并在函数中使用定义的变量</h3><p>下面我定义一个函数, 输入两个数a,b. 返回从a到b的求和结果</p>
+<pre><code>mysql&gt; create function mysum(a int, b int) #定义函数名和参数及其类型
+    -<span class="ruby">&gt; returns int                         <span class="comment">#定义返回参数类型</span>
+</span>    -<span class="ruby">&gt; <span class="keyword">begin</span>                               <span class="comment">#函数体开始</span>
+</span>    -<span class="ruby">&gt; declare sum int;                    <span class="comment">#定义sum为int变量保持求和结果</span>
+</span>    -<span class="ruby">&gt; set sum = <span class="number">0</span>;                        <span class="comment">#初始化sum为0</span>
+</span>    -<span class="ruby">&gt; <span class="keyword">while</span> a &lt;= b <span class="keyword">do</span>                     <span class="comment">#当a&lt;=b时应该执行循环语句, 注意循环语句有和do</span>
+</span>    -<span class="ruby">&gt;     set sum = sum + a;              <span class="comment">#求和</span>
+</span>    -<span class="ruby">&gt;     set a = a + <span class="number">1</span>;                  <span class="comment">#自加</span>
+</span>    -<span class="ruby">&gt; <span class="keyword">end</span> <span class="keyword">while</span>;                          <span class="comment">#标记循环体结束</span>
+</span>    -<span class="ruby">&gt; <span class="keyword">return</span> sum;                         <span class="comment">#返回sum</span>
+</span>    -<span class="ruby">&gt; <span class="keyword">end</span>                                 <span class="comment">#结束函数定义</span>
+</span>    -<span class="ruby">&gt; <span class="comment">#</span>
+</span>Query OK, 0 rows affected (0.00 sec)
+</code></pre><h3 id="验证函数的正确性">验证函数的正确性</h3><pre><code><span class="header">mysql&gt; select  mysum(1,10)#
++-------------+</span>
+<span class="header">| mysum(1,10) |
++-------------+</span>
+<span class="header">|          55 |
++-------------+</span>
+1 row in set (0.01 sec)
+</code></pre><p>对与mysql函数返回类型有一个需要注意的地方就是函数是不能返回一个table, 只能是一个具体的值, 虽然sql标准是可以返回一个表</p>
+<h1 id="创建过程">创建过程</h1><h2 id="创建语句的语法">创建语句的语法</h2><pre><code><span class="keyword">create</span> <span class="function"><span class="keyword">procedure</span> 过程名<span class="params">(<span class="keyword">in</span> 参数 类型, <span class="keyword">out</span> 参数 类型, inout 参数 类型)</span>
+<span class="title">begin</span>
+    语句集合;</span>
+<span class="keyword">end</span>
+</code></pre><h3 id="下面是一个简单例子,_过程接收两个输入参数,_并接收一个输出参数保存结果">下面是一个简单例子, 过程接收两个输入参数, 并接收一个输出参数保存结果</h3><pre><code>delimiter <span class="comment">//</span>
+<span class="keyword">create</span> <span class="function"><span class="keyword">procedure</span> <span class="title">a</span><span class="params">(<span class="keyword">in</span> x int, y int, <span class="keyword">out</span> sum int)</span>
+<span class="title">begin</span>
+<span class="title">select</span> <span class="title">x</span> + <span class="title">y</span> <span class="title">into</span> <span class="title">sum</span>;</span>
+<span class="keyword">end</span>
+<span class="comment">//</span>
+</code></pre><h3 id="其中对于同一种类的参数,_可以每个参数写一个in,_或者只写一个in,_然后后面跟参数">其中对于同一种类的参数, 可以每个参数写一个in, 或者只写一个in, 然后后面跟参数</h3><pre><code>create procedure a(in x int, in y int, out sum int)
+begin
+select x + y into sum;
+end
+<span class="comment">//</span>
+
+mysql&gt; call a(12, 23, @sum<span class="emphasis">_v)//
+
+</span><span class="header">mysql&gt; select @sum_v//
++--------+</span>
+<span class="header">| @sum_v |
++--------+</span>
+<span class="header">|     35 |
++--------+</span>
+</code></pre><h3 id="再来两个复杂点的procedure">再来两个复杂点的procedure</h3><p>输出所有部门的总工资, 然后将指定部门的总工资输出到变量</p>
+<pre><code><span class="operator"><span class="keyword">drop</span> <span class="keyword">procedure</span> <span class="keyword">if</span> <span class="keyword">exists</span> a//
+<span class="keyword">create</span> <span class="keyword">procedure</span> a(<span class="keyword">in</span> dept <span class="built_in">varchar</span>(<span class="number">30</span>), out tsalary <span class="built_in">int</span>)
+<span class="keyword">begin</span>
+<span class="keyword">select</span> dept_name, <span class="keyword">sum</span>(salary) <span class="keyword">from</span> instructor <span class="keyword">group</span> <span class="keyword">by</span> dept_name;</span>
+<span class="operator"><span class="keyword">select</span> <span class="keyword">sum</span>(salary) <span class="keyword">into</span> tsalary <span class="keyword">from</span> instructor <span class="keyword">group</span> <span class="keyword">by</span> dept_name <span class="keyword">having</span> dept_name = dept;</span>
+<span class="operator"><span class="keyword">end</span>
+//</span>
+</code></pre><h3 id="下面这个procedure接收输入数据,_然后验证数据的合法性,_如果满足要求则插入,_将状态吸入status变量">下面这个procedure接收输入数据, 然后验证数据的合法性, 如果满足要求则插入, 将状态吸入status变量</h3><pre><code>drop <span class="keyword">procedure</span> <span class="keyword">if</span> exists a//
+create <span class="keyword">procedure</span> a(<span class="type">in</span> <span class="keyword">name</span> varchar(<span class="number">10</span>), <span class="keyword">pass</span> varchar(<span class="number">10</span>), addr varchar(<span class="number">30</span>), <span class="type">out</span> <span class="keyword">status</span> varchar(<span class="number">100</span>))
+begin
+<span class="keyword">if</span> <span class="keyword">name</span> = <span class="string">""</span>
+<span class="keyword">then</span>
+    <span class="keyword">select</span> <span class="string">"name can not be empty"</span> into <span class="keyword">status</span>;
+elseif char_length(<span class="keyword">pass</span>) &lt; <span class="number">6</span> 
+<span class="keyword">then</span>
+    <span class="keyword">select</span> <span class="string">"length of passworld must bigger than 6"</span> into <span class="keyword">status</span>;
+<span class="keyword">else</span>
+    insert into user(<span class="keyword">name</span>, <span class="keyword">pass</span>, addr) values(<span class="keyword">name</span>, <span class="keyword">pass</span>, addr);
+    <span class="keyword">select</span> <span class="string">"done"</span> into <span class="keyword">status</span>;
+<span class="keyword">end</span> <span class="keyword">if</span>;
+<span class="keyword">end</span>
+//
+</code></pre><h2 id="过程的删除">过程的删除</h2><pre><code>drop <span class="function"><span class="keyword">procedure</span> <span class="title">if</span> <span class="title">exists</span> <span class="title">a</span></span>
+</code></pre><h1 id="函数与过程的区别">函数与过程的区别</h1><h3 id="过程可以理解为一组操作的集合,_并且可以在这些操作中获取某些有用的数据">过程可以理解为一组操作的集合, 并且可以在这些操作中获取某些有用的数据</h3><h3 id="函数只能通过_return_语句返回单个值或表对象；而存储过程不允许执行_return，但可以通过_OUT_参数返回多个值">函数只能通过 return 语句返回单个值或表对象；而存储过程不允许执行 return，但可以通过 OUT 参数返回多个值</h3><h3 id="函数可以嵌入在SQL语句中使用，可以在SELECT语句中作为查询语句的一个部分调用；而存储过程一般是作为一个独立的部分来执行">函数可以嵌入在SQL语句中使用，可以在SELECT语句中作为查询语句的一个部分调用；而存储过程一般是作为一个独立的部分来执行</h3>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-11-15T06:38:07.000Z"><a href="/2015/11/15/mysql表的连接/">2015-11-15</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/11/15/mysql表的连接/">mysql表的连接</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="概述">概述</h1><p>连接从类型上来说有两种连接, 一种是<em>内连接(inner join)</em>, 另一种是<em>外连接(outer join)</em><br>内连接就是只连接同时存在与两个表中的内容,忽略掉所有不匹配的信息, 比如说自然连接就是内连接, 只是省略了inner关键字<br>natural join是将两个表中相同属性的值做比较, 如果相同则放在一起, 如果, 两个表中有多个相同的属性, 那么则要求两个属性的值都相同才能链接到一起, 如果只想通过一个属性join,请使用A join B using(culum)<br>假如A表与B表有共同的属性ID, 自然链接可以使用以下三种写法:</p>
+<pre><code><span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> A <span class="keyword">natural</span> <span class="keyword">join</span> B;</span>
+<span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> A, B <span class="keyword">where</span> A.ID = B.ID;</span>
+<span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> A <span class="keyword">join</span> B <span class="keyword">using</span>(ID);</span>
+</code></pre><h1 id="连接类型">连接类型</h1><h2 id="外连接就是连接两个表中所有的内容,_对于没有其中一端匹配的记录,_使用NULL元组补齐显示"><em>外连接</em>就是连接两个表中所有的内容, 对于没有其中一端匹配的记录, 使用NULL元组补齐显示</h2><p>因为连接针对是两个表的,所以外连接就分成两种情况, 一种是左外连接, 或者叫左连接, 另外一种叫右外连接, 又叫右连接</p>
+<h2 id="左外连接就是当两个表进行连接时,_对于存在于左边表中的元组,_如果右边表中无法找到与之匹配的信息,_那么就使用NULL代替显示的右边的信息"><em>左外连接</em>就是当两个表进行连接时, 对于存在于左边表中的元组, 如果右边表中无法找到与之匹配的信息, 那么就使用NULL代替显示的右边的信息</h2><h2 id="反之,_右连接就是当两个表进行连接时,_对于存在于右边表中的元组,_如果左边表中无法找到与之匹配的信息,_那么就使用NULL代替显示的左边边的信息">反之, <em>右连接</em>就是当两个表进行连接时, 对于存在于右边表中的元组, 如果左边表中无法找到与之匹配的信息, 那么就使用NULL代替显示的左边边的信息</h2><h2 id="简而言之,_就是是什么链接就保留哪一边表中的原始信息,_而用NULL代替另外一边的信息">简而言之, 就是是什么链接就保留哪一边表中的原始信息, 而用NULL代替另外一边的信息</h2><font color="red">注意: MySQL中没有全连接</font>
+
+<h2 id="以下使用两个表来看看连接的效果是什么样的">以下使用两个表来看看连接的效果是什么样的</h2><h3 id="person表,_含有每个人的ID和姓名">person表, 含有每个人的ID和姓名</h3><pre><code><span class="header">mysql&gt; select * from person;
++------+---------+</span>
+<span class="header">| id   | name    |
++------+---------+</span>
+| 111  | xanarry |
+| 111  | xanarry |
+| 222  | marry   |
+| 333  | bob     |
+| 444  | carly   |
+| 555  | tom     |
+<span class="header">| 666  | jerry   |
++------+---------+</span>
+7 rows in set (0.00 sec)
+</code></pre><h3 id="salary表,_含有每个ID对应的工资money">salary表, 含有每个ID对应的工资money</h3><pre><code><span class="header">mysql&gt; select * from salary;
++------+-------+</span>
+<span class="header">| id   | money |
++------+-------+</span>
+| 444  |  1232 |
+| 555  |  3213 |
+| 666  |  4231 |
+| 777  |  2552 |
+| 888  |  6742 |
+<span class="header">| 999  |  8724 |
++------+-------+</span>
+6 rows in set (0.00 sec)
+</code></pre><h3 id="这是自然连接的效果,_可以看出,_任意表中与另外一个表不匹配的信息都被过滤掉了,_使用inner与不使用输出结果是一致的">这是自然连接的效果, 可以看出, 任意表中与另外一个表不匹配的信息都被过滤掉了, 使用inner与不使用输出结果是一致的</h3><pre><code><span class="header">mysql&gt; select * from person join salary using(id);
++------+-------+-------+</span>
+<span class="header">| id   | name  | money |
++------+-------+-------+</span>
+| 444  | carly |  1232 |
+| 555  | tom   |  3213 |
+<span class="header">| 666  | jerry |  4231 |
++------+-------+-------+</span>
+3 rows in set (0.01 sec)
+</code></pre><p>使用inner关键词</p>
+<pre><code><span class="header">mysql&gt; select * from person inner join salary using(id);
++------+-------+-------+</span>
+<span class="header">| id   | name  | money |
++------+-------+-------+</span>
+| 444  | carly |  1232 |
+| 555  | tom   |  3213 |
+<span class="header">| 666  | jerry |  4231 |
++------+-------+-------+</span>
+3 rows in set (0.00 sec)
+</code></pre><h2 id="左链接,_同样,_在使用左右连接是是否使用outer关键词都能得到一样的效果">左链接, 同样, 在使用左右连接是是否使用outer关键词都能得到一样的效果</h2><h2 id="可以看出输出了左边表中id为111,222,333的内容,_但是右边表中没有内容与这几项匹配,_所以使用NULL代替输出">可以看出输出了左边表中id为111,222,333的内容, 但是右边表中没有内容与这几项匹配, 所以使用NULL代替输出</h2><pre><code>mysql&gt; select <span class="keyword">*</span> from person left join salary using(id);
++------+---------+-------+
+|<span class="string"> id   </span>|<span class="string"> name    </span>|<span class="string"> money </span>|
++------+---------+-------+
+|<span class="string"> 444  </span>|<span class="string"> carly   </span>|<span class="string">  1232 </span>|
+|<span class="string"> 555  </span>|<span class="string"> tom     </span>|<span class="string">  3213 </span>|
+|<span class="string"> 666  </span>|<span class="string"> jerry   </span>|<span class="string">  4231 </span>|
+|<span class="string"> 111  </span>|<span class="string"> xanarry </span>|<span class="string">  NULL </span>|
+|<span class="string"> 111  </span>|<span class="string"> xanarry </span>|<span class="string">  NULL </span>|
+|<span class="string"> 222  </span>|<span class="string"> marry   </span>|<span class="string">  NULL </span>|
+|<span class="string"> 333  </span>|<span class="string"> bob     </span>|<span class="string">  NULL </span>|
++------+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql&gt; select <span class="keyword">*</span> from person left outer join salary using(id);
++------+---------+-------+
+|<span class="string"> id   </span>|<span class="string"> name    </span>|<span class="string"> money </span>|
++------+---------+-------+
+|<span class="string"> 444  </span>|<span class="string"> carly   </span>|<span class="string">  1232 </span>|
+|<span class="string"> 555  </span>|<span class="string"> tom     </span>|<span class="string">  3213 </span>|
+|<span class="string"> 666  </span>|<span class="string"> jerry   </span>|<span class="string">  4231 </span>|
+|<span class="string"> 111  </span>|<span class="string"> xanarry </span>|<span class="string">  NULL </span>|
+|<span class="string"> 111  </span>|<span class="string"> xanarry </span>|<span class="string">  NULL </span>|
+|<span class="string"> 222  </span>|<span class="string"> marry   </span>|<span class="string">  NULL </span>|
+|<span class="string"> 333  </span>|<span class="string"> bob     </span>|<span class="string">  NULL </span>|
++------+---------+-------+
+7 rows in set (0.00 sec)
+</code></pre><h2 id="右链接,_同样,_在使用左右连接是是否使用outer关键词都能得到一样的效果">右链接, 同样, 在使用左右连接是是否使用outer关键词都能得到一样的效果</h2><h2 id="可以看出输出了右边边表中id为777,888,999的内容,_但是左边边表中没有内容与这几项匹配,_所以使用NULL代替输出">可以看出输出了右边边表中id为777,888,999的内容, 但是左边边表中没有内容与这几项匹配, 所以使用NULL代替输出</h2><pre><code><span class="header">mysql&gt; select * from person right join salary using(id);
++------+-------+-------+</span>
+<span class="header">| id   | money | name  |
++------+-------+-------+</span>
+| 444  |  1232 | carly |
+| 555  |  3213 | tom   |
+| 666  |  4231 | jerry |
+| 777  |  2552 | NULL  |
+| 888  |  6742 | NULL  |
+<span class="header">| 999  |  8724 | NULL  |
++------+-------+-------+</span>
+6 rows in set (0.00 sec)
+</code></pre><h2 id="使用嵌套子查询实现join查询的方法">使用嵌套子查询实现join查询的方法</h2><h3 id="实现左连接的方法:">实现左连接的方法:</h3><h4 id="1-先使用自然连接;">1.先使用自然连接;</h4><h4 id="2-然后再通过嵌套子查询将左表中不存在与右表的元组输出,_列数不够的用NULL补齐">2.然后再通过嵌套子查询将左表中不存在与右表的元组输出, 列数不够的用NULL补齐</h4><h4 id="3-输出上面两个查询的交集(union)">3.输出上面两个查询的交集(union)</h4><p>例子:<br>假如A表有3列, B表有三列, 有共同列ID, 那么两个表的左连接为</p>
+<pre><code><span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> A <span class="keyword">natural</span> <span class="keyword">left</span> <span class="keyword">join</span> B;</span>
+</code></pre><p>使用子查询实现</p>
+<pre><code><span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> A <span class="keyword">natural</span> <span class="keyword">join</span> B
+<span class="keyword">union</span>
+<span class="keyword">select</span> A.1列, A.2列, A.3列, <span class="literal">NULL</span>, <span class="literal">NULL</span> <span class="keyword">from</span> A
+<span class="keyword">where</span> A.id 
+<span class="keyword">not</span> <span class="keyword">in</span>
+(<span class="keyword">select</span> ID <span class="keyword">from</span> B);</span>
+</code></pre><p>同样右连接只需要交换顺序即可</p>
+<h3 id="全连接的则使用两个union求自然连接,_只存在于左边和只存在于右边的并集">全连接的则使用两个union求自然连接, 只存在于左边和只存在于右边的并集</h3>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-11-15T06:36:20.000Z"><a href="/2015/11/15/mysql数据库和表的操作/">2015-11-15</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/11/15/mysql数据库和表的操作/">mysql数据库和表的操作</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="创建数据库">创建数据库</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE databasename DEFAULT CHARSET=&#23383;&#31526;&#38598;;</span><br></pre></td></tr></table></figure>
+<h2 id="选择数据库">选择数据库</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USE databasename;</span><br></pre></td></tr></table></figure>
+<h1 id="创建表">创建表</h1><p>语法如下:   </p>
+<pre><code><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tablename(
+    属性名 类型 约束条件,
+    属性名 类型 约束条件,
+    ...
+) 整个表的约束条件;</span>
+</code></pre><p>一个具体的例子:(以下创建一个学生表, 主键为id, )</p>
+<pre><code><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> student (
+        id <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT, #设置自增
+        name <span class="built_in">VARCHAR</span>(<span class="number">10</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,
+        sex <span class="built_in">CHAR</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,
+        age <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,
+        addr <span class="built_in">VARCHAR</span>(<span class="number">100</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,
+        <span class="keyword">no</span> <span class="built_in">CHAR</span>(<span class="number">10</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,
+        <span class="keyword">PRIMARY</span> <span class="keyword">KEY</span>(id) #设置主键
+        <span class="keyword">foreign</span> <span class="keyword">key</span> id <span class="keyword">references</span> 引用表名(id) <span class="keyword">on</span> <span class="keyword">delete</span> casecade
+)   DUFAULT <span class="keyword">CHARSET</span>=utf8 <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span>;</span> #设置表的相关配置, 比如此处设置编码使用utf8, 使用innodb引擎
+</code></pre><p>创建表的另外两个方法:</p>
+<h3 id="假如我们要创建一个和已有表一模一样的表">假如我们要创建一个和已有表一模一样的表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table new_table_name like a_exist_table_name;</span><br></pre></td></tr></table></figure>
+<h3 id="通过select的结果创建一个含有数据的表(这个表通常作为临时使用)">通过select的结果创建一个含有数据的表(这个表通常作为临时使用)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table new_table_name as (select * from a_table_name);</span><br></pre></td></tr></table></figure>
+<h2 id="查看表中的定义的所有属性和其类型">查看表中的定义的所有属性和其类型</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DESC &#34920;&#21517;</span><br></pre></td></tr></table></figure>
+<p><font color="red">关于创建表是的完整性约束mysql并不支持check, 虽然将check写入语句会被解析, 但是会被所有引擎忽略掉, 这是官方的说明. 如果需要实现类似的功能可以使用触发器实现,default 关键词是可用的, 注意default后面没有等号, 直接跟默认值<font></font></font></p>
+<h1 id="修改表结构">修改表结构</h1><h2 id="1-删除表">1.删除表</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP tablename</span><br></pre></td></tr></table></figure>
+<h2 id="2-更改表的结构">2.更改表的结构</h2><h3 id="使用”alter”语句更表的结构和属性">使用”alter”语句更表的结构和属性</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE tablename ADD (&#23646;&#24615;&#21517; &#25968;&#25454;&#31867;&#22411; &#32422;&#26463;&#26465;&#20214; first or after &#23646;&#24615;&#21517;) or &#32034;&#24341; or &#22806;&#38190;     #&#25554;&#20837;&#26032;&#30340;&#23646;&#24615;&#10;ALTER TABLE tablename DROP &#23646;&#24615;&#21517; or &#20027;&#38190; or &#32034;&#24341; or &#22806;&#38190; #&#21024;&#20854;&#20013;&#30340;&#19968;&#39033;&#23646;&#24615;&#10;ALTER TABLE tablename MODIFY &#23646;&#24615;&#21517; &#26032;&#30340;&#25968;&#25454;&#31867;&#22411;&#10;alter table tablename change &#23646;&#24615;&#21517;, &#26032;&#30340;&#23646;&#24615;&#21517;, &#26032;&#30340;&#25968;&#25454;&#31867;&#22411;&#10;#&#37325;&#21629;&#21517;&#34920;&#10;ALTER TABLE tablename RENAME AS &#26032;&#34920;&#21517;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-11-15T06:08:35.000Z"><a href="/2015/11/15/python爬虫抓取新华网新闻并自动生成word文档/">2015-11-15</a></time>
       
       
@@ -286,197 +725,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-10-02T14:34:40.000Z"><a href="/2015/10/02/windows-安装MySQL压缩包/">2015-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/10/02/windows-安装MySQL压缩包/">windows 安装MySQL压缩包</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h1 id="安装MySQL">安装MySQL</h1><ol>
-<li><p><a href="http://www.mysql.com/" target="_blank" rel="external">下载MySQL</a></p>
-</li>
-<li><p>解压MySQL并且进入MySQL的bin目标</p>
-</li>
-<li><p>执行: mysqld —explicit_defaults_timestamp=true #初始化数据库</p>
-</li>
-<li><p>执行: mysqld —console #启动数据库服务</p>
-</li>
-<li><p>执行: mysql -u root mysql #启动数据库<br>执行: use mysql<br>执行: update user set password= PASSWORD(“设置密码”) where user=”root” #设置管理员密码<br>执行: n #立即刷新</p>
-</li>
-<li><p>注册MySQL服务到Windows<br>执行: mysqld — install MySQL #最后一个参数是服务名, 可随意定义</p>
-</li>
-<li>为了不用每次都切换目录使用MySQL, 将MySQL的bin目录路径添加到环境变量</li>
-</ol>
-<p>windows启动和停止MySQL服务的命令行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net start mysql</span><br><span class="line">net stop mysql</span><br></pre></td></tr></table></figure></p>
-<p>注意: 如果Windows无法启动MySQL的服务, 请检查注册表: HKEY_LOCAL_MACHINE-SYSTEM-CurrentControlSet-services-mysql右边的ImagePath属性, 看改值是否指向MySQL解压缩文件的路径, 如果不是请修改</p>
-<h1 id="禁止命令行直接使用”mysql”命令登录">禁止命令行直接使用”mysql”命令登录</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">以root身份登录MySQL</span><br><span class="line">use user</span><br><span class="line">delete from user <span class="built_in">where</span> user=<span class="string">""</span>;</span><br><span class="line">flush privileges</span><br></pre></td></tr></table></figure>
-<p>OK, 生效</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-08-09T03:50:58.000Z"><a href="/2015/08/09/使用Python脚本将酷狗音乐的缓存文件修改为可播放/">2015-08-09</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/08/09/使用Python脚本将酷狗音乐的缓存文件修改为可播放/">使用Python脚本将酷狗音乐的缓存文件修改为可播放</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>假期回老家后比较郁闷的一件事就是没有网, 因为在学校一直使用的是酷狗的在线播放, 所有说连电脑里面里MP3音乐也没有, 由于之前我发现将酷狗酷狗音乐缓存文件后缀直接改成”mp3”就能播放, 所以需要将修改酷狗音乐的缓存文件的后缀, 对于重命名大量缓存文件, 可以使用命令行<strong>ren *.kgtemp *.mp3</strong>直接搞定, 另外一种就是编程处理了, 显然编程显得小题大做, 但是还是决定使用Python脚本处理, 因为脚本可以同时从歌词目录从将一部分歌曲的名字获取过来并设置. </p>
-<p>下面是处理的脚本文件, Python34<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"></span><br><span class="line">patterCache = <span class="string">"kgtemp"</span></span><br><span class="line">patterLyric = <span class="string">"krc"</span></span><br><span class="line">suffixLen = <span class="number">36</span></span><br><span class="line">newDir = <span class="string">"tempMP3"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#遍历所有目录搜索酷狗音乐的目录</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">searchPath</span><span class="params">(dire)</span>:</span></span><br><span class="line">    <span class="string">'''seal recursive function inside searchPath, ensure that most variable are locablbe'''</span></span><br><span class="line">    <span class="comment">#files means the number of files</span></span><br><span class="line">    <span class="comment">#unknown means the count of files with name's encode is not gbk, and can't output</span></span><br><span class="line">    <span class="comment">#only define like as follow can be modify</span></span><br><span class="line">    print(<span class="string">"searching..."</span>)</span><br><span class="line">    res = &#123;<span class="string">"lyrics"</span>: <span class="keyword">None</span>, <span class="string">"caches"</span> : <span class="keyword">None</span>&#125;</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">traverse</span><span class="params">(dire)</span>:</span></span><br><span class="line">        <span class="string">'''recursive function with file counter and output file's path'''</span></span><br><span class="line">        <span class="keyword">try</span>:<span class="comment">#give up unreadable direction</span></span><br><span class="line">            os.chdir(dire)</span><br><span class="line">        <span class="keyword">except</span> Exception:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="comment">#traverse all files or direcions in current direction</span></span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> os.listdir(dire):</span><br><span class="line">            <span class="comment">#derection then recursive search</span></span><br><span class="line">            <span class="keyword">if</span> os.path.isdir(x) <span class="keyword">and</span> x != <span class="string">"$RECYCLE.BIN"</span>:</span><br><span class="line">                    traverse(os.path.abspath(x))  </span><br><span class="line">            <span class="comment">#find kugou cache path          </span></span><br><span class="line">            <span class="keyword">elif</span> x[-len(patterCache) : ] == patterCache:</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> res[<span class="string">"caches"</span>]:</span><br><span class="line">                    res[<span class="string">"caches"</span>] = os.getcwd()</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            <span class="comment">#find kugou lyric path</span></span><br><span class="line">            <span class="keyword">elif</span> x[-len(patterLyric) : ] == patterLyric:</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> res[<span class="string">"lyrics"</span>]:</span><br><span class="line">                    res[<span class="string">"lyrics"</span>] = os.getcwd()</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">        os.chdir(<span class="string">".."</span>)</span><br><span class="line">        <span class="comment">#if has find the path of both lyric and cache, then return</span></span><br><span class="line">        <span class="keyword">if</span> res[<span class="string">"lyrics"</span>] <span class="keyword">and</span> res[<span class="string">"caches"</span>]:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">    traverse(dire)</span><br><span class="line"></span><br><span class="line">    print(<span class="string">"finish searching!"</span>)</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">modify</span><span class="params">(cacheDir, lyricDir)</span>:</span></span><br><span class="line">    <span class="string">'''copy all cache in new direction and rename all file, set sufix as mp3'''</span></span><br><span class="line">    <span class="comment">#change working dir to lyric dir</span></span><br><span class="line">    os.chdir(lyricDir)</span><br><span class="line">    names = &#123;&#125;</span><br><span class="line">    print(<span class="string">"copy name list from lyrics"</span>)</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> os.listdir(): <span class="comment">#get all lyric file name</span></span><br><span class="line">        names[x[-suffixLen : -len(patterLyric) - <span class="number">1</span>]] = x[ : -suffixLen - <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment">#change working dir </span></span><br><span class="line">    os.chdir(cacheDir)</span><br><span class="line">    print(<span class="string">"check and create new direction"</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(<span class="string">"../"</span> + newDir):</span><br><span class="line">        os.mkdir(<span class="string">"../"</span> + newDir)</span><br><span class="line"></span><br><span class="line">    print(<span class="string">"copying..."</span>)</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> os.listdir():</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(<span class="string">"../"</span> + newDir + item):</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="comment">#copy cache to new direciont</span></span><br><span class="line">                shutil.copy(item, <span class="string">"../"</span> + newDir)</span><br><span class="line">                core = item[ : -len(patterCache) - <span class="number">1</span>]</span><br><span class="line">                <span class="keyword">if</span> core <span class="keyword">in</span> names:<span class="comment">#rename cache if has lyric file</span></span><br><span class="line">                    os.rename(<span class="string">"../"</span> + newDir + item, <span class="string">"../"</span> + newDir + names[core] + <span class="string">".mp3"</span>)</span><br><span class="line">                <span class="keyword">else</span>:<span class="comment">#set sufix to mp3</span></span><br><span class="line">                    os.rename(<span class="string">"../"</span> + newDir + item, <span class="string">"../"</span> + newDir + core + <span class="string">".mp3"</span>)</span><br><span class="line">            <span class="keyword">except</span> Exception:</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">verify</span><span class="params">(dire)</span>:</span></span><br><span class="line">    <span class="string">'''traverse all files in new direction to check whether has file not change its sufix'''</span></span><br><span class="line">    print(<span class="string">"verifying"</span>)</span><br><span class="line">    os.chdir(dire)</span><br><span class="line">    os.chdir(<span class="string">"../"</span> + newDir)</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> os.listdir():</span><br><span class="line">        <span class="keyword">if</span> item[-<span class="number">3</span> : ] != <span class="string">"mp3"</span>:</span><br><span class="line">            os.rename(item, item[ : -len(patterCache) - <span class="number">1</span>] + <span class="string">".mp3"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">##################entry######################</span></span><br><span class="line">loc = str(input(<span class="string">"请输入酷狗音乐的缓存磁盘:"</span>))</span><br><span class="line"><span class="keyword">while</span> <span class="keyword">not</span> loc.isalpha():</span><br><span class="line">    print(loc, <span class="string">"is not valid, input again:"</span>)</span><br><span class="line">    loc = str(input(<span class="string">"请输入酷狗音乐的缓存磁盘:"</span>))</span><br><span class="line">loc += <span class="string">":\\"</span></span><br><span class="line"></span><br><span class="line">res = searchPath(loc)</span><br><span class="line">print(<span class="string">"cache dir:"</span>, res[<span class="string">"caches"</span>])</span><br><span class="line">print(<span class="string">"lyric dir:"</span>, res[<span class="string">"lyrics"</span>])</span><br><span class="line">modify(res[<span class="string">"caches"</span>], res[<span class="string">"lyrics"</span>])</span><br><span class="line">verify(res[<span class="string">"caches"</span>])</span><br><span class="line">os.chdir(res[<span class="string">"caches"</span>])</span><br><span class="line">os.chdir(<span class="string">"../"</span> + newDir)</span><br><span class="line">print(<span class="string">"done check mp3 file in"</span>, os.getcwd())</span><br></pre></td></tr></table></figure> </p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-07-13T08:17:30.000Z"><a href="/2015/07/13/汇编嵌套循环/">2015-07-13</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/07/13/汇编嵌套循环/">汇编嵌套循环</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-07-13T08:16:47.000Z"><a href="/2015/07/13/汇编除法运算/">2015-07-13</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/07/13/汇编除法运算/">汇编除法运算</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>汇编的除法指令是”div”, 实际上相对高级语言的除法, 汇编指令的div是同时得到商和余数的, 结果分别保存在不同的寄存器.</p>
-<ol>
-<li>除数: 有8位和16位两种, 在一个寄存器或者内存单元中</li>
-<li>被除数: 如果除数是8位则被除数为16位, 默认放在AX中, 如果除数是16位, 则被除数为32位, 默认高位放在DX, 低位放在AX</li>
-<li>结果: 如果除数是8位, 那么执行div后, 余数存放在AH, 商存放在AL中; 如果除数是16位, 那么AX保存商, DX保存余数<br>注意: 被除数的位数一定是除数的两倍</li>
-</ol>
-<p>指令格式:<br>1: div registre<br>2: div 内存单元</p>
-<p>一个除数为8位的例子(96除以10)</p>
-<p>mov ax 60h ;dec 96 = hex 60<br>mov bh 0ah ;dec 10 = hex ah, 代码中数字起始位位字母要在最前加0<br>div bh     ;执行后ax为:0609, 即高位ah=06(余数), 低位al=09(商)</p>
-<p>执行div后ax的高低位就可以后后续的计算了</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-07-13T08:15:54.000Z"><a href="/2015/07/13/汇编寄存器概要/">2015-07-13</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/07/13/汇编寄存器概要/">汇编寄存器概要</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -508,7 +756,7 @@
   
     <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
   
-    <li><a href="/categories/MySQL/">MySQL</a><small>2</small></li>
+    <li><a href="/categories/MySQL/">MySQL</a><small>7</small></li>
   
     <li><a href="/categories/Operating-System/">Operating System</a><small>1</small></li>
   
@@ -539,7 +787,9 @@
   
     <li><a href="/tags/C/">C++</a><small>1</small></li>
   
-    <li><a href="/tags/MySQL/">MySQL</a><small>4</small></li>
+    <li><a href="/tags/MySQL/">MySQL</a><small>8</small></li>
+  
+    <li><a href="/tags/Mysql/">Mysql</a><small>1</small></li>
   
     <li><a href="/tags/c-高精度/">c++高精度</a><small>1</small></li>
   

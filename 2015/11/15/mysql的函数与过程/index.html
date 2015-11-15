@@ -1,0 +1,360 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>mysql的函数与过程 | xanarry&#39;s</title>
+  <meta name="author" content="xanarry">
+  
+  <meta name="description" content="xanarry&#39;s blog">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="mysql的函数与过程"/>
+  <meta property="og:site_name" content="xanarry&#39;s"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="xanarry&#39;s" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">xanarry&#39;s</a></h1>
+  <h2><a href="/">创造就是一个构造过程的过程!</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-11-15T06:38:42.000Z"><a href="/2015/11/15/mysql的函数与过程/">2015-11-15</a></time>
+      
+      
+  
+    <h1 class="title">mysql的函数与过程</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="函数">函数</h1><h2 id="查看函数">查看函数</h2><pre><code><span class="operator"><span class="keyword">show</span> <span class="keyword">function</span> <span class="keyword">status</span>;</span>
+<span class="operator"><span class="keyword">select</span> <span class="string">'name'</span> <span class="keyword">from</span> mysql.proc <span class="keyword">where</span> db= <span class="string">'test'</span> <span class="keyword">and</span> <span class="string">'type'</span>=<span class="string">'function'</span>;</span>
+</code></pre><h2 id="mysql函数的创建">mysql函数的创建</h2><pre><code>基本格式如下
+<span class="operator"><span class="keyword">create</span> <span class="keyword">function</span> 函数名(参数 类型, 参数 类型...)
+<span class="keyword">returns</span> 返回类型
+<span class="keyword">begin</span>
+    <span class="keyword">declare</span> 变量 类型, 变量 类型
+    函数体
+<span class="keyword">end</span>
+(<span class="keyword">begin</span>与<span class="keyword">end</span>之间的为函数体, 语句之间使用分号隔开)</span>
+</code></pre><h2 id="函数的删除">函数的删除</h2><pre><code><span class="operator"><span class="keyword">drop</span> <span class="keyword">function</span> function_name;</span>
+</code></pre><h2 id="函数的创建">函数的创建</h2><h3 id="以下创建helloworld的函数,_作用仅仅是返回一个字符串">以下创建helloworld的函数, 作用仅仅是返回一个字符串</h3><pre><code>mysql&gt; delimiter #
+mysql&gt; create function helloworld()
+    -<span class="ruby">&gt; returns varchar(<span class="number">20</span>)
+</span>    -<span class="ruby">&gt; <span class="keyword">begin</span>
+</span>    -<span class="ruby">&gt; <span class="keyword">return</span> <span class="string">"hello world"</span>;
+</span>    -<span class="ruby">&gt; <span class="keyword">end</span>
+</span>    -<span class="ruby">&gt; <span class="comment">#</span>
+</span>Query OK, 0 rows affected (0.01 sec)
+</code></pre><h3 id="这是输出结果">这是输出结果</h3><pre><code><span class="header">mysql&gt; select helloworld()#
++--------------+</span>
+<span class="header">| helloworld() |
++--------------+</span>
+<span class="header">| hello world  |
++--------------+</span>
+1 row in set (0.00 sec)
+</code></pre><h3 id="再看看带参数的函数定义,_注意这里参数名的参数类型是相反的,_和一般编程语言的定义不同">再看看带参数的函数定义, 注意这里参数名的参数类型是相反的, 和一般编程语言的定义不同</h3><pre><code>mysql&gt; create function sayhello(name varchar(10))
+    -<span class="ruby">&gt; returns varchar(<span class="number">100</span>)
+</span>    -<span class="ruby">&gt; <span class="keyword">begin</span>
+</span>    -<span class="ruby">&gt; <span class="keyword">return</span> concat(<span class="string">"hello "</span>, name);
+</span>    -<span class="ruby">&gt; <span class="keyword">end</span>
+</span>    -<span class="ruby">&gt; <span class="comment">#</span>
+</span>Query OK, 0 rows affected (0.00 sec)
+</code></pre><h3 id="输出结果">输出结果</h3><pre><code><span class="header">mysql&gt; select sayhello("xanarry")#
++---------------------+</span>
+<span class="header">| sayhello("xanarry") |
++---------------------+</span>
+<span class="header">| hello xanarry       |
++---------------------+</span>
+1 row in set (0.00 sec)
+</code></pre><h3 id="定义多个参数的函数,_并在函数中使用定义的变量">定义多个参数的函数, 并在函数中使用定义的变量</h3><p>下面我定义一个函数, 输入两个数a,b. 返回从a到b的求和结果</p>
+<pre><code>mysql&gt; create function mysum(a int, b int) #定义函数名和参数及其类型
+    -<span class="ruby">&gt; returns int                         <span class="comment">#定义返回参数类型</span>
+</span>    -<span class="ruby">&gt; <span class="keyword">begin</span>                               <span class="comment">#函数体开始</span>
+</span>    -<span class="ruby">&gt; declare sum int;                    <span class="comment">#定义sum为int变量保持求和结果</span>
+</span>    -<span class="ruby">&gt; set sum = <span class="number">0</span>;                        <span class="comment">#初始化sum为0</span>
+</span>    -<span class="ruby">&gt; <span class="keyword">while</span> a &lt;= b <span class="keyword">do</span>                     <span class="comment">#当a&lt;=b时应该执行循环语句, 注意循环语句有和do</span>
+</span>    -<span class="ruby">&gt;     set sum = sum + a;              <span class="comment">#求和</span>
+</span>    -<span class="ruby">&gt;     set a = a + <span class="number">1</span>;                  <span class="comment">#自加</span>
+</span>    -<span class="ruby">&gt; <span class="keyword">end</span> <span class="keyword">while</span>;                          <span class="comment">#标记循环体结束</span>
+</span>    -<span class="ruby">&gt; <span class="keyword">return</span> sum;                         <span class="comment">#返回sum</span>
+</span>    -<span class="ruby">&gt; <span class="keyword">end</span>                                 <span class="comment">#结束函数定义</span>
+</span>    -<span class="ruby">&gt; <span class="comment">#</span>
+</span>Query OK, 0 rows affected (0.00 sec)
+</code></pre><h3 id="验证函数的正确性">验证函数的正确性</h3><pre><code><span class="header">mysql&gt; select  mysum(1,10)#
++-------------+</span>
+<span class="header">| mysum(1,10) |
++-------------+</span>
+<span class="header">|          55 |
++-------------+</span>
+1 row in set (0.01 sec)
+</code></pre><p>对与mysql函数返回类型有一个需要注意的地方就是函数是不能返回一个table, 只能是一个具体的值, 虽然sql标准是可以返回一个表</p>
+<h1 id="创建过程">创建过程</h1><h2 id="创建语句的语法">创建语句的语法</h2><pre><code><span class="keyword">create</span> <span class="function"><span class="keyword">procedure</span> 过程名<span class="params">(<span class="keyword">in</span> 参数 类型, <span class="keyword">out</span> 参数 类型, inout 参数 类型)</span>
+<span class="title">begin</span>
+    语句集合;</span>
+<span class="keyword">end</span>
+</code></pre><h3 id="下面是一个简单例子,_过程接收两个输入参数,_并接收一个输出参数保存结果">下面是一个简单例子, 过程接收两个输入参数, 并接收一个输出参数保存结果</h3><pre><code>delimiter <span class="comment">//</span>
+<span class="keyword">create</span> <span class="function"><span class="keyword">procedure</span> <span class="title">a</span><span class="params">(<span class="keyword">in</span> x int, y int, <span class="keyword">out</span> sum int)</span>
+<span class="title">begin</span>
+<span class="title">select</span> <span class="title">x</span> + <span class="title">y</span> <span class="title">into</span> <span class="title">sum</span>;</span>
+<span class="keyword">end</span>
+<span class="comment">//</span>
+</code></pre><h3 id="其中对于同一种类的参数,_可以每个参数写一个in,_或者只写一个in,_然后后面跟参数">其中对于同一种类的参数, 可以每个参数写一个in, 或者只写一个in, 然后后面跟参数</h3><pre><code>create procedure a(in x int, in y int, out sum int)
+begin
+select x + y into sum;
+end
+<span class="comment">//</span>
+
+mysql&gt; call a(12, 23, @sum<span class="emphasis">_v)//
+
+</span><span class="header">mysql&gt; select @sum_v//
++--------+</span>
+<span class="header">| @sum_v |
++--------+</span>
+<span class="header">|     35 |
++--------+</span>
+</code></pre><h3 id="再来两个复杂点的procedure">再来两个复杂点的procedure</h3><p>输出所有部门的总工资, 然后将指定部门的总工资输出到变量</p>
+<pre><code><span class="operator"><span class="keyword">drop</span> <span class="keyword">procedure</span> <span class="keyword">if</span> <span class="keyword">exists</span> a//
+<span class="keyword">create</span> <span class="keyword">procedure</span> a(<span class="keyword">in</span> dept <span class="built_in">varchar</span>(<span class="number">30</span>), out tsalary <span class="built_in">int</span>)
+<span class="keyword">begin</span>
+<span class="keyword">select</span> dept_name, <span class="keyword">sum</span>(salary) <span class="keyword">from</span> instructor <span class="keyword">group</span> <span class="keyword">by</span> dept_name;</span>
+<span class="operator"><span class="keyword">select</span> <span class="keyword">sum</span>(salary) <span class="keyword">into</span> tsalary <span class="keyword">from</span> instructor <span class="keyword">group</span> <span class="keyword">by</span> dept_name <span class="keyword">having</span> dept_name = dept;</span>
+<span class="operator"><span class="keyword">end</span>
+//</span>
+</code></pre><h3 id="下面这个procedure接收输入数据,_然后验证数据的合法性,_如果满足要求则插入,_将状态吸入status变量">下面这个procedure接收输入数据, 然后验证数据的合法性, 如果满足要求则插入, 将状态吸入status变量</h3><pre><code>drop <span class="keyword">procedure</span> <span class="keyword">if</span> exists a//
+create <span class="keyword">procedure</span> a(<span class="type">in</span> <span class="keyword">name</span> varchar(<span class="number">10</span>), <span class="keyword">pass</span> varchar(<span class="number">10</span>), addr varchar(<span class="number">30</span>), <span class="type">out</span> <span class="keyword">status</span> varchar(<span class="number">100</span>))
+begin
+<span class="keyword">if</span> <span class="keyword">name</span> = <span class="string">""</span>
+<span class="keyword">then</span>
+    <span class="keyword">select</span> <span class="string">"name can not be empty"</span> into <span class="keyword">status</span>;
+elseif char_length(<span class="keyword">pass</span>) &lt; <span class="number">6</span> 
+<span class="keyword">then</span>
+    <span class="keyword">select</span> <span class="string">"length of passworld must bigger than 6"</span> into <span class="keyword">status</span>;
+<span class="keyword">else</span>
+    insert into user(<span class="keyword">name</span>, <span class="keyword">pass</span>, addr) values(<span class="keyword">name</span>, <span class="keyword">pass</span>, addr);
+    <span class="keyword">select</span> <span class="string">"done"</span> into <span class="keyword">status</span>;
+<span class="keyword">end</span> <span class="keyword">if</span>;
+<span class="keyword">end</span>
+//
+</code></pre><h2 id="过程的删除">过程的删除</h2><pre><code>drop <span class="function"><span class="keyword">procedure</span> <span class="title">if</span> <span class="title">exists</span> <span class="title">a</span></span>
+</code></pre><h1 id="函数与过程的区别">函数与过程的区别</h1><h3 id="过程可以理解为一组操作的集合,_并且可以在这些操作中获取某些有用的数据">过程可以理解为一组操作的集合, 并且可以在这些操作中获取某些有用的数据</h3><h3 id="函数只能通过_return_语句返回单个值或表对象；而存储过程不允许执行_return，但可以通过_OUT_参数返回多个值">函数只能通过 return 语句返回单个值或表对象；而存储过程不允许执行 return，但可以通过 OUT 参数返回多个值</h3><h3 id="函数可以嵌入在SQL语句中使用，可以在SELECT语句中作为查询语句的一个部分调用；而存储过程一般是作为一个独立的部分来执行">函数可以嵌入在SQL语句中使用，可以在SELECT语句中作为查询语句的一个部分调用；而存储过程一般是作为一个独立的部分来执行</h3>
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/MySQL/">MySQL</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/MySQL/">MySQL</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/C/">C</a><small>1</small></li>
+  
+    <li><a href="/categories/CPP/">CPP</a><small>3</small></li>
+  
+    <li><a href="/categories/Hexo/">Hexo</a><small>2</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>1</small></li>
+  
+    <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
+  
+    <li><a href="/categories/MySQL/">MySQL</a><small>7</small></li>
+  
+    <li><a href="/categories/Operating-System/">Operating System</a><small>1</small></li>
+  
+    <li><a href="/categories/Other/">Other</a><small>1</small></li>
+  
+    <li><a href="/categories/Python/">Python</a><small>11</small></li>
+  
+    <li><a href="/categories/jsp/">jsp</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>2</small></li>
+  
+    <li><a href="/categories/sublime-text/">sublime text</a><small>2</small></li>
+  
+    <li><a href="/categories/windows/">windows</a><small>1</small></li>
+  
+    <li><a href="/categories/位运算/">位运算</a><small>1</small></li>
+  
+    <li><a href="/categories/汇编/">汇编</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/C/">C++</a><small>1</small></li>
+  
+    <li><a href="/tags/MySQL/">MySQL</a><small>8</small></li>
+  
+    <li><a href="/tags/Mysql/">Mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/c-高精度/">c++高精度</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>3</small></li>
+  
+    <li><a href="/tags/jsp/">jsp</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda表达式/">lambda表达式</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>2</small></li>
+  
+    <li><a href="/tags/other/">other</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>2</small></li>
+  
+    <li><a href="/tags/python字典/">python字典</a><small>1</small></li>
+  
+    <li><a href="/tags/sublime-text/">sublime text</a><small>2</small></li>
+  
+    <li><a href="/tags/test/">test</a><small>1</small></li>
+  
+    <li><a href="/tags/位运算/">位运算</a><small>2</small></li>
+  
+    <li><a href="/tags/其他/">其他</a><small>1</small></li>
+  
+    <li><a href="/tags/命令行/">命令行</a><small>1</small></li>
+  
+    <li><a href="/tags/字符串/">字符串</a><small>1</small></li>
+  
+    <li><a href="/tags/学习/">学习</a><small>1</small></li>
+  
+    <li><a href="/tags/排序/">排序</a><small>1</small></li>
+  
+    <li><a href="/tags/汇编/">汇编</a><small>1</small></li>
+  
+    <li><a href="/tags/爬虫/">爬虫</a><small>1</small></li>
+  
+    <li><a href="/tags/生活/">生活</a><small>1</small></li>
+  
+    <li><a href="/tags/高精度/">高精度</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 xanarry
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'xanarry';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?05b8c86ae6be8be1243fc590c74bfde1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</body>
+</html>

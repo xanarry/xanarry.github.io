@@ -51,6 +51,196 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-06-09T15:29:38.000Z"><a href="/2015/06/09/操作系统学习的开始/">2015-06-09</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/06/09/操作系统学习的开始/">操作系统学习的开始</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>半个月前做了一套在线笔试题, 被虐的受刺激了. </p>
+<p>操作系统的和计算机网络的内容完全不会, 马上就大三了, 虽然学校大三才开这些课, 但是要想成为大神是不能靠上课学的, 还有感觉从大一到现在主要的学习都是在编程上面去了, 在理论基础上还有很对东西不足, 我可不想让这些东西成为后续发展的瓶颈, 实际上我最大瓶颈还是数学.</p>
+<p>说实话我对数学还是有点兴趣的, 但是数学水平还相当不给力, 线代概率课还大多数时间睡觉了, 看来是自找的, 不过, 有时间还的好好学学数学. 作为理论学习的开始, 于是就开始学习操作系统的计划, 书籍为&lt;&lt;现代操作系统&gt;&gt;英文版的, 非常不错的专业书籍, 嗯, 其实到现在都看了100多页了, 同时也学习英语了.</p>
+<p>这周末考六级, 一点都还没有看呢, 自认为平时的英语阅读量还行, 所有就没怎么复习了, 这是自信还是自负, 哈哈, 考试完后再说吧. 还有一点就当是写日记了吧, 这两天在看红黑树, 红黑树的插入能在纸上画图实现的, 但在代码实现时又是困难重重, 所以到晚上还没没实现, 搞得整个人都郁闷了, 于是来写这个博文, 这么没有逻辑的博文, 算是扯淡了, 哈哈, 除了红黑树, 还打算后面陆续学Splay-tree, KD-tree, B-tree, B+-tree, R-tree, 线段树, skip-list, 二项堆, fibonacci堆, 都是比较高大上的数据结构, 任务沉重, 先睡觉了, 不然又是在浪费青春了.  </p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-08T07:13:27.000Z"><a href="/2015/06/08/使用Python-list通过递归实现一个表达式计算器/">2015-06-08</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/06/08/使用Python-list通过递归实现一个表达式计算器/">使用Python list通过递归实现一个表达式计算器</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>因为python list可以同时保存不同的数据, 并且提供丰富的操作方案, 想想可以同时把数字和运算符号都保存到列表中, 于是就诞生了使用列表写个表达式计算器, 思路就是同时将数字和运算符保存到列表, 然后从左向右计算所有乘除号两边的数值, 然后删除两个操作数和一个运算符, 再把运算结果保存到刚才计算的位置, 然后再第二次循环计算剩下的加减法运算, 最有元组只剩下一个数, 输出即结果, </p>
+<p>通过以上的方案已经能计算任意不含括号的加减乘除运算, 但是我想要功能个更NB一点, 要能计算带括号的表达式, 怎么实现呢, 同先计算乘除法一样, 上面计算简单表达式的方法写成一个子函数, 然后再写一个递归函数递归计算带括号的表达式就OK了, 先计算最内部括号中的表达式, 然后将最内部的括号替换为计算后的结果, 在递归外部一层的, 最有留下的就是结果了</p>
+<h3 id="检查符号是否为运算符号">检查符号是否为运算符号</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">nums = <span class="string">"0123456789"</span></span><br><span class="line">optrs = <span class="string">"+-*/="</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isoperator</span><span class="params">(expression, index)</span>:</span></span><br><span class="line">    <span class="string">'''判断符号是运算符号还算是描述负数的符号'''</span></span><br><span class="line">    <span class="keyword">if</span> nums.find(expression[index - <span class="number">1</span>]) != -<span class="number">1</span> <span class="keyword">and</span> optrs.find(expression[index]) != -<span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">False</span></span><br></pre></td></tr></table></figure>
+<h3 id="将字符串表达式转换为列表">将字符串表达式转换为列表</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gen_list</span><span class="params">(expression)</span>:</span></span><br><span class="line">    <span class="string">'''将输入的字符串表达式转换为列表'''</span></span><br><span class="line">    units = []<span class="comment">#保存包含操作符和操作数的列表</span></span><br><span class="line">    start = <span class="number">0</span><span class="comment">#标记数字起点</span></span><br><span class="line">    expression = (expression <span class="keyword">if</span> expression[len(expression) - <span class="number">1</span>] == <span class="string">"="</span> <span class="keyword">else</span> expression + <span class="string">"="</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(expression)):</span><br><span class="line">        <span class="keyword">if</span> (isoperator(expression, i)):</span><br><span class="line">            units.append(float(expression[start:i]))</span><br><span class="line">            units.append(expression[i])</span><br><span class="line">            start = i + <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> units</span><br></pre></td></tr></table></figure>
+<h3 id="计算只有简单加减乘除的表达式">计算只有简单加减乘除的表达式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">base_calculate</span><span class="params">(expression, isFirst = True)</span>:</span></span><br><span class="line">    <span class="string">'''计算只含有加减乘除的基本表达式'''</span></span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; len(expression) - <span class="number">3</span>:</span><br><span class="line">        a = expression[i]<span class="comment">#获取操作数1</span></span><br><span class="line">        b = expression[i + <span class="number">2</span>]<span class="comment">#获取操作数2</span></span><br><span class="line">        optr = expression[i + <span class="number">1</span>]<span class="comment">#或者运算符</span></span><br><span class="line">        tresult = <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> optr == <span class="string">"*"</span>:</span><br><span class="line">            tresult = a * b</span><br><span class="line">        <span class="keyword">elif</span> optr == <span class="string">"/"</span>:</span><br><span class="line">            tresult = a / b</span><br><span class="line">        <span class="keyword">elif</span> <span class="keyword">not</span> isFirst <span class="keyword">and</span> optr == <span class="string">"+"</span>:</span><br><span class="line">            tresult = a + b</span><br><span class="line">        <span class="keyword">elif</span> <span class="keyword">not</span> isFirst <span class="keyword">and</span> optr == <span class="string">"-"</span>:</span><br><span class="line">            tresult = a - b</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> tresult != <span class="keyword">None</span>:</span><br><span class="line">            expression[i] = tresult<span class="comment">#将第一个操作数替换问运算结果</span></span><br><span class="line">            <span class="keyword">del</span>(expression[i + <span class="number">1</span> : i + <span class="number">3</span>])<span class="comment">#删除运算符号和后一个操作数</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            i += <span class="number">2</span><span class="comment">#下标偏移</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> isFirst:</span><br><span class="line">        <span class="keyword">return</span> base_calculate(expression, <span class="keyword">False</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> expression[<span class="number">0</span>]<span class="comment">#返回结果</span></span><br></pre></td></tr></table></figure>
+<h3 id="实现递归计算带括号的表达式">实现递归计算带括号的表达式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">calculate</span><span class="params">(expression)</span>:</span></span><br><span class="line">    <span class="string">'''递归计算带括号的表达式'''</span></span><br><span class="line">    <span class="keyword">if</span> expression.find(<span class="string">"("</span>) == -<span class="number">1</span>:<span class="comment">#如果表达式不含符号, 直接返回计算结果</span></span><br><span class="line">        <span class="keyword">return</span> base_calculate(gen_list(expression))</span><br><span class="line"></span><br><span class="line">    parathesis = []<span class="comment">#做符号栈检查括号匹配</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(expression)):</span><br><span class="line">        <span class="keyword">if</span> expression[i] == <span class="string">'('</span>:<span class="comment">#遇到左括号, 表达式起点</span></span><br><span class="line">            parathesis.append(i)<span class="comment">#保存左括号的下标</span></span><br><span class="line">        <span class="keyword">elif</span> expression[i] == <span class="string">')'</span>:<span class="comment">#遇到右括号, 表达式终点, 遇到完整的一段表达式则递归计算</span></span><br><span class="line">            <span class="keyword">if</span> len(parathesis) != <span class="number">0</span>:</span><br><span class="line">                subexp = expression[parathesis[-<span class="number">1</span>] : i + <span class="number">1</span>][<span class="number">1</span> : -<span class="number">1</span>]<span class="comment">#截取子表达式</span></span><br><span class="line">                <span class="keyword">if</span> subexp.find(<span class="string">"("</span>) == -<span class="number">1</span>:<span class="comment">#如果子表达式不含有括号了则计算</span></span><br><span class="line">                    result = base_calculate(gen_list(subexp))<span class="comment">#计算子表达式的结果</span></span><br><span class="line">                    pre = expression[<span class="number">0</span> : parathesis[-<span class="number">1</span>]]<span class="comment">#括号前面的表达式</span></span><br><span class="line">                    post = expression[i + <span class="number">1</span> : ]<span class="comment">#括号后面的表达式</span></span><br><span class="line">                    expression = pre + str(result) + post<span class="comment">#拼接为新的表达式</span></span><br><span class="line">                    <span class="keyword">return</span> calculate(expression)<span class="comment">#递归计算</span></span><br><span class="line">                parathesis.pop()<span class="comment">#删除一个左括号</span></span><br></pre></td></tr></table></figure>
+<h3 id="执行入口">执行入口</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">    <span class="comment">#输入表达式, 保证输入合法</span></span><br><span class="line">    expression = input(<span class="string">'input a expression:'</span>)</span><br><span class="line">    print(calculate(expression))</span><br></pre></td></tr></table></figure>
+<p>将以上代码按顺序复制到python文件就能运行了</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-08T07:01:25.000Z"><a href="/2015/06/08/一点奇淫技巧-让浏览器变代码编辑器/">2015-06-08</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/06/08/一点奇淫技巧-让浏览器变代码编辑器/">一点奇淫技巧-让浏览器变代码编辑器</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>将以下代码粘贴到浏览器地址栏中即可以再浏览器中编辑相关的类型代码(请使用chrome或者Firefox):</p>
+<h3 id="C/C++">C/C++</h3><pre><code>data:text/html, <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">css</span>%<span class="attribute">22</span>&gt;</span><span class="css"><span class="id">#e</span><span class="rules">{<span class="rule"><span class="attribute">position</span>:<span class="value">absolute</span></span>;<span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>;}</span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">%22e%22</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">%22http:</span>//<span class="attribute">d1n0x3qji82z53.cloudfront.net</span>/<span class="attribute">src-min-noconflict</span>/<span class="attribute">ace.js</span>%<span class="attribute">22</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">javascript</span>%<span class="attribute">22</span> <span class="attribute">charset</span>=<span class="value">%22utf-8%22</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="apache"><span class="keyword">var</span> e=ace.edit(<span class="number">%22</span>e<span class="number">%22</span>);e.setTheme(<span class="number">%22</span>ace/theme/monokai<span class="number">%22</span>);e.getSession().setMode(<span class="number">%22</span>ace/mode/c_cpp<span class="number">%22</span>);</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre><h3 id="Java:">Java:</h3><pre><code>data:text/html, <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">css</span>%<span class="attribute">22</span>&gt;</span><span class="css"><span class="id">#e</span><span class="rules">{<span class="rule"><span class="attribute">position</span>:<span class="value">absolute</span></span>;<span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>;}</span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">%22e%22</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">%22http:</span>//<span class="attribute">d1n0x3qji82z53.cloudfront.net</span>/<span class="attribute">src-min-noconflict</span>/<span class="attribute">ace.js</span>%<span class="attribute">22</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">javascript</span>%<span class="attribute">22</span> <span class="attribute">charset</span>=<span class="value">%22utf-8%22</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="apache"><span class="keyword">var</span> e=ace.edit(<span class="number">%22</span>e<span class="number">%22</span>);e.setTheme(<span class="number">%22</span>ace/theme/monokai<span class="number">%22</span>);e.getSession().setMode(<span class="number">%22</span>ace/mode/java<span class="number">%22</span>);</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre><h3 id="JavaScript:">JavaScript:</h3><pre><code>data:text/html, <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">css</span>%<span class="attribute">22</span>&gt;</span><span class="css"><span class="id">#e</span><span class="rules">{<span class="rule"><span class="attribute">position</span>:<span class="value">absolute</span></span>;<span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>;}</span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">%22e%22</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">%22http:</span>//<span class="attribute">d1n0x3qji82z53.cloudfront.net</span>/<span class="attribute">src-min-noconflict</span>/<span class="attribute">ace.js</span>%<span class="attribute">22</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">javascript</span>%<span class="attribute">22</span> <span class="attribute">charset</span>=<span class="value">%22utf-8%22</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="apache"><span class="keyword">var</span> e=ace.edit(<span class="number">%22</span>e<span class="number">%22</span>);e.setTheme(<span class="number">%22</span>ace/theme/monokai<span class="number">%22</span>);e.getSession().setMode(<span class="number">%22</span>ace/mode/javascript<span class="number">%22</span>);</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre><h3 id="Ruby:">Ruby:</h3><pre><code>data:text/html, <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">css</span>%<span class="attribute">22</span>&gt;</span><span class="css"><span class="id">#e</span><span class="rules">{<span class="rule"><span class="attribute">position</span>:<span class="value">absolute</span></span>;<span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>;}</span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">%22e%22</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">%22http:</span>//<span class="attribute">d1n0x3qji82z53.cloudfront.net</span>/<span class="attribute">src-min-noconflict</span>/<span class="attribute">ace.js</span>%<span class="attribute">22</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">javascript</span>%<span class="attribute">22</span> <span class="attribute">charset</span>=<span class="value">%22utf-8%22</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="apache"><span class="keyword">var</span> e=ace.edit(<span class="number">%22</span>e<span class="number">%22</span>);e.setTheme(<span class="number">%22</span>ace/theme/monokai<span class="number">%22</span>);e.getSession().setMode(<span class="number">%22</span>ace/mode/ruby<span class="number">%22</span>);</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre><h3 id="Python:">Python:</h3><pre><code>data:text/html, <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">css</span>%<span class="attribute">22</span>&gt;</span><span class="css"><span class="id">#e</span><span class="rules">{<span class="rule"><span class="attribute">position</span>:<span class="value">absolute</span></span>;<span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>;}</span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">%22e%22</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">%22http:</span>//<span class="attribute">d1n0x3qji82z53.cloudfront.net</span>/<span class="attribute">src-min-noconflict</span>/<span class="attribute">ace.js</span>%<span class="attribute">22</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">javascript</span>%<span class="attribute">22</span> <span class="attribute">charset</span>=<span class="value">%22utf-8%22</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="mel">var e=ace.edit(<span class="variable">%22e</span><span class="variable">%22</span>);e.setTheme(<span class="variable">%22ace</span>/theme/monokai<span class="variable">%22</span>);e.getSession().setMode(<span class="variable">%22ace</span>/mode/<span class="keyword">python</span><span class="variable">%22</span>);</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre><h3 id="PHP:">PHP:</h3><pre><code>data:text/html, <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">css</span>%<span class="attribute">22</span>&gt;</span><span class="css"><span class="id">#e</span><span class="rules">{<span class="rule"><span class="attribute">position</span>:<span class="value">absolute</span></span>;<span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>;}</span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">%22e%22</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">%22http:</span>//<span class="attribute">d1n0x3qji82z53.cloudfront.net</span>/<span class="attribute">src-min-noconflict</span>/<span class="attribute">ace.js</span>%<span class="attribute">22</span> <span class="attribute">type</span>=<span class="value">%22text</span>/<span class="attribute">javascript</span>%<span class="attribute">22</span> <span class="attribute">charset</span>=<span class="value">%22utf-8%22</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="apache"><span class="keyword">var</span> e=ace.edit(<span class="number">%22</span>e<span class="number">%22</span>);e.setTheme(<span class="number">%22</span>ace/theme/monokai<span class="number">%22</span>);e.getSession().setMode(<span class="number">%22</span>ace/mode/php<span class="number">%22</span>);</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre><p>内容转自: <a href="http://blog.jobbole.com/32823/" target="_blank" rel="external">一行代码，浏览器变临时编辑器</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-04T04:08:04.000Z"><a href="/2015/06/04/修改Ubuntu的默认启动项/">2015-06-04</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/06/04/修改Ubuntu的默认启动项/">修改Ubuntu的默认启动项</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在windows机器上安装Ubuntu系统后, 开机启动会默认启动Ubuntu, 可以修改过<strong>grub.cfg</strong>文件设置默认启动windows.<br>打开终端:<br>输入: <em>sudo gedit /boot/grub/grub.cfg</em></p>
+<p>按下: Ctrl+F, 搜索”default”, 找到<em>default=0</em>的位置, 将0该为4, 即最后一个启动项windows, 然后再搜索”timeout”, 将所有”timeout=10”中的10全部改为1</p>
+<p>保存并退出gedit, 重启系统即可</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-05-31T00:29:55.000Z"><a href="/2015/05/31/使用命令行启动或者关闭windows的服务/">2015-05-31</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/31/使用命令行启动或者关闭windows的服务/">使用命令行启动或者关闭windows的服务</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li><p>使用 net start/stop 命令启动服务程序或关闭服务程序<br>net start ServiceName（服务名称）<br>net stop ServiceName（服务名称）</p>
+</li>
+<li><p>使用 sc 命令启动服务程序或关闭服务程序<br>sc start ServiceName（服务名称）<br>sc stop ServiceName（服务名称）</p>
+</li>
+</ol>
+<p>如果服务名称中带有空格，需要用双引号引起来</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-05-29T14:13:27.000Z"><a href="/2015/05/29/sublime-text-3-添加运行python文件的快捷键/">2015-05-29</a></time>
       
       
@@ -365,211 +555,6 @@ tnums = <span class="function"><span class="title">sorted</span><span class="par
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-25T14:36:04.000Z"><a href="/2015/05/25/python实现高精度乘法/">2015-05-25</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/25/python实现高精度乘法/">python实现高精度乘法</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>方法还是将两个乘数转为两个包含乘数每位数字的list,<br>因为在计算中两个list中的数据要反复使用,所以定义第三个list来保存乘法的运算结果,然后使用两重循序模拟列竖式计算出乘法运算的结果, 因为乘法运算每次运算时需要向前移动一位表示扩大10倍,所以定义变量pos标记计算时移动的位数, 每次移动一位<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> reduce</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">multiply</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    a = list(map(<span class="keyword">lambda</span> x : int(x), a.strip()))</span><br><span class="line">    b = list(map(<span class="keyword">lambda</span> x : int(x), b.strip()))</span><br><span class="line">    c = list(map(<span class="keyword">lambda</span> x : <span class="number">0</span>, (<span class="string">"0"</span> + str(a) + str(b)).strip()))</span><br><span class="line">    index = len(c) - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(a) - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">        pos = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(len(b) - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            temp = a[i] * b[j] + c[index - pos] <span class="comment">#两个乘数相乘,并加上在此前一次的进位</span></span><br><span class="line">            c[index - pos] = temp % <span class="number">10</span> <span class="comment">#保存运算求余结果</span></span><br><span class="line">            c[index - pos - <span class="number">1</span>] += temp // <span class="number">10</span> <span class="comment">#处理进位,进位可以是0或者大于0的数</span></span><br><span class="line">            pos += <span class="number">1</span></span><br><span class="line">        index -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> int(reduce(<span class="keyword">lambda</span> x, y : str(x) + str(y), c)) <span class="comment">#将list中的内容转换为字符串</span></span><br><span class="line"></span><br><span class="line">a = input(<span class="string">"input a: "</span>)</span><br><span class="line">b = input(<span class="string">"input b: "</span>)</span><br><span class="line">print(multiply(a, b))</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-25T14:35:52.000Z"><a href="/2015/05/25/python实现高精度减法/">2015-05-25</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/25/python实现高精度减法/">python实现高精度减法</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>减法的实现同加法基本一致, 也是模拟竖式计算, 额外的处理了一下输入数值大小的问题,否则不然代码量可以更少. 在此不再做过多陈述, 从代码看问题吧!<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> reduce</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cmpare</span><span class="params">(a, b)</span>:</span><span class="comment">#定义函数比较两个数值大小</span></span><br><span class="line">    <span class="keyword">if</span> (len(a) != len(b)):</span><br><span class="line">        <span class="keyword">return</span> len(a) - len(b)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(a)):</span><br><span class="line">            <span class="keyword">if</span> a[i] != b[i]:</span><br><span class="line">                <span class="keyword">return</span> a[i] - b[i]</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">minus</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    optr = <span class="string">"+"</span>;</span><br><span class="line">    <span class="keyword">if</span> (cmpare(a, b) &lt; <span class="number">0</span>):</span><br><span class="line">        optr = <span class="string">'-'</span><span class="comment">#如果减数大于被减数,设置符号为负号</span></span><br><span class="line">        temp = a<span class="comment">#并且交换两个数,保证始终用大数减小数</span></span><br><span class="line">        a = b</span><br><span class="line">        b = temp</span><br><span class="line">        </span><br><span class="line">    a = list(map(<span class="keyword">lambda</span> x : int(x), (<span class="string">"0"</span> + str(a)).strip()))</span><br><span class="line">    b = list(map(<span class="keyword">lambda</span> x : int(x), (<span class="string">"0"</span> + str(b)).strip()))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> len(a) &gt; len(b):</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> range(len(a) - len(b)):</span><br><span class="line">            b.insert(<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> range(len(b) - len(a)):</span><br><span class="line">            a.insert(<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(a) - <span class="number">1</span>, <span class="number">0</span>, -<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> (a[i] &gt;= b[i]):</span><br><span class="line">            a[i] -= b[i]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            a[i] = a[i] + <span class="number">10</span> - b[i]</span><br><span class="line">            a[i - <span class="number">1</span>] -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> int(optr + reduce(<span class="keyword">lambda</span> x, y : str(x) + str(y), a))</span><br><span class="line"></span><br><span class="line">a = input(<span class="string">"input a: "</span>)</span><br><span class="line">b = input(<span class="string">"input b: "</span>)</span><br><span class="line">print(minus(a, b))</span><br></pre></td></tr></table></figure></p>
-<p><em>注意: 输入仅限两个正整数, 输入不分大小</em></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-25T14:35:40.000Z"><a href="/2015/05/25/python实现高精度加法/">2015-05-25</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/25/python实现高精度加法/">python实现高精度加法</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>之前一直使用的c++, c++没有提供高精度的计算方案, 所以大整数的运算都需要手动实现,python已经为我们提供了高精度运算, 这里出于刚学习python作为练习, 代码实现高精度加法运算的原理. 高精度加法的过程就是完全模拟列竖式计算的方式,我们开两个列表,将加数a,假如a=1243,在列表中保存为[1, 2, 4, 3], 加数b, 假如b=12, 在列表中保存为[1, 2], 这样的话两个列表的长度不同, 就会后面代码实现的不便, 因此, 在执行计算前, 我们将两个列表处理为</p>
-<pre><code>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">3</span>]
-[<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]
-</code></pre><p>即使两个数长度一致, 短的在左边补0, 最后再在两个数左端都添加一个0, 这样是为了防止最高位进位后导致进位的值没有地方存储, 我们从右边计算到左边,将计算的每一位数保存到列表a中, 上面两个数相加时2+3=5求余保存到a[4], 取整加到a[3]处理进位,4+1=5求余保存到a[3], 取整加到a[2], 依次类推, 如果两数之和大于10, 则有进位1, 否则就是进位0, 相当于没有进位</p>
-<p>下面请看代码实现:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> reduce<span class="comment">#导入reduce用于将整数列表中的内容转换为字符串</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> len(a) &gt; len(b):<span class="comment">#将输入的数字左端补齐为同样的长度</span></span><br><span class="line">        b = b.zfill(len(a) - len(b) + <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        a = a.zfill(len(b) - len(a) + <span class="number">1</span>)</span><br><span class="line">    <span class="comment">#("0" + str(a))前面加"0"的原因是防止最高位进位是超过列表的容量限制</span></span><br><span class="line">    <span class="comment">#比如说9+9会向前面进一位,如果没有添加额外的0的话进位1就没地方存储</span></span><br><span class="line">    a = list(map(<span class="keyword">lambda</span> x : int(x), (<span class="string">"0"</span> + str(a)).strip()))</span><br><span class="line">    b = list(map(<span class="keyword">lambda</span> x : int(x), (<span class="string">"0"</span> + str(b)).strip()))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(a) - <span class="number">1</span>, <span class="number">0</span>, -<span class="number">1</span>):</span><br><span class="line">        temp = a[i] + b[i];</span><br><span class="line">        a[i - <span class="number">1</span>] += temp // <span class="number">10</span></span><br><span class="line">        a[i] = temp % <span class="number">10</span></span><br><span class="line">    <span class="keyword">return</span> int(reduce(<span class="keyword">lambda</span> x, y : str(x) + str(y), a))<span class="comment">#转换为字符串</span></span><br><span class="line"></span><br><span class="line">a, b = input(<span class="string">"input a: "</span>), input(<span class="string">"input b: "</span>)</span><br><span class="line">print(add(a, b))</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-25T14:10:29.000Z"><a href="/2015/05/25/搭建Hexo博客的简单步骤/">2015-05-25</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/25/搭建Hexo博客的简单步骤/">搭建Hexo博客的简单步骤</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>前期准备,注册github账号,并创建GitHub Pages<br>1:安装<a href="https://nodejs.org/" target="_blank" rel="external">node.js</a><br>2:安装<a href="http://git-scm.com/" target="_blank" rel="external">git</a><br>3:在你的计算机中创建一个工作根目录,比如我是将hexo目录创建在D盘的. <font color="0080ff">D:\hexo</font><br>3:打开工作根目录,右键调出gitbash<br>4:输入npm install -g hexo<br>5:输入hexo init<br>6:输入npm install<br>7:检查ssh_key</p>
-<pre><code>ls -al ~/.ssh
-<span class="comment">#如果没有请输入:</span>
-ssh-keygen -t rsa -C <span class="string">"github注册邮箱"</span>
-<span class="comment">#输入passphrase:要记住,后面用</span>
-ssh-agent <span class="operator">-s</span>
-ssh-add ~/.ssh/id_rsa <span class="comment">#如果本行出错执行下面两行</span>
-<span class="built_in">eval</span> `ssh-agent <span class="operator">-s</span>`
-ssh-add
-<span class="comment">#然后在用户目录中找到.ssh目录中的id_rsa.pub,打开并复制其内容添加到github的ssh key中</span>
-</code></pre><p>8:测试ssh_key是否成功</p>
-<pre><code><span class="title">ssh</span> -T git<span class="variable">@github</span>.com
-<span class="comment">#如果输出hi yourname... 那就正常了</span>
-</code></pre><p>9:添加用户信息</p>
-<pre><code>git config --<span class="built_in">global</span> user.name <span class="string">"cnfeat"</span> <span class="comment">#用户名</span>
-git config --<span class="built_in">global</span> user.email  <span class="string">"cnfeat@gmail.com"</span> <span class="comment">#填写自己的邮箱</span>
-</code></pre><p>10:编辑本地根目录中的配置文件<font color="0080ff">_config.yml</font>,添加github仓库信息</p>
-<pre><code><span class="attribute">deploy</span>:
-<span class="attribute">type</span>: git
-<span class="attribute">repository</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:you_name/your_name.github.io.git
-<span class="attribute">branch</span>: master
-</code></pre><p>11:使用</p>
-<pre><code><span class="title">hexo</span> n <span class="comment">#添加新文章</span>
-hexo g <span class="comment">#生成文章</span>
-hexo d <span class="comment">#发布</span>
-hexo s <span class="comment">#打开本地服务器测试:localhost:4000</span>
-</code></pre><p>注意:如果发布出现deplorer not found git,请使用如下命令,由于显示的原因,提示一下末尾的”—save”也是在命令中的:</p>
-<pre><code>npm <span class="operator"><span class="keyword">install</span> hexo-deployer-git <span class="comment">--save </span></span>
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-25T07:41:45.000Z"><a href="/2015/05/25/python34-访问MySQL数据库/">2015-05-25</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/25/python34-访问MySQL数据库/">python34 访问MySQL数据库</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>本文介绍如何使用MySQL官方提供的工具访问MySQL数据库<br>首先下载<a href="http://dev.mysql.com/downloads/connector/python/" target="_blank" rel="external">connector/python</a>, 这是一个.msi的安装文件,下载后双击安装到电脑, 然后开始连接数据库</p>
-<h3 id="连接方式1">连接方式1</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mysql.connector</span><br><span class="line">cnx = mysql.connector.connect(user = <span class="string">"root"</span>, password = <span class="string">"admin"</span>, host = <span class="string">"127.0.0.1"</span>, database = <span class="string">"world"</span>)</span><br><span class="line">cnx.close()</span><br></pre></td></tr></table></figure>
-<h3 id="连接方式2">连接方式2</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mysql.connector <span class="keyword">import</span> (connection)</span><br><span class="line">cnx = connection.MySQLConnection(user=<span class="string">'scott'</span>, password=<span class="string">'tiger'</span>, host=<span class="string">'127.0.0.1'</span>, database=<span class="string">'employees'</span>)</span><br><span class="line">cnx.close()</span><br></pre></td></tr></table></figure>
-<p>两种连接方式都使用了connector,他们的作用是一样的,通常第一种方式用的更多</p>
-<h3 id="连接方式3">连接方式3</h3><p>如果连接的参数较多,可以使用**运算符直接给connect()传递一个字典,以方便代码的维护</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">config = &#123;</span><br><span class="line">    <span class="string">"user"</span> : <span class="string">"root"</span>, </span><br><span class="line">    <span class="string">"password"</span> : <span class="string">"admin"</span>, </span><br><span class="line">    <span class="string">"host"</span> : <span class="string">"127.0.0.1"</span>, </span><br><span class="line">    <span class="string">"database"</span> : <span class="string">"world"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">cnx = mysql.connector.connect(**config)</span><br><span class="line">cnx.close()</span><br></pre></td></tr></table></figure>
-<p>我们可以访问数据库的过程加上异常处理</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mysql.connector</span><br><span class="line"><span class="keyword">from</span> mysql.connector <span class="keyword">import</span> errorcode</span><br><span class="line">cnx = <span class="keyword">None</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    cnx = mysql.connector.connect(user = <span class="string">"root"</span>, password = <span class="string">"admin"</span>, host = <span class="string">"127.0.0.1"</span>, database = <span class="string">"world"</span>)</span><br><span class="line"><span class="keyword">except</span> mysql.connector.Error <span class="keyword">as</span> err:  </span><br><span class="line">    <span class="keyword">if</span> err.errno == errorcode.ER_ACCESS_DENIED_ERROR:</span><br><span class="line">        print(<span class="string">"账户不存在或者密码错误"</span>)</span><br><span class="line">    <span class="keyword">elif</span> err.errno == errorcode.ER_BAD_DB_ERROR:</span><br><span class="line">        print(<span class="string">"数据库不存在"</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(err)</span><br><span class="line">    print(err)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"连接成功"</span>)</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    cnx.close()</span><br></pre></td></tr></table></figure>  
-<p>连接后使用cnx返回的cursor对象即可访问数据库表中的内容了<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cursor = cnx.cursor()</span><br><span class="line">sql = <span class="string">"select * from city where CountryCode = \"CHN\" order by Name asc limit 1000"</span></span><br><span class="line">cursor.execute(sql)</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> cursor:</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -603,7 +588,7 @@ hexo s <span class="comment">#打开本地服务器测试:localhost:4000</span>
   
     <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
   
-    <li><a href="/categories/MySQL/">MySQL</a><small>2</small></li>
+    <li><a href="/categories/MySQL/">MySQL</a><small>7</small></li>
   
     <li><a href="/categories/Operating-System/">Operating System</a><small>1</small></li>
   
@@ -634,7 +619,9 @@ hexo s <span class="comment">#打开本地服务器测试:localhost:4000</span>
   
     <li><a href="/tags/C/">C++</a><small>1</small></li>
   
-    <li><a href="/tags/MySQL/">MySQL</a><small>4</small></li>
+    <li><a href="/tags/MySQL/">MySQL</a><small>8</small></li>
+  
+    <li><a href="/tags/Mysql/">Mysql</a><small>1</small></li>
   
     <li><a href="/tags/c-高精度/">c++高精度</a><small>1</small></li>
   
