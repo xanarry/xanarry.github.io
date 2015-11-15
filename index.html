@@ -51,7 +51,7 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-11-15T08:08:33.362Z"><a href="/2015/11/15/SQL的循环语句/">2015-11-15</a></time>
+        <time datetime="2015-11-15T08:15:47.037Z"><a href="/2015/11/15/SQL的循环语句/">2015-11-15</a></time>
       
       
   
@@ -77,9 +77,51 @@
 </code></pre><font color="red">以上两个语句只能在循环中使用</font>
 
 
-<h3 id="下面分别演示使用三种循环对1到100求和">下面分别演示使用三种循环对1到100求和</h3><p>while<br>    mysql&gt;delimter //<br>    mysql&gt; create function sum100()<br>        -&gt; returns int<br>        -&gt; begin<br>        -&gt; declare sum int default 0;<br>        -&gt; declare i int default 0;<br>        -&gt; while i &lt;= 100 do<br>        -&gt;     set sum = sum + i;<br>        -&gt;     set i = i + 1;<br>        -&gt; end while;<br>        -&gt; return sum;<br>        -&gt; end<br>        -&gt; //</p>
-<p>repeat<br>    mysql&gt; create function sum100()<br>        -&gt; returns int<br>        -&gt; begin<br>        -&gt; declare sum int default 0;<br>        -&gt; declare i int default 0;<br>        -&gt; repeat<br>        -&gt;     set sum = sum + i;<br>        -&gt;     set i = i + 1;<br>        -&gt; until i &gt; 100<br>        -&gt; end repeat;<br>        -&gt; return sum;<br>        -&gt; end<br>        -&gt; //<br>loop<br>    mysql&gt; create function sum100()<br>        -&gt; returns int<br>        -&gt; begin<br>        -&gt; declare sum int default 0;<br>        -&gt; declare i int default 0;<br>        -&gt; lpl : loop<br>        -&gt;     set sum = sum + i;<br>        -&gt;     set i = i + 1;<br>        -&gt;     if i &gt; 100<br>        -&gt;         then leave lpl;<br>        -&gt;     end if;<br>        -&gt; end loop lpl;<br>        -&gt; return sum;<br>        -&gt; end<br>        -&gt; //</p>
-<h1 id="判断语句:">判断语句:</h1><pre><code><span class="keyword">if</span> 布尔表达式
+<h3 id="下面分别演示使用三种循环对1到100求和">下面分别演示使用三种循环对1到100求和</h3><p>while</p>
+<pre><code>mysql&gt;delimter //
+mysql&gt; create function sum100()
+    -<span class="ruby">&gt; returns int
+</span>    -<span class="ruby">&gt; <span class="keyword">begin</span> 
+</span>    -<span class="ruby">&gt; declare sum int default <span class="number">0</span>;
+</span>    -<span class="ruby">&gt; declare i int default <span class="number">0</span>;
+</span>    -<span class="ruby">&gt; <span class="keyword">while</span> i &lt;= <span class="number">100</span> <span class="keyword">do</span>
+</span>    -<span class="ruby">&gt;     set sum = sum + i;
+</span>    -<span class="ruby">&gt;     set i = i + <span class="number">1</span>;
+</span>    -<span class="ruby">&gt; <span class="keyword">end</span> <span class="keyword">while</span>;
+</span>    -<span class="ruby">&gt; <span class="keyword">return</span> sum;
+</span>    -<span class="ruby">&gt; <span class="keyword">end</span>
+</span>    -<span class="ruby">&gt; <span class="regexp">//</span></span>
+</code></pre><p>repeat</p>
+<pre><code>mysql&gt; create function sum100()
+    -<span class="ruby">&gt; returns int
+</span>    -<span class="ruby">&gt; <span class="keyword">begin</span> 
+</span>    -<span class="ruby">&gt; declare sum int default <span class="number">0</span>;
+</span>    -<span class="ruby">&gt; declare i int default <span class="number">0</span>;
+</span>    -<span class="ruby">&gt; repeat 
+</span>    -<span class="ruby">&gt;     set sum = sum + i;
+</span>    -<span class="ruby">&gt;     set i = i + <span class="number">1</span>;
+</span>    -<span class="ruby">&gt; <span class="keyword">until</span> i &gt; <span class="number">100</span>
+</span>    -<span class="ruby">&gt; <span class="keyword">end</span> repeat;
+</span>    -<span class="ruby">&gt; <span class="keyword">return</span> sum;
+</span>    -<span class="ruby">&gt; <span class="keyword">end</span>
+</span>    -<span class="ruby">&gt; <span class="regexp">//</span></span>
+</code></pre><p>loop</p>
+<pre><code>mysql&gt; create function sum100()
+    -<span class="ruby">&gt; returns int
+</span>    -<span class="ruby">&gt; <span class="keyword">begin</span> 
+</span>    -<span class="ruby">&gt; declare sum int default <span class="number">0</span>;
+</span>    -<span class="ruby">&gt; declare i int default <span class="number">0</span>;
+</span>    -<span class="ruby">&gt; lpl <span class="symbol">:</span> loop
+</span>    -<span class="ruby">&gt;     set sum = sum + i;
+</span>    -<span class="ruby">&gt;     set i = i + <span class="number">1</span>;
+</span>    -<span class="ruby">&gt;     <span class="keyword">if</span> i &gt; <span class="number">100</span>
+</span>    -<span class="ruby">&gt;         <span class="keyword">then</span> leave lpl;
+</span>    -<span class="ruby">&gt;     <span class="keyword">end</span> <span class="keyword">if</span>;
+</span>    -<span class="ruby">&gt; <span class="keyword">end</span> loop lpl;
+</span>    -<span class="ruby">&gt; <span class="keyword">return</span> sum;
+</span>    -<span class="ruby">&gt; <span class="keyword">end</span>
+</span>    -<span class="ruby">&gt; <span class="regexp">//</span></span>
+</code></pre><h1 id="判断语句:">判断语句:</h1><pre><code><span class="keyword">if</span> 布尔表达式
     <span class="keyword">then</span> 语句
 <span class="keyword">elseif</span> 布尔表达式
     <span class="keyword">then</span> 语句
@@ -177,8 +219,8 @@
     </header>
     <div class="entry">
       
-        <h3 id="1-sudo_gedit_/etc/mysql/my-cnf">1.sudo gedit /etc/mysql/my.cnf</h3><p>在[client]后添加<br>    default-character-set=utf8</p>
-<h3 id="2-在[mysqld]后添加">2.在[mysqld]后添加</h3><pre><code>character_<span class="built_in">set</span>_server=utf8
+        <h3 id="1-打开MySQL配置文件,_Linux使用sudo_gedit_/etc/mysql/my-cnf在[client]后添加">1.打开MySQL配置文件, Linux使用<em>sudo gedit /etc/mysql/my.cnf</em>在[client]后添加</h3><pre><code><span class="keyword">default</span>-character-<span class="keyword">set</span>=utf8
+</code></pre><h3 id="2-在[mysqld]后添加">2.在[mysqld]后添加</h3><pre><code>character_<span class="built_in">set</span>_server=utf8
 </code></pre><h3 id="3-创建数据库的时候使用">3.创建数据库的时候使用</h3><pre><code><span class="operator"><span class="keyword">create</span> datablase dbname <span class="keyword">default</span> <span class="keyword">charset</span>=<span class="string">'utf8'</span>;</span>
 </code></pre><h3 id="4-创建表的时候同样使用">4.创建表的时候同样使用</h3><pre><code><span class="keyword">default</span> charset=<span class="string">'utf8'</span>
 </code></pre>

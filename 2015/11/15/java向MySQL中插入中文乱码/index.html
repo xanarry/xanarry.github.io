@@ -60,8 +60,8 @@
     </header>
     <div class="entry">
       
-        <h3 id="1-sudo_gedit_/etc/mysql/my-cnf">1.sudo gedit /etc/mysql/my.cnf</h3><p>在[client]后添加<br>    default-character-set=utf8</p>
-<h3 id="2-在[mysqld]后添加">2.在[mysqld]后添加</h3><pre><code>character_<span class="built_in">set</span>_server=utf8
+        <h3 id="1-打开MySQL配置文件,_Linux使用sudo_gedit_/etc/mysql/my-cnf在[client]后添加">1.打开MySQL配置文件, Linux使用<em>sudo gedit /etc/mysql/my.cnf</em>在[client]后添加</h3><pre><code><span class="keyword">default</span>-character-<span class="keyword">set</span>=utf8
+</code></pre><h3 id="2-在[mysqld]后添加">2.在[mysqld]后添加</h3><pre><code>character_<span class="built_in">set</span>_server=utf8
 </code></pre><h3 id="3-创建数据库的时候使用">3.创建数据库的时候使用</h3><pre><code><span class="operator"><span class="keyword">create</span> datablase dbname <span class="keyword">default</span> <span class="keyword">charset</span>=<span class="string">'utf8'</span>;</span>
 </code></pre><h3 id="4-创建表的时候同样使用">4.创建表的时候同样使用</h3><pre><code><span class="keyword">default</span> charset=<span class="string">'utf8'</span>
 </code></pre>
