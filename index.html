@@ -61,8 +61,62 @@
     </header>
     <div class="entry">
       
-        <p>以下函数在使用时函数名不分大小写<br>::<br>    ASCII() Return numeric value of left-most character<br>    BIN()   Return a string containing binary representation of a number<br>    BIT_LENGTH()    Return length of argument in bits<br>    CHAR_LENGTH()   Return number of characters in argument<br>    CHAR()  Return the character for each integer passed<br>    CHARACTER_LENGTH()  Synonym for CHAR_LENGTH()<br>    CONCAT_WS() Return concatenate with separator<br>    CONCAT()    Return concatenated string<br>    ELT()   Return string at index number<br>    EXPORT_SET()    Return a string such that for every bit set in the value bits, you get an on string and for every unset bit, you get an off string<br>    FIELD() Return the index (position) of the first argument in the subsequent arguments<br>    FIND_IN_SET()   Return the index position of the first argument within the second argument<br>    FORMAT()    Return a number formatted to specified number of decimal places<br>    HEX()   Return a hexadecimal representation of a decimal or string value<br>    INSERT()    Insert a substring at the specified position up to the specified number of characters<br>    INSTR() Return the index of the first occurrence of substring<br>    LCASE() Synonym for LOWER()<br>    LEFT()  Return the leftmost number of characters as specified<br>    LENGTH()    Return the length of a string in bytes<br>    LIKE    Simple pattern matching<br>    LOAD_FILE() Load the named file<br>    LOCATE()    Return the position of the first occurrence of substring<br>    LOWER() Return the argument in lowercase<br>    LPAD()  Return the string argument, left-padded with the specified string<br>    LTRIM() Remove leading spaces<br>    MAKE_SET()  Return a set of comma-separated strings that have the corresponding bit in bits set<br>    MATCH   Perform full-text search<br>    MID()   Return a substring starting from the specified position<br>    NOT LIKE    Negation of simple pattern matching<br>    NOT REGEXP  Negation of REGEXP<br>    OCT()   Return a string containing octal representation of a number<br>    OCTET_LENGTH()  Synonym for LENGTH()<br>    ORD()   Return character code for leftmost character of the argument<br>    POSITION()  Synonym for LOCATE()<br>    QUOTE() Escape the argument for use in an SQL statement<br>    REGEXP  Pattern matching using regular expressions<br>    REPEAT()    Repeat a string the specified number of times<br>    REPLACE()   Replace occurrences of a specified string<br>    REVERSE()   Reverse the characters in a string<br>    RIGHT() Return the specified rightmost number of characters<br>    RLIKE   Synonym for REGEXP<br>    RPAD()  Append string the specified number of times<br>    RTRIM() Remove trailing spaces<br>    SOUNDEX()   Return a soundex string<br>    SOUNDS LIKE Compare sounds<br>    SPACE() Return a string of the specified number of spaces<br>    STRCMP()    Compare two strings<br>    SUBSTR()    Return the substring as specified<br>    SUBSTRING_INDEX()   Return a substring from a string before the specified number of occurrences of the delimiter<br>    SUBSTRING() Return the substring as specified<br>    TRIM()  Remove leading and trailing spaces<br>    UCASE() Synonym for UPPER()<br>    UNHEX() Return a string containing hex representation of a number<br>    UPPER() Convert to uppercase</p>
-
+        <p>以下函数在使用时函数名不分大小写</p>
+<pre><code>ASCII() Return numeric value of left-most character
+BIN()   Return a string containing binary representation of a number
+BIT_LENGTH()    Return length of argument in bits
+CHAR_LENGTH()   Return number of characters in argument
+CHAR()  Return the character for each integer passed
+CHARACTER_LENGTH()  Synonym for CHAR_LENGTH()
+CONCAT_WS() Return concatenate with separator
+CONCAT()    Return concatenated string
+ELT()   Return string at index number
+EXPORT_SET()    Return a string such that for every bit <span class="operator"><span class="keyword">set</span> <span class="keyword">in</span> the <span class="keyword">value</span> bits, you <span class="keyword">get</span> an <span class="keyword">on</span> <span class="keyword">string</span> <span class="keyword">and</span> <span class="keyword">for</span> every unset <span class="built_in">bit</span>, you <span class="keyword">get</span> an off <span class="keyword">string</span>
+<span class="keyword">FIELD</span>() <span class="keyword">Return</span> the <span class="keyword">index</span> (<span class="keyword">position</span>) <span class="keyword">of</span> the <span class="keyword">first</span> argument <span class="keyword">in</span> the subsequent arguments
+<span class="keyword">FIND_IN_SET</span>()   <span class="keyword">Return</span> the <span class="keyword">index</span> <span class="keyword">position</span> <span class="keyword">of</span> the <span class="keyword">first</span> argument within the <span class="keyword">second</span> argument
+<span class="keyword">FORMAT</span>()    <span class="keyword">Return</span> a <span class="built_in">number</span> formatted <span class="keyword">to</span> specified <span class="built_in">number</span> <span class="keyword">of</span> <span class="built_in">decimal</span> places
+<span class="keyword">HEX</span>()   <span class="keyword">Return</span> a hexadecimal representation <span class="keyword">of</span> a <span class="built_in">decimal</span> <span class="keyword">or</span> <span class="keyword">string</span> <span class="keyword">value</span>
+<span class="keyword">INSERT</span>()    <span class="keyword">Insert</span> a <span class="keyword">substring</span> <span class="keyword">at</span> the specified <span class="keyword">position</span> up <span class="keyword">to</span> the specified <span class="built_in">number</span> <span class="keyword">of</span> characters
+<span class="keyword">INSTR</span>() <span class="keyword">Return</span> the <span class="keyword">index</span> <span class="keyword">of</span> the <span class="keyword">first</span> occurrence <span class="keyword">of</span> <span class="keyword">substring</span>
+<span class="keyword">LCASE</span>() Synonym <span class="keyword">for</span> <span class="keyword">LOWER</span>()
+<span class="keyword">LEFT</span>()  <span class="keyword">Return</span> the leftmost <span class="built_in">number</span> <span class="keyword">of</span> characters <span class="keyword">as</span> specified
+LENGTH()    <span class="keyword">Return</span> the length <span class="keyword">of</span> a <span class="keyword">string</span> <span class="keyword">in</span> bytes
+<span class="keyword">LIKE</span>    Simple pattern matching
+<span class="keyword">LOAD_FILE</span>() <span class="keyword">Load</span> the named file
+<span class="keyword">LOCATE</span>()    <span class="keyword">Return</span> the <span class="keyword">position</span> <span class="keyword">of</span> the <span class="keyword">first</span> occurrence <span class="keyword">of</span> <span class="keyword">substring</span>
+<span class="keyword">LOWER</span>() <span class="keyword">Return</span> the argument <span class="keyword">in</span> lowercase
+<span class="keyword">LPAD</span>()  <span class="keyword">Return</span> the <span class="keyword">string</span> argument, <span class="keyword">left</span>-padded <span class="keyword">with</span> the specified <span class="keyword">string</span>
+<span class="keyword">LTRIM</span>() Remove <span class="keyword">leading</span> spaces
+<span class="keyword">MAKE_SET</span>()  <span class="keyword">Return</span> a <span class="keyword">set</span> <span class="keyword">of</span> comma-separated strings that have the <span class="keyword">corresponding</span> <span class="built_in">bit</span> <span class="keyword">in</span> bits <span class="keyword">set</span>
+<span class="keyword">MATCH</span>   Perform <span class="keyword">full</span>-<span class="built_in">text</span> search
+<span class="keyword">MID</span>()   <span class="keyword">Return</span> a <span class="keyword">substring</span> <span class="keyword">starting</span> <span class="keyword">from</span> the specified <span class="keyword">position</span>
+<span class="keyword">NOT</span> <span class="keyword">LIKE</span>    Negation <span class="keyword">of</span> simple pattern matching
+<span class="keyword">NOT</span> <span class="keyword">REGEXP</span>  Negation <span class="keyword">of</span> <span class="keyword">REGEXP</span>
+<span class="keyword">OCT</span>()   <span class="keyword">Return</span> a <span class="keyword">string</span> containing octal representation <span class="keyword">of</span> a <span class="built_in">number</span>
+<span class="keyword">OCTET_LENGTH</span>()  Synonym <span class="keyword">for</span> LENGTH()
+<span class="keyword">ORD</span>()   <span class="keyword">Return</span> <span class="built_in">character</span> code <span class="keyword">for</span> leftmost <span class="built_in">character</span> <span class="keyword">of</span> the argument
+<span class="keyword">POSITION</span>()  Synonym <span class="keyword">for</span> <span class="keyword">LOCATE</span>()
+<span class="keyword">QUOTE</span>() <span class="keyword">Escape</span> the argument <span class="keyword">for</span> <span class="keyword">use</span> <span class="keyword">in</span> an <span class="keyword">SQL</span> statement
+<span class="keyword">REGEXP</span>  Pattern matching <span class="keyword">using</span> regular expressions
+<span class="keyword">REPEAT</span>()    <span class="keyword">Repeat</span> a <span class="keyword">string</span> the specified <span class="built_in">number</span> <span class="keyword">of</span> times
+<span class="keyword">REPLACE</span>()   <span class="keyword">Replace</span> occurrences <span class="keyword">of</span> a specified <span class="keyword">string</span>
+<span class="keyword">REVERSE</span>()   <span class="keyword">Reverse</span> the characters <span class="keyword">in</span> a <span class="keyword">string</span>
+<span class="keyword">RIGHT</span>() <span class="keyword">Return</span> the specified rightmost <span class="built_in">number</span> <span class="keyword">of</span> characters
+<span class="keyword">RLIKE</span>   Synonym <span class="keyword">for</span> <span class="keyword">REGEXP</span>
+<span class="keyword">RPAD</span>()  Append <span class="keyword">string</span> the specified <span class="built_in">number</span> <span class="keyword">of</span> times
+<span class="keyword">RTRIM</span>() Remove <span class="keyword">trailing</span> spaces
+<span class="keyword">SOUNDEX</span>()   <span class="keyword">Return</span> a <span class="keyword">soundex</span> <span class="keyword">string</span>
+SOUNDS <span class="keyword">LIKE</span> Compare sounds
+<span class="keyword">SPACE</span>() <span class="keyword">Return</span> a <span class="keyword">string</span> <span class="keyword">of</span> the specified <span class="built_in">number</span> <span class="keyword">of</span> spaces
+<span class="keyword">STRCMP</span>()    Compare two strings
+<span class="keyword">SUBSTR</span>()    <span class="keyword">Return</span> the <span class="keyword">substring</span> <span class="keyword">as</span> specified
+SUBSTRING_INDEX()   <span class="keyword">Return</span> a <span class="keyword">substring</span> <span class="keyword">from</span> a <span class="keyword">string</span> <span class="keyword">before</span> the specified <span class="built_in">number</span> <span class="keyword">of</span> occurrences <span class="keyword">of</span> the delimiter
+<span class="keyword">SUBSTRING</span>() <span class="keyword">Return</span> the <span class="keyword">substring</span> <span class="keyword">as</span> specified
+<span class="keyword">TRIM</span>()  Remove <span class="keyword">leading</span> <span class="keyword">and</span> <span class="keyword">trailing</span> spaces
+<span class="keyword">UCASE</span>() Synonym <span class="keyword">for</span> <span class="keyword">UPPER</span>()
+<span class="keyword">UNHEX</span>() <span class="keyword">Return</span> a <span class="keyword">string</span> containing <span class="keyword">hex</span> representation <span class="keyword">of</span> a <span class="built_in">number</span>
+<span class="keyword">UPPER</span>() <span class="keyword">Convert</span> <span class="keyword">to</span> uppercase</span>
+</code></pre>
       
     </div>
     <footer>
