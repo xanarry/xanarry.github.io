@@ -97,15 +97,27 @@
     </header>
     <div class="entry">
       
-        <h1 id="insert语句(插入)">insert语句(插入)</h1><p>insert语句比较简单, 其语法为:<br>    insert into 表名 (属性1, 属性2, 属性3, …) values (值1, 值2, 值3, …);<br>或者<br>    insert into 表名 values (值1, 值2, 值3, …);<br>两者的区别是第一种在插入时, 每个值和属性一一对应插入, 第二种插入则将每个值依次插入到表中的每个属性上(从第一个到最后一个), 如果值的数量小于属性的数量, 那么后面的属性将会被空闲 </p>
+        <h1 id="insert语句(插入)">insert语句(插入)</h1><p>insert语句比较简单, 其语法为:</p>
+<pre><code><span class="operator"><span class="keyword">insert</span> <span class="keyword">into</span> 表名 (属性<span class="number">1</span>, 属性<span class="number">2</span>, 属性<span class="number">3</span>, ...) <span class="keyword">values</span> (值<span class="number">1</span>, 值<span class="number">2</span>, 值<span class="number">3</span>, ...);</span>
+</code></pre><p>或者</p>
+<pre><code><span class="operator"><span class="keyword">insert</span> <span class="keyword">into</span> 表名 <span class="keyword">values</span> (值<span class="number">1</span>, 值<span class="number">2</span>, 值<span class="number">3</span>, ...);</span>
+</code></pre><p>两者的区别是第一种在插入时, 每个值和属性一一对应插入, 第二种插入则将每个值依次插入到表中的每个属性上(从第一个到最后一个), 如果值的数量小于属性的数量, 那么后面的属性将会被空闲 </p>
 <h1 id="SELECT语句(查询)">SELECT语句(查询)</h1><p>首先看看MySQL SELECT语句的官方语法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT&#10;    [ALL | DISTINCT | DISTINCTROW ]&#10;    [HIGH_PRIORITY]&#10;    [STRAIGHT_JOIN]&#10;    [SQL_SMALL_RESULT] [SQL_BIG_RESULT] [SQL_BUFFER_RESULT]&#10;    [SQL_CACHE | SQL_NO_CACHE] [SQL_CALC_FOUND_ROWS]&#10;    SELECT_expr [, SELECT_expr ...]&#10;    [FROM table_references&#10;    [PARTITION partition_list]&#10;    [WHERE where_condition]&#10;    [GROUP BY &#123;col_name | expr | position&#125;&#10;    [ASC | DESC], ... [WITH ROLLUP]]&#10;    [HAVING where_condition]&#10;    [ORDER BY &#123;col_name | expr | position&#125;&#10;    [ASC | DESC], ...]&#10;    [LIMIT &#123;[offset,] row_count | row_count OFFSET offset&#125;]&#10;    [PROCEDURE procedure_name(argument_list)]&#10;    [INTO OUTFILE &#39;file_name&#39;&#10;    [CHARACTER SET charset_name]&#10;    export_options&#10;    | INTO DUMPFILE &#39;file_name&#39;&#10;    | INTO var_name [, var_name]]&#10;    [FOR UPDATE | LOCK IN SHARE MODE]]</span><br></pre></td></tr></table></figure></p>
-<p>归纳SELECT的用法, 其语法结构为<br>    SELECT 属性列表 FROM 表名 WHERE 条件语句<br>属性列表可以是任意多个, 使用*<em>\</em>表示选择全部属性<br>表名为单表或者多表联合的结果<br>在条件语句中,可以对查询结果进行筛选,排序等操作</p>
-<p>SELECT的更名运算<br>对属性重命名<br>    SELECT oldname1 AS newname1, oldname2 AS newname2 FROM table;<br>将会下显示结果中使用新的名字代替旧的名字, 其中AS不是必须的, 可以直接写成oldname newname</p>
-<p>对表重命名:<br>    SELECT T.ID, T.name FROM user AS T;</p>
-<p>对选择结果排序使用ORDER BY 属性名1 排序方式(ASC|DESC), 属性名2 排序方式(ASC|DESC)<br>    SELECT * FROM student ORDER BY score DESC, name ASC;<br>表示对student按分数降序排序, 按名字升序排序</p>
-<p>SELECT查询数据时的默认参数为 ALL, 即,如果查询结果中有重复的元祖, 默认会把全部元组输出, 如果不想有重复元组输出, 在SELECT 后面加一个关键词<em>distinct</em>就可以了<br>    SELECT DISTINCT sex FROM student;</p>
-<h1 id="UPDATE语句(修改)">UPDATE语句(修改)</h1><p>UPDATE 表名 SET 属性名1=新值, 属性名2=新值 WHERE 约束条件</p>
-<h1 id="DELETE语句(删除)">DELETE语句(删除)</h1><pre><code><span class="operator"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> 表名 <span class="keyword">WHERE</span> 条件</span>
+<p>归纳SELECT的用法, 其语法结构为</p>
+<pre><code><span class="keyword">SELECT</span> 属性列表 <span class="keyword">FROM</span> 表名 <span class="keyword">WHERE</span> 条件语句
+</code></pre><p>属性列表可以是任意多个, 使用*<em>\</em>表示选择全部属性<br>表名为单表或者多表联合的结果<br>在条件语句中,可以对查询结果进行筛选,排序等操作</p>
+<p>SELECT的更名运算<br>对属性重命名</p>
+<pre><code><span class="operator"><span class="keyword">SELECT</span> oldname1 <span class="keyword">AS</span> newname1, oldname2 <span class="keyword">AS</span> newname2 <span class="keyword">FROM</span> <span class="keyword">table</span>;</span>
+</code></pre><p>将会下显示结果中使用新的名字代替旧的名字, 其中AS不是必须的, 可以直接写成oldname newname</p>
+<p>对表重命名:</p>
+<pre><code><span class="operator"><span class="keyword">SELECT</span> T.ID, T.name <span class="keyword">FROM</span> <span class="keyword">user</span> <span class="keyword">AS</span> T;</span>
+</code></pre><p>对选择结果排序使用ORDER BY 属性名1 排序方式(ASC|DESC), 属性名2 排序方式(ASC|DESC)</p>
+<pre><code><span class="operator"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> student <span class="keyword">ORDER</span> <span class="keyword">BY</span> score <span class="keyword">DESC</span>, name <span class="keyword">ASC</span>;</span>
+</code></pre><p>表示对student按分数降序排序, 按名字升序排序</p>
+<p>SELECT查询数据时的默认参数为 ALL, 即,如果查询结果中有重复的元祖, 默认会把全部元组输出, 如果不想有重复元组输出, 在SELECT 后面加一个关键词<em>distinct</em>就可以了</p>
+<pre><code><span class="operator"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> sex <span class="keyword">FROM</span> student;</span>
+</code></pre><h1 id="UPDATE语句(修改)">UPDATE语句(修改)</h1><pre><code><span class="operator"><span class="keyword">UPDATE</span> 表名 <span class="keyword">SET</span> 属性名<span class="number">1</span>=新值, 属性名<span class="number">2</span>=新值 <span class="keyword">WHERE</span> 约束条件</span>
+</code></pre><h1 id="DELETE语句(删除)">DELETE语句(删除)</h1><pre><code><span class="operator"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> 表名 <span class="keyword">WHERE</span> 条件</span>
 </code></pre><p>如果DELETE语句没有加条件, 将会删除表中的所有数据</p>
 
       
