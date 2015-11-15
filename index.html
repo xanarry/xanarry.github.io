@@ -61,9 +61,14 @@
     </header>
     <div class="entry">
       
-        <p>默认可能没有安装mysql的链接库, 使用下面语句安装<br>    sudo apt-get install libmysqlclient-dev</p>
-<p>使用下面两条命令查看库文件的位置和头文件的位置<br>    mysql_config —libs<br>    mysql_config —cflags</p>
-<p>然后就可以使用<br>    gcc in.c -o -lmysqlclient<br>编译</p>
+        <p>默认可能没有安装mysql的链接库, 使用下面语句安装</p>
+<pre><code>sudo apt-<span class="built_in">get</span> install libmysqlclient-<span class="built_in">dev</span>
+</code></pre><p>使用下面两条命令查看库文件的位置和头文件的位置</p>
+<pre><code>mysql_config <span class="comment">--libs</span>
+mysql_config <span class="comment">--cflags</span>
+</code></pre><p>然后就可以使用</p>
+<pre><code>gcc <span class="keyword">in</span><span class="class">.c</span> -o -lmysqlclient
+</code></pre><p>编译</p>
 <p>使用集成开发工具要添加库的路径到工具上</p>
 
       
