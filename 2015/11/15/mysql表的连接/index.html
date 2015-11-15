@@ -60,12 +60,12 @@
     </header>
     <div class="entry">
       
-        <h1 id="概述">概述</h1><p>连接从类型上来说有两种连接, 一种是<em>内连接(inner join)</em>, 另一种是<em>外连接(outer join)</em><br>内连接就是只连接同时存在与两个表中的内容,忽略掉所有不匹配的信息, 比如说自然连接就是内连接, 只是省略了inner关键字<br>natural join是将两个表中相同属性的值做比较, 如果相同则放在一起, 如果, 两个表中有多个相同的属性, 那么则要求两个属性的值都相同才能链接到一起, 如果只想通过一个属性join,请使用A join B using(culum)<br>假如A表与B表有共同的属性ID, 自然链接可以使用以下三种写法:</p>
+        <h1 id="概述">概述</h1><h3 id="连接从类型上来说有两种连接,_一种是内连接(inner_join),_另一种是外连接(outer_join)">连接从类型上来说有两种连接, 一种是<em>内连接(inner join)</em>, 另一种是<em>外连接(outer join)</em></h3><h3 id="内连接就是只连接同时存在与两个表中的内容,忽略掉所有不匹配的信息,_比如说自然连接就是内连接,_只是省略了inner关键字">内连接就是只连接同时存在与两个表中的内容,忽略掉所有不匹配的信息, 比如说自然连接就是内连接, 只是省略了inner关键字</h3><h3 id="natural_join是将两个表中相同属性的值做比较,_如果相同则放在一起,_如果,_两个表中有多个相同的属性,_那么则要求两个属性的值都相同才能链接到一起,_如果只想通过一个属性join,请使用A_join_B_using(culum)">natural join是将两个表中相同属性的值做比较, 如果相同则放在一起, 如果, 两个表中有多个相同的属性, 那么则要求两个属性的值都相同才能链接到一起, 如果只想通过一个属性join,请使用A join B using(culum)</h3><p>假如A表与B表有共同的属性ID, 自然链接可以使用以下三种写法:</p>
 <pre><code><span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> A <span class="keyword">natural</span> <span class="keyword">join</span> B;</span>
 <span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> A, B <span class="keyword">where</span> A.ID = B.ID;</span>
 <span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> A <span class="keyword">join</span> B <span class="keyword">using</span>(ID);</span>
-</code></pre><h1 id="连接类型">连接类型</h1><h2 id="外连接就是连接两个表中所有的内容,_对于没有其中一端匹配的记录,_使用NULL元组补齐显示"><em>外连接</em>就是连接两个表中所有的内容, 对于没有其中一端匹配的记录, 使用NULL元组补齐显示</h2><p>因为连接针对是两个表的,所以外连接就分成两种情况, 一种是左外连接, 或者叫左连接, 另外一种叫右外连接, 又叫右连接</p>
-<h2 id="左外连接就是当两个表进行连接时,_对于存在于左边表中的元组,_如果右边表中无法找到与之匹配的信息,_那么就使用NULL代替显示的右边的信息"><em>左外连接</em>就是当两个表进行连接时, 对于存在于左边表中的元组, 如果右边表中无法找到与之匹配的信息, 那么就使用NULL代替显示的右边的信息</h2><h2 id="反之,_右连接就是当两个表进行连接时,_对于存在于右边表中的元组,_如果左边表中无法找到与之匹配的信息,_那么就使用NULL代替显示的左边边的信息">反之, <em>右连接</em>就是当两个表进行连接时, 对于存在于右边表中的元组, 如果左边表中无法找到与之匹配的信息, 那么就使用NULL代替显示的左边边的信息</h2><h2 id="简而言之,_就是是什么链接就保留哪一边表中的原始信息,_而用NULL代替另外一边的信息">简而言之, 就是是什么链接就保留哪一边表中的原始信息, 而用NULL代替另外一边的信息</h2><font color="red">注意: MySQL中没有全连接</font>
+</code></pre><h3 id="外连接就是连接两个表中所有的内容,_对于没有其中一端匹配的记录,_使用NULL元组补齐显示"><em>外连接</em>就是连接两个表中所有的内容, 对于没有其中一端匹配的记录, 使用NULL元组补齐显示</h3><p>因为连接针对是两个表的,所以外连接就分成两种情况, 一种是左外连接, 或者叫左连接, 另外一种叫右外连接, 又叫右连接</p>
+<h3 id="左外连接就是当两个表进行连接时,_对于存在于左边表中的元组,_如果右边表中无法找到与之匹配的信息,_那么就使用NULL代替显示的右边的信息"><em>左外连接</em>就是当两个表进行连接时, 对于存在于左边表中的元组, 如果右边表中无法找到与之匹配的信息, 那么就使用NULL代替显示的右边的信息</h3><h3 id="反之,_右连接就是当两个表进行连接时,_对于存在于右边表中的元组,_如果左边表中无法找到与之匹配的信息,_那么就使用NULL代替显示的左边边的信息">反之, <em>右连接</em>就是当两个表进行连接时, 对于存在于右边表中的元组, 如果左边表中无法找到与之匹配的信息, 那么就使用NULL代替显示的左边边的信息</h3><h3 id="简而言之,_就是是什么链接就保留哪一边表中的原始信息,_而用NULL代替另外一边的信息">简而言之, 就是是什么链接就保留哪一边表中的原始信息, 而用NULL代替另外一边的信息</h3><font color="red">注意: MySQL中没有全连接</font>
 
 <h2 id="以下使用两个表来看看连接的效果是什么样的">以下使用两个表来看看连接的效果是什么样的</h2><h3 id="person表,_含有每个人的ID和姓名">person表, 含有每个人的ID和姓名</h3><pre><code><span class="header">mysql&gt; select * from person;
 +------+---------+</span>
@@ -111,7 +111,7 @@
 <span class="header">| 666  | jerry |  4231 |
 +------+-------+-------+</span>
 3 rows in set (0.00 sec)
-</code></pre><h2 id="左链接,_同样,_在使用左右连接是是否使用outer关键词都能得到一样的效果">左链接, 同样, 在使用左右连接是是否使用outer关键词都能得到一样的效果</h2><h2 id="可以看出输出了左边表中id为111,222,333的内容,_但是右边表中没有内容与这几项匹配,_所以使用NULL代替输出">可以看出输出了左边表中id为111,222,333的内容, 但是右边表中没有内容与这几项匹配, 所以使用NULL代替输出</h2><pre><code>mysql&gt; select <span class="keyword">*</span> from person left join salary using(id);
+</code></pre><h3 id="左链接,_同样,_在使用左右连接是是否使用outer关键词都能得到一样的效果">左链接, 同样, 在使用左右连接是是否使用outer关键词都能得到一样的效果</h3><h3 id="可以看出输出了左边表中id为111,222,333的内容,_但是右边表中没有内容与这几项匹配,_所以使用NULL代替输出">可以看出输出了左边表中id为111,222,333的内容, 但是右边表中没有内容与这几项匹配, 所以使用NULL代替输出</h3><pre><code>mysql&gt; select <span class="keyword">*</span> from person left join salary using(id);
 +------+---------+-------+
 |<span class="string"> id   </span>|<span class="string"> name    </span>|<span class="string"> money </span>|
 +------+---------+-------+
@@ -138,7 +138,7 @@ mysql&gt; select <span class="keyword">*</span> from person left outer join sala
 |<span class="string"> 333  </span>|<span class="string"> bob     </span>|<span class="string">  NULL </span>|
 +------+---------+-------+
 7 rows in set (0.00 sec)
-</code></pre><h2 id="右链接,_同样,_在使用左右连接是是否使用outer关键词都能得到一样的效果">右链接, 同样, 在使用左右连接是是否使用outer关键词都能得到一样的效果</h2><h2 id="可以看出输出了右边边表中id为777,888,999的内容,_但是左边边表中没有内容与这几项匹配,_所以使用NULL代替输出">可以看出输出了右边边表中id为777,888,999的内容, 但是左边边表中没有内容与这几项匹配, 所以使用NULL代替输出</h2><pre><code><span class="header">mysql&gt; select * from person right join salary using(id);
+</code></pre><h3 id="右链接,_同样,_在使用左右连接是是否使用outer关键词都能得到一样的效果">右链接, 同样, 在使用左右连接是是否使用outer关键词都能得到一样的效果</h3><h3 id="可以看出输出了右边边表中id为777,888,999的内容,_但是左边边表中没有内容与这几项匹配,_所以使用NULL代替输出">可以看出输出了右边边表中id为777,888,999的内容, 但是左边边表中没有内容与这几项匹配, 所以使用NULL代替输出</h3><pre><code><span class="header">mysql&gt; select * from person right join salary using(id);
 +------+-------+-------+</span>
 <span class="header">| id   | money | name  |
 +------+-------+-------+</span>
