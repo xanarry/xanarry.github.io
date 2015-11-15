@@ -51,6 +51,247 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-11-15T06:08:35.000Z"><a href="/2015/11/15/python爬虫抓取新华网新闻并自动生成word文档/">2015-11-15</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/11/15/python爬虫抓取新华网新闻并自动生成word文档/">python爬虫抓取新华网新闻并自动生成word文档</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>认识一个在学校广播电台的学妹, 听她说她们每天都要在网上找新闻, 国际, 国内, 和校内各五篇, 然后将其做成word文档打印, 个人感觉这种活非常浪费时间, 应该写个程序帮我们自动完成. 后来没事的时候就写了这个python程序实现这个功能.</p>
+<p>程序用python3.4编写, 使用到了urllib, 加另外两个三方库, BeautifulSoup(解析网页, 很好用的一个工具)和python-docx(生成word文档,这个库功能还不是特别强大)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">from</span> docx <span class="keyword">import</span> Document</span><br><span class="line"><span class="keyword">from</span> docx.shared <span class="keyword">import</span> Pt</span><br><span class="line"><span class="keyword">from</span> docx.enum.text <span class="keyword">import</span> WD_ALIGN_PARAGRAPH</span><br><span class="line"></span><br><span class="line">national = <span class="string">"国内"</span></span><br><span class="line">international = <span class="string">"国际"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_html_soup</span><span class="params">(url)</span>:</span><span class="comment">#获取解编码后的HTML</span></span><br><span class="line">    html = <span class="keyword">None</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        response = urllib.request.urlopen(url, timeout = <span class="number">10</span>)</span><br><span class="line">        html = response.read().decode(encoding = <span class="string">"utf8"</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        print(e, <span class="string">"please check your network situation"</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line">    soup = BeautifulSoup(str(html), <span class="string">"lxml"</span>)</span><br><span class="line">    <span class="keyword">return</span> soup</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">page_url</span><span class="params">(url, page_num)</span>:</span><span class="comment">#生成带页面的URL</span></span><br><span class="line">    <span class="keyword">if</span> page_num == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> url</span><br><span class="line">    index = url.rfind(<span class="string">"."</span>)</span><br><span class="line">    <span class="keyword">return</span> url[<span class="number">0</span> : index] + <span class="string">"_"</span> + str(page_num) + url[index : ]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_title_link</span><span class="params">(url, pattern)</span>:</span><span class="comment">#获取新闻的标题和正文链接</span></span><br><span class="line">    soup = get_html_soup(url)</span><br><span class="line">    news_link = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    scroll_list = BeautifulSoup(str(soup.find(<span class="string">"div"</span>, attrs = pattern)), <span class="string">"lxml"</span>)</span><br><span class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> scroll_list.find_all(<span class="string">"a"</span>):</span><br><span class="line">        <span class="keyword">if</span> len(link.get_text().strip()) &gt; <span class="number">0</span> <span class="keyword">and</span> link.get(<span class="string">"href"</span>).find(<span class="string">"http"</span>) != -<span class="number">1</span>:</span><br><span class="line">            news_link[link.get_text()] = link.get(<span class="string">'href'</span>)</span><br><span class="line">    <span class="keyword">return</span> news_link</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_news_body</span><span class="params">(url)</span>:</span><span class="comment">#抓取新闻主体内容</span></span><br><span class="line">    first = <span class="keyword">True</span></span><br><span class="line">    content_text = []</span><br><span class="line">    page_num = <span class="number">1</span></span><br><span class="line">    article_div = <span class="string">""</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#使用循环处理有分页的新闻</span></span><br><span class="line">    <span class="keyword">while</span> first == <span class="keyword">True</span> <span class="keyword">or</span> article_div.find(<span class="string">"下一页&lt;/a&gt;"</span>) != -<span class="number">1</span>:</span><br><span class="line">        soup = get_html_soup(page_url(url, page_num))</span><br><span class="line">        <span class="keyword">if</span> soup == <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">        article_div = str(soup.find(<span class="string">"div"</span>, attrs = &#123;<span class="string">"class"</span>: <span class="string">"article"</span>&#125;))</span><br><span class="line">        soup = BeautifulSoup(str(article_div), <span class="string">"lxml"</span>)</span><br><span class="line">        <span class="keyword">for</span> content <span class="keyword">in</span> soup.find_all(<span class="string">"p"</span>):</span><br><span class="line">            <span class="keyword">if</span> len(content.get_text().strip()) &gt; <span class="number">0</span>:</span><br><span class="line">                content_text.append(<span class="string">"    "</span> + content.get_text().strip())</span><br><span class="line">        page_num += <span class="number">1</span></span><br><span class="line">        first = <span class="keyword">False</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> content_text:</span><br><span class="line">        <span class="keyword">if</span> x == <span class="string">"    None"</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line">    <span class="keyword">return</span> content_text</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">clean_chinese_character</span><span class="params">(text)</span>:</span></span><br><span class="line">    <span class="string">'''处理特殊的中文符号,将其全部替换为'-' 否则在保存时Windows无法将有的中文符号作为路径'''</span></span><br><span class="line">    chars = chars = [<span class="string">"/"</span>, <span class="string">"\""</span>, <span class="string">"'"</span>, <span class="string">"·"</span>, <span class="string">"。"</span>,<span class="string">"？"</span>, <span class="string">"！"</span>, <span class="string">"，"</span>, <span class="string">"、"</span>, <span class="string">"；"</span>, <span class="string">"："</span>, <span class="string">"‘"</span>, <span class="string">"’"</span>, <span class="string">"“"</span>, <span class="string">"”"</span>, <span class="string">"（"</span>, <span class="string">"）"</span>, <span class="string">"…"</span>, <span class="string">"–"</span>, <span class="string">"．"</span>, <span class="string">"《"</span>, <span class="string">"》"</span>];</span><br><span class="line">    new_text = <span class="string">""</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(text)):</span><br><span class="line">        <span class="keyword">if</span> text[i] <span class="keyword">not</span> <span class="keyword">in</span> chars:</span><br><span class="line">            new_text += text[i]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            new_text += <span class="string">"_"</span></span><br><span class="line">    <span class="keyword">return</span> new_text;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_docx</span><span class="params">(news_type, title, content)</span>:</span></span><br><span class="line">    <span class="string">'''这里使用python-docx库将新闻的内容生成word文件'''</span></span><br><span class="line">    document = Document()</span><br><span class="line">    paragraph = document.add_paragraph(title)</span><br><span class="line">    paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER</span><br><span class="line">    paragraph.bold = <span class="keyword">True</span></span><br><span class="line">   </span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> content:</span><br><span class="line">        paragraph = document.add_paragraph(x)</span><br><span class="line"></span><br><span class="line">    style = paragraph.style</span><br><span class="line">    font = style.font</span><br><span class="line">    font.size = Pt(<span class="number">15</span>)</span><br><span class="line">    font.name = <span class="string">"consolas"</span></span><br><span class="line"></span><br><span class="line">    name = news_type + <span class="string">"-"</span> + clean_chinese_character(title) + <span class="string">".docx"</span></span><br><span class="line">    document.save(news_type + <span class="string">"/"</span> + name)</span><br><span class="line"></span><br><span class="line"><span class="comment">########################################################################</span></span><br><span class="line">national_news = <span class="string">"http://www.news.cn/politics/"</span></span><br><span class="line">national_news_pattern = &#123;<span class="string">"id"</span>: <span class="string">"hideData0"</span>&#125;</span><br><span class="line"></span><br><span class="line">international_news = <span class="string">"http://www.news.cn/world/"</span></span><br><span class="line">international_news_pattern = &#123;<span class="string">"class"</span>: <span class="string">"partR domPC"</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#删除旧目录</span></span><br><span class="line">print(<span class="string">"deleting old dir"</span>)</span><br><span class="line"><span class="keyword">if</span> os.path.exists(international):</span><br><span class="line">    shutil.rmtree(international)</span><br><span class="line"><span class="keyword">if</span> os.path.exists(national):</span><br><span class="line">    shutil.rmtree(national)</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建新目录</span></span><br><span class="line">print(<span class="string">"creating dir: "</span>, international)</span><br><span class="line">os.mkdir(international)</span><br><span class="line">print(<span class="string">"creating dir: "</span>, national)</span><br><span class="line">os.mkdir(national)</span><br><span class="line"></span><br><span class="line"><span class="comment">#获取新闻的标题和链接</span></span><br><span class="line">international_news_list = get_title_link(international_news, international_news_pattern)</span><br><span class="line">print(<span class="string">"\ngetting international news content"</span>)</span><br><span class="line"><span class="comment">#获取新闻的内容主体并写入文件</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> international_news_list:</span><br><span class="line">    paras = get_news_body(international_news_list[x])</span><br><span class="line">    <span class="keyword">if</span> paras != <span class="keyword">None</span> <span class="keyword">and</span> len(paras) &gt; <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">"writing:"</span>, clean_chinese_character(x), international_news_list[x])</span><br><span class="line">        create_docx(international, x, paras)</span><br><span class="line"></span><br><span class="line">national_news_list = get_title_link(national_news, national_news_pattern);</span><br><span class="line">print(<span class="string">"\ngetting national news content"</span>)</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> national_news_list:</span><br><span class="line">    paras = get_news_body(national_news_list[x])</span><br><span class="line">    <span class="keyword">if</span> paras != <span class="keyword">None</span> <span class="keyword">and</span> len(paras) &gt; <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">"writing:"</span>, clean_chinese_character(x), national_news_list[x])</span><br><span class="line">        create_docx(national, x, paras)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"All done, have a nice day"</span>)</span><br></pre></td></tr></table></figure>
+<p>代码的核心是beautifulsoup库的使用, 这的确是个很好用的工具, 大家有兴趣应该学学</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-11-15T05:36:00.000Z"><a href="/2015/11/15/mysql的插入-查询-修改和删除/">2015-11-15</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/11/15/mysql的插入-查询-修改和删除/">mysql的插入,查询,修改和删除</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="insert语句(插入)">insert语句(插入)</h1><p>insert语句比较简单, 其语法为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into &#34920;&#21517; (&#23646;&#24615;1, &#23646;&#24615;2, &#23646;&#24615;3, ...) values (&#20540;1, &#20540;2, &#20540;3, ...);</span><br></pre></td></tr></table></figure></p>
+<p>或者<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into &#34920;&#21517; values (&#20540;1, &#20540;2, &#20540;3, ...);</span><br></pre></td></tr></table></figure></p>
+<p>两者的区别是第一种在插入时, 每个值和属性一一对应插入, 第二种插入则将每个值依次插入到表中的每个属性上(从第一个到最后一个), 如果值的数量小于属性的数量, 那么后面的属性将会被空闲 </p>
+<h1 id="SELECT语句(查询)">SELECT语句(查询)</h1><p>首先看看MySQL SELECT语句的官方语法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT&#10;    [ALL | DISTINCT | DISTINCTROW ]&#10;    [HIGH_PRIORITY]&#10;    [STRAIGHT_JOIN]&#10;    [SQL_SMALL_RESULT] [SQL_BIG_RESULT] [SQL_BUFFER_RESULT]&#10;    [SQL_CACHE | SQL_NO_CACHE] [SQL_CALC_FOUND_ROWS]&#10;    SELECT_expr [, SELECT_expr ...]&#10;    [FROM table_references&#10;    [PARTITION partition_list]&#10;    [WHERE where_condition]&#10;    [GROUP BY &#123;col_name | expr | position&#125;&#10;    [ASC | DESC], ... [WITH ROLLUP]]&#10;    [HAVING where_condition]&#10;    [ORDER BY &#123;col_name | expr | position&#125;&#10;    [ASC | DESC], ...]&#10;    [LIMIT &#123;[offset,] row_count | row_count OFFSET offset&#125;]&#10;    [PROCEDURE procedure_name(argument_list)]&#10;    [INTO OUTFILE &#39;file_name&#39;&#10;    [CHARACTER SET charset_name]&#10;    export_options&#10;    | INTO DUMPFILE &#39;file_name&#39;&#10;    | INTO var_name [, var_name]]&#10;    [FOR UPDATE | LOCK IN SHARE MODE]]</span><br></pre></td></tr></table></figure></p>
+<p>归纳SELECT的用法, 其语法结构为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT &#23646;&#24615;&#21015;&#34920; FROM &#34920;&#21517; WHERE &#26465;&#20214;&#35821;&#21477;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>属性列表可以是任意多个, 使用*<em>\</em>表示选择全部属性</li>
+<li>表名为单表或者多表联合的结果</li>
+<li>在条件语句中,可以对查询结果进行筛选,排序等操作</li>
+</ol>
+<p>SELECT的更名运算<br>对属性重命名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT oldname1 AS newname1, oldname2 AS newname2 FROM table;</span><br></pre></td></tr></table></figure></p>
+<p>将会下显示结果中使用新的名字代替旧的名字, 其中AS不是必须的, 可以直接写成oldname newname</p>
+<p>对表重命名:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT T.ID, T.name FROM user AS T;</span><br></pre></td></tr></table></figure></p>
+<p>对选择结果排序使用ORDER BY 属性名1 排序方式(ASC|DESC), 属性名2 排序方式(ASC|DESC)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM student ORDER BY score DESC, name ASC;</span><br></pre></td></tr></table></figure></p>
+<p>表示对student按分数降序排序, 按名字升序排序</p>
+<p>SELECT查询数据时的默认参数为 ALL, 即,如果查询结果中有重复的元祖, 默认会把全部元组输出, 如果不想有重复元组输出, 在SELECT 后面加一个关键词<em>distinct</em>就可以了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT DISTINCT sex FROM student;</span><br></pre></td></tr></table></figure></p>
+<h1 id="UPDATE语句(修改)">UPDATE语句(修改)</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE &#34920;&#21517; SET &#23646;&#24615;&#21517;1=&#26032;&#20540;, &#23646;&#24615;&#21517;2=&#26032;&#20540; WHERE &#32422;&#26463;&#26465;&#20214;</span><br></pre></td></tr></table></figure>
+<h1 id="DELETE语句(删除)">DELETE语句(删除)</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE FROM &#34920;&#21517; WHERE &#26465;&#20214;</span><br></pre></td></tr></table></figure>
+<p>如果DELETE语句没有加条件, 将会删除表中的所有数据</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-10-05T01:56:46.000Z"><a href="/2015/10/05/jsp-servlet接收中文参数乱码的问题/">2015-10-05</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/10/05/jsp-servlet接收中文参数乱码的问题/">jsp servlet接收中文参数乱码的问题</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li>get乱码<br>在jsp文件中指明了使用utf-8编码则在servlet中使用<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String name = new String(req.getParameter(<span class="string">"name"</span>).getBytes(<span class="string">"ISO-8859-1"</span>), <span class="string">"UTF-8"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>才能保证中文不会乱码, 因为网页本身使用utf-8编码, get方法使用URL传输参数,那么通过utf-8编码后的字符串会再次经过浏览器的编码方式(通常为iOS-8859-1)编码, 所有在解码是需要先翻译ISO-8859-1的编码方式, 再使用utf-8解码, 就能得到正确的中文字符</p>
+<ol>
+<li>post乱码<br>post是直接发送网页编码后的字符, 所以在接收post方法的参数时使用<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request.setCharacterEncoding(<span class="string">"UTF-8"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在获取参数就是正常的中文了</p>
+<p>注意: <em>以上的UTF-8是因为网友中设置的编码为utf-8, 如果网页设置编码为GBK, 那么相应的把以上所有的utf-8改为GBK</em></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-10-02T14:57:10.000Z"><a href="/2015/10/02/ubuntu-安装jdk/">2015-10-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/10/02/ubuntu-安装jdk/">ubuntu 安装jdk</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li><p>上jdk官网下载jdk8的tar文件</p>
+</li>
+<li><p>使用tar命令解压jdk文件</p>
+</li>
+<li><p>移动解压后的jdk文件夹到你想要放到的位置, 我放到/usr/lib/中的:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv jdk1.<span class="number">8.0</span>_60 /usr/lib</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>添加jdk路径到环境变量中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/profile</span><br></pre></td></tr></table></figure>
+<p>添加：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/lib/jvm/jdk1.<span class="number">8.0</span>_60  <span class="comment">## 这里要注意目录要换成自己解压的jdk 目录</span></span><br><span class="line"><span class="built_in">export</span> JRE_HOME=<span class="variable">$&#123;JAVA_HOME&#125;</span>/jre  </span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$&#123;JAVA_HOME&#125;</span>/lib:<span class="variable">$&#123;JRE_HOME&#125;</span>/lib  </span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$&#123;JAVA_HOME&#125;</span>/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li>设置系统默认jdk 版本<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo update-alternatives --install /usr/bin/java  java   /usr/lib/jdk1.<span class="number">8.0</span>_60/bin/java  <span class="number">300</span>  </span><br><span class="line">sudo update-alternatives --install /usr/bin/javac javac  /usr/lib/jdk1.<span class="number">8.0</span>_60/bin/javac <span class="number">300</span>  </span><br><span class="line">sudo update-alternatives --install /usr/bin/jar   jar    /usr/lib/jdk1.<span class="number">8.0</span>_60/bin/jar   <span class="number">300</span>   </span><br><span class="line">sudo update-alternatives --install /usr/bin/javah javah  /usr/lib/jdk1.<span class="number">8.0</span>_60/bin/javah <span class="number">300</span>   </span><br><span class="line">sudo update-alternatives --install /usr/bin/javap javap  /usr/lib/jdk1.<span class="number">8.0</span>_60/bin/javap <span class="number">300</span>   </span><br><span class="line">sudo chmod a+x /usr/bin/java</span><br><span class="line">sudo chmod a+x /usr/bin/javac</span><br><span class="line">sudo update-alternatives --config java</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li>测试jdk<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-10-02T14:44:32.000Z"><a href="/2015/10/02/ubuntu-安装MySQL/">2015-10-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/10/02/ubuntu-安装MySQL/">ubuntu 安装MySQL</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="install_mysql56_on_ubuntu14-04">install mysql56 on ubuntu14.04</h1><ol>
+<li><p>go to <a href="www.mysql.com">www.mysql.com</a> and download mysql server file</p>
+</li>
+<li><p>enter the direction of the download file</p>
+</li>
+<li><p>extract mysql tar file</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf mysql-server_5.<span class="number">6.26</span>-<span class="number">1</span>ubuntu14.<span class="number">04</span>_i386.deb-bundle.tar</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>install dependencies</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i mysql-common_5.<span class="number">6.26</span>-<span class="number">1</span>ubuntu14.<span class="number">04</span>_i386.deb</span><br><span class="line">sudo apt-get install libaio1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>install mysql server</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i mysql-community-server_5.<span class="number">6.26</span>-<span class="number">1</span>ubuntu14.<span class="number">04</span>_i386.deb</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>install mysql client otherwise you can not use mysql command line in the terminal</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i mysql-community-client_5.<span class="number">6.26</span>-<span class="number">1</span>ubuntu14.<span class="number">04</span>_i386.deb</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="stop_&amp;_start_the_service_of_mysql">stop &amp; start the service of mysql</h1><p>start:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/mysql start</span><br></pre></td></tr></table></figure></p>
+<p>stop:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/mysql stop</span><br></pre></td></tr></table></figure></p>
+<p>or:<br>start:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service mysql start</span><br></pre></td></tr></table></figure></p>
+<p>stop :<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service mysql stop</span><br></pre></td></tr></table></figure></p>
+<p>done</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-10-02T14:34:40.000Z"><a href="/2015/10/02/windows-安装MySQL压缩包/">2015-10-02</a></time>
       
       
@@ -236,202 +477,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-07-13T08:14:32.000Z"><a href="/2015/07/13/汇编语言的基本结构/">2015-07-13</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/07/13/汇编语言的基本结构/">汇编语言的基本结构</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-07-13T08:12:41.000Z"><a href="/2015/07/13/使用位运算转换大小写/">2015-07-13</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/07/13/使用位运算转换大小写/">使用位运算转换大小写</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>大小写字母的ASCII码差值为32, 32是2的5次方, 因此如果将ASCII的值使用二进制编码表示会不会有奇特的关系呢?<br>看看如下列表<br>ch  dec  bin            ch   dec   bin<br>a   97   0110 0001  -&gt;  A    65    0100 0010<br>b   98   0110 0010  -&gt;  B    66    0100 0010<br>c   99   0110 0011  -&gt;  C    67    0100 0011<br>d   100  0110 0100  -&gt;  D    68    0100 0100<br>e   101  0110 0101  -&gt;  E    69    0100 0101<br>从列表可以看出, 二进制ASCII码的低四位是一致的, 唯一的差别就在于第5位(从0开始数, 2的5次方正好是32)<br>小写字母的是1, 大写字母的是0, </p>
-<p>于是我们在编程中可以使用为运算直接将这一位置为1或者置为0实现大小写的转换, 所以, 将大小字母转换为小写字母即保留其他位, 使用”或0010 0000”(代码即”!32”)实现转换, 同样, 如果要将第小写转为大小, 用”与1101 1111”(代码即”&amp;-33”)把5位设为0即可.</p>
-<p>以下给的c++使用以上方法转换的代码片段<br>char ch = ‘A’;//定义ch的的值为’A’<br>ch != 32;//将ch转换为小写’a’<br>ch &amp;= -33;//将小写的’a’转换为’A’</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-06-30T07:43:49.000Z"><a href="/2015/06/30/C++-高精度类/">2015-06-30</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/06/30/C++-高精度类/">c++ 高精度类</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="高精度的计算方法就是将数字使用字符串存储，然后加减乘过程都是模拟列竖式运算,_除法的方法则神奇一点">高精度的计算方法就是将数字使用字符串存储，然后加减乘过程都是模拟列竖式运算, 除法的方法则神奇一点</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;iostream&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;cstring&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;string&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> BigInteger</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> max_len = <span class="number">10000</span>;<span class="comment">//数字的最大长度</span></span><br><span class="line">    <span class="keyword">int</span> num[max_len];<span class="comment">//保存数字的每位数到数组，数字时逆序的，1234保存格式为4321</span></span><br><span class="line">    <span class="keyword">int</span> len;<span class="comment">//数字的有效长度</span></span><br><span class="line"></span><br><span class="line">    BigInteger(<span class="keyword">long</span> <span class="keyword">long</span> n)<span class="comment">//构造函数，接收整数形式输入</span></span><br><span class="line">    &#123;</span><br><span class="line">        len = <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">memset</span>(num, <span class="number">0</span>, <span class="keyword">sizeof</span>(num));</span><br><span class="line">        <span class="keyword">if</span> (n &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span> (n &gt; <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                num[i++] = n % <span class="number">10</span>;</span><br><span class="line">                n /= <span class="number">10</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            len = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    BigInteger(<span class="built_in">string</span> n)<span class="comment">//构造函数接收字符串形式输入</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">memset</span>(num, <span class="number">0</span>, <span class="keyword">sizeof</span>(num));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = n.length() - <span class="number">1</span>, t = <span class="number">0</span>; i &gt;=<span class="number">0</span>; i--)</span><br><span class="line">            num[t++] = (<span class="keyword">int</span>)(n[i] - <span class="string">'0'</span>);</span><br><span class="line">        len = n.length();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    BigInteger()<span class="comment">//默认构造函数，初始值为0</span></span><br><span class="line">    &#123;</span><br><span class="line">        len = <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">memset</span>(num, <span class="number">0</span>, <span class="keyword">sizeof</span>(num));</span><br><span class="line">    &#125;</span><br><span class="line">    ~BigInteger()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">clean</span><span class="params">()</span><span class="comment">//清理掉数字前面的0，将“001509”，计算时表示为“905100”，将后面的0清除，整理为9051，最终输出1509</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (len &gt; <span class="number">1</span> &amp;&amp; !num[len - <span class="number">1</span>])</span><br><span class="line">            len--;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> BigInteger <span class="keyword">operator</span>+ (BigInteger a, BigInteger b)<span class="comment">//加法，逆序</span></span><br><span class="line">    &#123;</span><br><span class="line">        a.len = a.len &gt; b.len ? a.len + <span class="number">1</span> : a.len + <span class="number">1</span>;<span class="comment">//考虑进位情况，循环两个数中最大的位数加1次</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.len; i++)<span class="comment">//从个位开始</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> temp = a.num[i] + b.num[i];<span class="comment">//两个数的各位数相加</span></span><br><span class="line">            a.num[i] = temp % <span class="number">10</span>;<span class="comment">//求余保存到数a</span></span><br><span class="line">            a.num[i + <span class="number">1</span>] += temp / <span class="number">10</span>;<span class="comment">//实现进位</span></span><br><span class="line">        &#125;</span><br><span class="line">        a.clean();<span class="comment">//整理</span></span><br><span class="line">        <span class="keyword">return</span> a;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> BigInteger <span class="keyword">operator</span>- (BigInteger a, BigInteger b)<span class="comment">//减法,逆序</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (a &gt; b)<span class="comment">//a&gt;b才做减法</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.len; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (a.num[i] &lt; b.num[i])<span class="comment">//不够减</span></span><br><span class="line">                &#123;</span><br><span class="line">                    a.num[i] = a.num[i] + <span class="number">10</span> - b.num[i];<span class="comment">//如果被减数不是零则加10后在相减</span></span><br><span class="line">                    a.num[i + <span class="number">1</span>]--;<span class="comment">//被减数的下一位减1,</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span><span class="comment">//如果够减则两个数直接相减</span></span><br><span class="line">                    a.num[i] -= b.num[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span><span class="comment">//否则返回0</span></span><br><span class="line">            <span class="built_in">memset</span>(a.num, <span class="number">0</span>, <span class="keyword">sizeof</span>(a.num));</span><br><span class="line">        a.clean();</span><br><span class="line">        <span class="keyword">return</span> a;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> BigInteger <span class="keyword">operator</span>* (BigInteger a, BigInteger b)<span class="comment">//乘法，逆序</span></span><br><span class="line">    &#123;</span><br><span class="line">        BigInteger result;<span class="comment">//应为a,b两个数中的每个数要重复操作，所有开新的变量保存结果</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.len; i++)<span class="comment">//遍历乘数A</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; b.len; j++)<span class="comment">//遍历乘数B</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">/////////////两个数相乘的结果///加上上次计算的进位值</span></span><br><span class="line">                <span class="keyword">int</span> temp = a.num[i] * b.num[j] + result.num[i + j];</span><br><span class="line">                result.num[i + j] =  temp % <span class="number">10</span>;<span class="comment">//取余数保存</span></span><br><span class="line">                result.num[i + j + <span class="number">1</span>] += temp / <span class="number">10</span>;<span class="comment">//进位, 小于10的时候进0，错位相加同时进行</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        result.len = a.len + b.len;<span class="comment">//两数相乘的最大乘数是两个乘数的长度之和</span></span><br><span class="line">        result.clean();</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">friend</span> BigInteger <span class="keyword">operator</span>/ (BigInteger a, BigInteger b)<span class="comment">//除法，顺序</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/*</span><br><span class="line">         *比如175/6=29...3</span><br><span class="line">         *第一次循环：temp=1&lt;6 不执行操作，然后temp=1*10=10</span><br><span class="line">         *第二次循序：因为temp=10+7=17 &gt;= 6, 不断用temp-6，能减2次，保存2，然后temp剩下5， temp=5*10=60</span><br><span class="line">         *第三次循序：因为temp=50+5=55 &gt;= 6, 不断用temp-6，能减9次，保存9，然后temp剩下2， temp=2*10=20</span><br><span class="line">         *循环结束，所以结果是29</span><br><span class="line">         */</span></span><br><span class="line">        BigInteger result = <span class="number">0</span>, temp;<span class="comment">//定义变量保存结果和辅助计算中间数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = a.len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) </span><br><span class="line">        &#123;</span><br><span class="line">            temp.num[<span class="number">0</span>] = a.num[i];<span class="comment">//加上下一位数，因为是数组形式，直接赋值到temp.num[0]</span></span><br><span class="line">            <span class="keyword">while</span> (temp &gt;= b)<span class="comment">//迭代相加</span></span><br><span class="line">            &#123;</span><br><span class="line">                temp = temp - b;</span><br><span class="line">                result.num[i]++;<span class="comment">//保存相减次数</span></span><br><span class="line">            &#125;</span><br><span class="line">            temp = temp * <span class="number">10</span>;<span class="comment">//扩大十倍</span></span><br><span class="line">        &#125;</span><br><span class="line">        result.len = a.len + <span class="number">1</span>;</span><br><span class="line">        result.clean();</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> BigInteger <span class="keyword">operator</span>% (BigInteger a, BigInteger b)<span class="comment">//模运算</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> a - (a / b) * b;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    BigInteger <span class="keyword">operator</span>= (<span class="built_in">string</span> n)<span class="comment">//重载赋值符号</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = n.length() - <span class="number">1</span>, t = <span class="number">0</span>; i &gt;= <span class="number">0</span>; i++)</span><br><span class="line">            num[t++] = (<span class="keyword">int</span>)(n[i] - <span class="string">'0'</span>);</span><br><span class="line">        len = n.length();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span> &lt; (<span class="keyword">const</span> BigInteger &amp;a, <span class="keyword">const</span> BigInteger &amp;b)<span class="comment">//定义小于运算符</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (a.len != b.len)<span class="comment">//首先比较长度</span></span><br><span class="line">            <span class="keyword">return</span> a.len - b.len;</span><br><span class="line">        <span class="keyword">else</span><span class="comment">//长度相同依次比较每一位数</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = a.len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">                <span class="keyword">if</span> (a.num[i] != b.num[i])<span class="comment">//不同时才比较</span></span><br><span class="line">                    <span class="keyword">return</span> a.num[i] &lt; b.num[i];</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span> &gt; (<span class="keyword">const</span> BigInteger &amp;a, <span class="keyword">const</span> BigInteger &amp;b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> b &lt; a;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span> &gt;= (<span class="keyword">const</span> BigInteger &amp;a, <span class="keyword">const</span> BigInteger &amp;b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> !(a &lt; b);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span> &lt;= (<span class="keyword">const</span> BigInteger &amp;a, <span class="keyword">const</span> BigInteger &amp;b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> !(b &gt; a);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span> == (<span class="keyword">const</span> BigInteger &amp;a, <span class="keyword">const</span> BigInteger &amp;b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> !(a &gt; b) &amp;&amp; !(a &lt; b);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span> != (<span class="keyword">const</span> BigInteger &amp;a, <span class="keyword">const</span> BigInteger &amp;b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> !(b == a);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> ostream&amp; <span class="keyword">operator</span> &lt;&lt; (ostream &amp;os, <span class="keyword">const</span> BigInteger n)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = n.len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">            os &lt;&lt; n.num[i];</span><br><span class="line">        <span class="keyword">return</span> os;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> istream&amp; <span class="keyword">operator</span> &gt;&gt; (istream &amp;is, BigInteger &amp;n)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">string</span> s;</span><br><span class="line">        is &gt;&gt; s;</span><br><span class="line">        n = BigInteger(s);</span><br><span class="line">        <span class="keyword">return</span> is;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    BigInteger a = BigInteger(<span class="string">"0"</span>);</span><br><span class="line">    BigInteger b = BigInteger(<span class="string">"0"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="string">"+"</span> &lt;&lt; b &lt;&lt; <span class="string">"="</span> &lt;&lt; (a + b) &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="string">"-"</span> &lt;&lt; b &lt;&lt; <span class="string">"="</span> &lt;&lt; (a - b) &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="string">"*"</span> &lt;&lt; b &lt;&lt; <span class="string">"="</span> &lt;&lt; (a * b) &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="string">"/"</span> &lt;&lt; b &lt;&lt; <span class="string">"="</span> &lt;&lt; (a / b) &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="string">"%"</span> &lt;&lt; b &lt;&lt; <span class="string">"="</span> &lt;&lt; (a % b)&lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="有缺陷的地方可以在这里完善">有缺陷的地方可以在<a href="https://github.com/xanarry/source-code/blob/master/CPP/%E9%AB%98%E7%B2%BE%E5%BA%A6%E7%B1%BB.cpp" target="_blank" rel="external">这里完善</a></h2>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-06-30T07:09:08.133Z"><a href="/2015/06/30/hexo-的基本使用/">2015-06-30</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/06/30/hexo-的基本使用/">hexo 的基本使用</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>hexo创建新博客,生成,发布以及本地服务器测试的命令行</p>
-<h2 id="快速入门">快速入门</h2><h3 id="创建一个新的博客">创建一个新的博客</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"新博客的名字"</span></span><br></pre></td></tr></table></figure>
-<p>更多: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="在本地服务器上运行测试博客(localhost:4000)">在本地服务器上运行测试博客(localhost:4000)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>更多: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="生成静态HTML文件">生成静态HTML文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>更多: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="发布到远程服务器">发布到远程服务器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>更多: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-06-10T07:27:54.000Z"><a href="/2015/06/10/位运算/">2015-06-10</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/06/10/位运算/">位运算</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>位运算一直不太熟悉, 所以今天重新看了看位运算, 此文做个简单的总结</p>
-<p>计算机的所有数据都是转化为二进制按位存储的, 二位运算就是一系列直接操纵位序列的运算, 简单的说就是直接操纵二进制数据, 位运算的类型有一下6种:</p>
-<p>一. <strong><font color="0070ff"> &amp; </font></strong>, 与运算(双目), 类似于求交集, 对于两个位串, 如果同一个位置的两位同时为1则取1, 否则取0</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    01001101&#10; &#38;  10011011&#10;-----------------&#10;    00001001</span><br></pre></td></tr></table></figure>
-<p>二. <strong><font color="0070ff"> | </font></strong>, 或运算(双目), 类似于求交集, 即对于两个位串, 如果同一个位置的两位其中一个为1那么取1, 两个位都为0则取0</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    01001101&#10; |  10011011&#10;-----------------&#10;    11011111</span><br></pre></td></tr></table></figure>
-<p>三. <strong><font color="0070ff"> ^ </font></strong>, 异或运算(双目), 对于两个位串, 如果同一个位置其中一个为1, 但不都为1则取1, 否则取0</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    01001101&#10; ^  10011011&#10;-----------------&#10;    11010110</span><br></pre></td></tr></table></figure>
-<p>四. <strong><font color="0070ff"> ~ </font></strong>, 取反(单目), 对于一个位串, 对每一位取反</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">           01001101&#10;&#21462;&#21453;&#24471;&#21040;:   10110010</span><br></pre></td></tr></table></figure>
-<p>五. <strong><font color="0070ff"> &lt;&lt; </font></strong>, 左移(双目), 将一个位串向左移动n位, 高位的丢弃, 低位用零补齐</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">           01001101&#10;&#24038;&#31227;3&#20301;:    01101000</span><br></pre></td></tr></table></figure>
-<p>假如定义<strong>a = 5</strong>, 二进制为: 0000 0101<br><strong>a &lt;&lt;= 1;</strong>, 左移1位,变成: 0000 1010, 即十进制10</p>
-<p>六. <strong><font color="0070ff"> &gt;&gt; </font></strong>, 右移(双目), 将一个位串向右移动n位, 高位用零补齐, 低位的丢弃</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">           01001101&#10;&#21491;&#31227;3&#20301;:    00001001</span><br></pre></td></tr></table></figure>
-<p>假如定义<strong>a = 5</strong>, 二进制为: 0000 0101<br><strong>a &gt;&gt;= 1;</strong>, 左移1位,变成: 0000 0010, 即十进制2</p>
-<p>因此, 根据位运算的规则, 可以使用左移将数字扩大2的多少次方倍, 使用右移将数字缩小多少倍. 使用与(&amp;)或(|)运算来做位上的筛选. </p>
-<p>通过以上特性, 可以使用位运算写一个将十进制转为二进制的函数, 方法为每次取十进制的数的最低位, 然后右移一位, 然后再取最低位, 最后得到的串即为二进制数</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*处理32位整数*/</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">itob</span><span class="params">(<span class="keyword">int</span> a)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> bin[<span class="number">65</span>];<span class="comment">//保存没一位的数字</span></span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">8</span> * <span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">    <span class="comment">//不断右移取低位, 一共取32位</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = len - <span class="number">1</span>; i&gt;= <span class="number">0</span>; i--, a &gt;&gt;= <span class="number">1</span>)<span class="comment">//右移</span></span><br><span class="line">        bin[i] = (a &amp; <span class="number">1</span>);<span class="comment">//使用"0000 0000 0000 0000 0000 0000 0000 0001"筛选最低位</span></span><br><span class="line">    bin[len] = <span class="string">'\0'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">string</span> res = <span class="string">""</span>;<span class="comment">//将字符数组转为字符串并加上空格分割符, 4位一段</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i &amp;&amp; i % <span class="number">4</span> == <span class="number">0</span>)</span><br><span class="line">            res += <span class="string">" "</span>;</span><br><span class="line">        res += <span class="keyword">char</span>(bin[i] + <span class="string">'0'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//返回形如:xxxx xxxx xxxx xxxx 的二进制数</span></span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>还有根据计算机表示二进制数的方式, 我们可以直接得到一个类型的最大值:</p>
-<p>以一个32位带符号整数位例子:</p>
-<p><font color="0070ff">x</font>xxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx</p>
-<p>其中最高位为<strong>u</strong>符号位, 所以实际上表示数字本身的只有后面31位, 因为要找出最大值, 那么在二进制上的每一位肯定都是1, 处理最高位, 那么值肯定是<strong><font color="0070ff">0</font>111 1111 1111 1111 1111 1111 1111  1111</strong>将二进制4位分一段, 采用16进制表示, 后面七段都是1111, 即16进制F, 最高位上只有三位<strong>111</strong>表示值, 写成16进制即<strong>7</strong>, 那么这个带符号的最大是肯定就是<strong>0x7FFFFFFF</strong>, 对应32位十进制:<strong>2147483647</strong></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -465,7 +510,7 @@
   
     <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
   
-    <li><a href="/categories/MySQL/">MySQL</a><small>7</small></li>
+    <li><a href="/categories/MySQL/">MySQL</a><small>9</small></li>
   
     <li><a href="/categories/Operating-System/">Operating System</a><small>1</small></li>
   
@@ -483,6 +528,8 @@
   
     <li><a href="/categories/位运算/">位运算</a><small>1</small></li>
   
+    <li><a href="/categories/数据库/">数据库</a><small>2</small></li>
+  
     <li><a href="/categories/汇编/">汇编</a><small>1</small></li>
   
   </ul>
@@ -496,7 +543,7 @@
   
     <li><a href="/tags/C/">C++</a><small>1</small></li>
   
-    <li><a href="/tags/MySQL/">MySQL</a><small>8</small></li>
+    <li><a href="/tags/MySQL/">MySQL</a><small>11</small></li>
   
     <li><a href="/tags/Mysql/">Mysql</a><small>1</small></li>
   
@@ -531,6 +578,8 @@
     <li><a href="/tags/学习/">学习</a><small>1</small></li>
   
     <li><a href="/tags/排序/">排序</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>1</small></li>
   
     <li><a href="/tags/汇编/">汇编</a><small>1</small></li>
   

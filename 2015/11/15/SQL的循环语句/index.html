@@ -1,0 +1,287 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>xanarry&#39;s</title>
+  <meta name="author" content="xanarry">
+  
+  <meta name="description" content="xanarry&#39;s blog">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="xanarry&#39;s"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="xanarry&#39;s" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">xanarry&#39;s</a></h1>
+  <h2><a href="/">创造就是一个构造过程的过程!</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-11-15T08:08:33.362Z"><a href="/2015/11/15/SQL的循环语句/">2015-11-15</a></time>
+      
+      
+  
+    <h1 class="title"></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>title: SQL的循环语句<br>date: 2015-11-15 15:45:36<br>tags: SQL</p>
+<h2 id="categories:_数据库">categories: 数据库</h2><h1 id="循环语句:">循环语句:</h1><h2 id="NO-1_while">NO.1 while</h2><pre><code><span class="keyword">while</span> 布尔表达式(循环的条件) <span class="keyword">do</span>
+    循环体(语句用分号标记结束)
+<span class="keyword">end</span> <span class="keyword">while</span>
+</code></pre><h2 id="NO-2_repeat">NO.2 repeat</h2><pre><code><span class="keyword">repeat</span>
+    循环体(语句用分号标记结束)
+<span class="keyword">until</span> 布尔表达式(停止循环的条件)
+<span class="keyword">end</span> <span class="keyword">repeat</span>
+</code></pre><h2 id="NO-3_loop">NO.3 loop</h2><pre><code>循环标签 : <span class="keyword">loop</span>
+    循环执行语句;
+<span class="keyword">end</span> <span class="keyword">loop</span> 循环标签
+</code></pre><h3 id="LEAVE语句用来退出任何被标注的流程控制语句，语法如下：">LEAVE语句用来退出任何被标注的流程控制语句，语法如下：</h3><pre><code>LEAVE <span class="keyword">label</span>;
+</code></pre><h3 id="ITERATE语句将执行顺序转到语句段开头处，ITERATE只可以出现在_LOOP、REPEAT和WHILE语句内。语法如下：">ITERATE语句将执行顺序转到语句段开头处，ITERATE只可以出现在 LOOP、REPEAT和WHILE语句内。语法如下：</h3><pre><code><span class="keyword">ITERATE </span>label<span class="comment">;</span>
+</code></pre><font color="red">以上两个语句只能在循环中使用</font>
+
+
+<h3 id="下面分别演示使用三种循环对1到100求和">下面分别演示使用三种循环对1到100求和</h3><p>while<br>    mysql&gt;delimter //<br>    mysql&gt; create function sum100()<br>        -&gt; returns int<br>        -&gt; begin<br>        -&gt; declare sum int default 0;<br>        -&gt; declare i int default 0;<br>        -&gt; while i &lt;= 100 do<br>        -&gt;     set sum = sum + i;<br>        -&gt;     set i = i + 1;<br>        -&gt; end while;<br>        -&gt; return sum;<br>        -&gt; end<br>        -&gt; //</p>
+<p>repeat<br>    mysql&gt; create function sum100()<br>        -&gt; returns int<br>        -&gt; begin<br>        -&gt; declare sum int default 0;<br>        -&gt; declare i int default 0;<br>        -&gt; repeat<br>        -&gt;     set sum = sum + i;<br>        -&gt;     set i = i + 1;<br>        -&gt; until i &gt; 100<br>        -&gt; end repeat;<br>        -&gt; return sum;<br>        -&gt; end<br>        -&gt; //<br>loop<br>    mysql&gt; create function sum100()<br>        -&gt; returns int<br>        -&gt; begin<br>        -&gt; declare sum int default 0;<br>        -&gt; declare i int default 0;<br>        -&gt; lpl : loop<br>        -&gt;     set sum = sum + i;<br>        -&gt;     set i = i + 1;<br>        -&gt;     if i &gt; 100<br>        -&gt;         then leave lpl;<br>        -&gt;     end if;<br>        -&gt; end loop lpl;<br>        -&gt; return sum;<br>        -&gt; end<br>        -&gt; //</p>
+<h1 id="判断语句:">判断语句:</h1><pre><code><span class="keyword">if</span> 布尔表达式
+    <span class="keyword">then</span> 语句
+<span class="keyword">elseif</span> 布尔表达式
+    <span class="keyword">then</span> 语句
+<span class="keyword">else</span>
+    语句
+<span class="keyword">end</span> <span class="keyword">if</span>
+</code></pre><h1 id="条件跳转语句:">条件跳转语句:</h1><pre><code><span class="keyword">case</span> 判断的变量
+    <span class="keyword">when</span> 一个值 <span class="keyword">then</span> 执行语句;
+    <span class="keyword">when</span> 一个值 <span class="keyword">then</span> 执行语句;
+    <span class="keyword">when</span> 一个值 <span class="keyword">then</span> 执行语句;
+    <span class="keyword">else</span> 执行语句;
+<span class="keyword">end</span> <span class="keyword">case</span>
+</code></pre><h1 id="case_语句的示例:(注意与select中的case语句不一样)">case 语句的示例:(注意与select中的case语句不一样)</h1><pre><code>mysql&gt; create function trans(a int)
+    -<span class="ruby">&gt; returns char
+</span>    -<span class="ruby">&gt; <span class="keyword">begin</span>
+</span>    -<span class="ruby">&gt; <span class="keyword">case</span> a
+</span>    -<span class="ruby">&gt; <span class="keyword">when</span> <span class="number">1</span> <span class="keyword">then</span> <span class="keyword">return</span> <span class="string">'A'</span>;
+</span>    -<span class="ruby">&gt; <span class="keyword">when</span> <span class="number">2</span> <span class="keyword">then</span> <span class="keyword">return</span> <span class="string">'B'</span>;
+</span>    -<span class="ruby">&gt; <span class="keyword">when</span> <span class="number">3</span> <span class="keyword">then</span> <span class="keyword">return</span> <span class="string">'C'</span>;
+</span>    -<span class="ruby">&gt; <span class="keyword">else</span> <span class="keyword">return</span> <span class="string">'+'</span>;
+</span>    -<span class="ruby">&gt; <span class="keyword">end</span> <span class="keyword">case</span>;
+</span>    -<span class="ruby">&gt; <span class="keyword">end</span>
+</span>    -<span class="ruby">&gt;<span class="regexp">//</span></span>
+</code></pre><h1 id="赋值语句">赋值语句</h1><p>对于赋值语句同样可使用<br>    select a into b;<br>等同与<br>    set b = a;</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/C/">C</a><small>1</small></li>
+  
+    <li><a href="/categories/CPP/">CPP</a><small>3</small></li>
+  
+    <li><a href="/categories/Hexo/">Hexo</a><small>2</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>1</small></li>
+  
+    <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
+  
+    <li><a href="/categories/MySQL/">MySQL</a><small>9</small></li>
+  
+    <li><a href="/categories/Operating-System/">Operating System</a><small>1</small></li>
+  
+    <li><a href="/categories/Other/">Other</a><small>1</small></li>
+  
+    <li><a href="/categories/Python/">Python</a><small>11</small></li>
+  
+    <li><a href="/categories/jsp/">jsp</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>2</small></li>
+  
+    <li><a href="/categories/sublime-text/">sublime text</a><small>2</small></li>
+  
+    <li><a href="/categories/windows/">windows</a><small>1</small></li>
+  
+    <li><a href="/categories/位运算/">位运算</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>2</small></li>
+  
+    <li><a href="/categories/汇编/">汇编</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/C/">C++</a><small>1</small></li>
+  
+    <li><a href="/tags/MySQL/">MySQL</a><small>11</small></li>
+  
+    <li><a href="/tags/Mysql/">Mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/c-高精度/">c++高精度</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>3</small></li>
+  
+    <li><a href="/tags/jsp/">jsp</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda表达式/">lambda表达式</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>2</small></li>
+  
+    <li><a href="/tags/other/">other</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>2</small></li>
+  
+    <li><a href="/tags/python字典/">python字典</a><small>1</small></li>
+  
+    <li><a href="/tags/sublime-text/">sublime text</a><small>2</small></li>
+  
+    <li><a href="/tags/test/">test</a><small>1</small></li>
+  
+    <li><a href="/tags/位运算/">位运算</a><small>2</small></li>
+  
+    <li><a href="/tags/其他/">其他</a><small>1</small></li>
+  
+    <li><a href="/tags/命令行/">命令行</a><small>1</small></li>
+  
+    <li><a href="/tags/字符串/">字符串</a><small>1</small></li>
+  
+    <li><a href="/tags/学习/">学习</a><small>1</small></li>
+  
+    <li><a href="/tags/排序/">排序</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/汇编/">汇编</a><small>1</small></li>
+  
+    <li><a href="/tags/爬虫/">爬虫</a><small>1</small></li>
+  
+    <li><a href="/tags/生活/">生活</a><small>1</small></li>
+  
+    <li><a href="/tags/高精度/">高精度</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 xanarry
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'xanarry';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?05b8c86ae6be8be1243fc590c74bfde1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</body>
+</html>

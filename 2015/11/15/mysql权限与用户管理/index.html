@@ -1,0 +1,272 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>mysql权限与用户管理 | xanarry&#39;s</title>
+  <meta name="author" content="xanarry">
+  
+  <meta name="description" content="xanarry&#39;s blog">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="mysql权限与用户管理"/>
+  <meta property="og:site_name" content="xanarry&#39;s"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="xanarry&#39;s" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">xanarry&#39;s</a></h1>
+  <h2><a href="/">创造就是一个构造过程的过程!</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-11-15T07:44:49.000Z"><a href="/2015/11/15/mysql权限与用户管理/">2015-11-15</a></time>
+      
+      
+  
+    <h1 class="title">mysql权限与用户管理</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="创建用户">创建用户</h1><h3 id="创建用户(新建的用户没有任何权限):">创建用户(新建的用户没有任何权限):</h3><pre><code><span class="operator"><span class="keyword">create</span> <span class="keyword">user</span> <span class="string">'user_name'</span>@<span class="string">'host_name'</span> <span class="keyword">identified</span> <span class="string">'password'</span>;</span>
+</code></pre><h3 id="以下语句在当前主机上创建一个名为xanarry,_密码为1234的用户">以下语句在当前主机上创建一个名为xanarry, 密码为1234的用户</h3><pre><code><span class="operator"><span class="keyword">create</span> <span class="keyword">user</span> <span class="string">'xanarry'</span>@<span class="string">'localhost'</span> <span class="keyword">identified</span> <span class="keyword">by</span> <span class="string">'1234'</span>;</span>
+</code></pre><h3 id="为来自任何地址的名为monty的人创建一个用户">为来自任何地址的名为monty的人创建一个用户</h3><p>CREATE USER ‘monty’@’%’ IDENTIFIED BY ‘some_pass’;</p>
+<h3 id="创建dummy用户并没有密码">创建dummy用户并没有密码</h3><pre><code><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">'dummy'</span>@<span class="string">'localhost'</span>;</span>
+</code></pre><h1 id="mysql权限的授予:">mysql权限的授予:</h1><pre><code>grants &lt;允许操作<span class="number">1</span>, 允许操作<span class="number">2</span>, 允许操作<span class="number">2</span>, ...&gt; <span class="function_start"><span class="keyword">on</span></span> 数据库名.表名 <span class="keyword">to</span> 用户名@主机名
+</code></pre><h3 id="为customy用户授予在bankaccount数据库所有表的SELECT,INSERT,UPDATE,DELETE,CREATE,DROP权限">为customy用户授予在bankaccount数据库所有表的SELECT,INSERT,UPDATE,DELETE,CREATE,DROP权限</h3><pre><code>mysql<span class="subst">&gt;</span> GRANT <span class="keyword">SELECT</span>,INSERT,UPDATE,DELETE,CREATE,DROP
+    <span class="subst">-&gt;     </span><span class="keyword">ON</span> bankaccount<span class="built_in">.</span><span class="subst">*</span>
+    <span class="subst">-&gt;     </span><span class="keyword">TO</span> <span class="string">'custom'</span>@<span class="string">'localhost'</span>;
+</code></pre><h3 id="如果要为用户授予所有权限使用">如果要为用户授予所有权限使用</h3><pre><code>grant <span class="literal">all</span> privileges <span class="keyword">on</span> <span class="attribute">...</span> <span class="keyword">to</span> <span class="attribute">...</span>
+</code></pre><h3 id="查看用户的权限:">查看用户的权限:</h3><pre><code><span class="operator"><span class="keyword">show</span> <span class="keyword">grants</span> <span class="keyword">for</span> username;</span>
+</code></pre><h1 id="撤销用户的权限">撤销用户的权限</h1><h3 id="使用revoke关键词">使用revoke关键词</h3><pre><code>revoke 权限列表 <span class="function_start"><span class="keyword">on</span></span> 数据库.表 <span class="keyword">from</span> 用户@主机
+</code></pre><h3 id="以下命令撤销用户xanarry在数据库test中student表上的所有权利">以下命令撤销用户xanarry在数据库test中student表上的所有权利</h3><pre><code><span class="operator"><span class="keyword">revoke</span> <span class="keyword">all</span> <span class="keyword">privileges</span> <span class="keyword">on</span> test.student <span class="keyword">from</span> <span class="string">'xanarry'</span>@<span class="string">'localhost'</span>;</span>
+</code></pre><h1 id="修改用户的密码">修改用户的密码</h1><h3 id="方法1:">方法1:</h3><pre><code><span class="operator"><span class="keyword">set</span> <span class="keyword">password</span> <span class="keyword">for</span> ‘nero’@’localhost’ = <span class="keyword">password</span>(‘<span class="number">123</span>’)</span>
+</code></pre><h3 id="方法2:">方法2:</h3><pre><code>格式:mysqladmin -u用户名 -p旧密码 <span class="literal">password</span> 新密码
+mysqladmin -uroot -p123456 <span class="literal">password</span> <span class="number">1234</span>abcd
+</code></pre><h3 id="方法3:直接在mysql库user表中更新密码">方法3:直接在mysql库user表中更新密码</h3><pre><code><span class="operator"><span class="keyword">use</span> mysql;</span>
+<span class="operator"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> <span class="keyword">password</span> = <span class="keyword">PASSWORD</span>(<span class="string">"新密码"</span>) <span class="keyword">where</span> <span class="keyword">user</span> = <span class="string">"用户名"</span>;</span>
+</code></pre><h1 id="删除用户">删除用户</h1><pre><code><span class="operator"><span class="keyword">drop</span> <span class="keyword">user</span> <span class="string">'xanarry'</span>@<span class="string">'localhost'</span></span>
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/MySQL/">MySQL</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/MySQL/">MySQL</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/C/">C</a><small>1</small></li>
+  
+    <li><a href="/categories/CPP/">CPP</a><small>3</small></li>
+  
+    <li><a href="/categories/Hexo/">Hexo</a><small>2</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>1</small></li>
+  
+    <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
+  
+    <li><a href="/categories/MySQL/">MySQL</a><small>9</small></li>
+  
+    <li><a href="/categories/Operating-System/">Operating System</a><small>1</small></li>
+  
+    <li><a href="/categories/Other/">Other</a><small>1</small></li>
+  
+    <li><a href="/categories/Python/">Python</a><small>11</small></li>
+  
+    <li><a href="/categories/jsp/">jsp</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>2</small></li>
+  
+    <li><a href="/categories/sublime-text/">sublime text</a><small>2</small></li>
+  
+    <li><a href="/categories/windows/">windows</a><small>1</small></li>
+  
+    <li><a href="/categories/位运算/">位运算</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>2</small></li>
+  
+    <li><a href="/categories/汇编/">汇编</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/C/">C++</a><small>1</small></li>
+  
+    <li><a href="/tags/MySQL/">MySQL</a><small>11</small></li>
+  
+    <li><a href="/tags/Mysql/">Mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/c-高精度/">c++高精度</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>3</small></li>
+  
+    <li><a href="/tags/jsp/">jsp</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda表达式/">lambda表达式</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>2</small></li>
+  
+    <li><a href="/tags/other/">other</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>2</small></li>
+  
+    <li><a href="/tags/python字典/">python字典</a><small>1</small></li>
+  
+    <li><a href="/tags/sublime-text/">sublime text</a><small>2</small></li>
+  
+    <li><a href="/tags/test/">test</a><small>1</small></li>
+  
+    <li><a href="/tags/位运算/">位运算</a><small>2</small></li>
+  
+    <li><a href="/tags/其他/">其他</a><small>1</small></li>
+  
+    <li><a href="/tags/命令行/">命令行</a><small>1</small></li>
+  
+    <li><a href="/tags/字符串/">字符串</a><small>1</small></li>
+  
+    <li><a href="/tags/学习/">学习</a><small>1</small></li>
+  
+    <li><a href="/tags/排序/">排序</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/汇编/">汇编</a><small>1</small></li>
+  
+    <li><a href="/tags/爬虫/">爬虫</a><small>1</small></li>
+  
+    <li><a href="/tags/生活/">生活</a><small>1</small></li>
+  
+    <li><a href="/tags/高精度/">高精度</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 xanarry
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'xanarry';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?05b8c86ae6be8be1243fc590c74bfde1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</body>
+</html>

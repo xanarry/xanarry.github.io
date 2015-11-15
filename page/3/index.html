@@ -51,6 +51,202 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-07-13T08:14:32.000Z"><a href="/2015/07/13/汇编语言的基本结构/">2015-07-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/07/13/汇编语言的基本结构/">汇编语言的基本结构</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-07-13T08:12:41.000Z"><a href="/2015/07/13/使用位运算转换大小写/">2015-07-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/07/13/使用位运算转换大小写/">使用位运算转换大小写</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>大小写字母的ASCII码差值为32, 32是2的5次方, 因此如果将ASCII的值使用二进制编码表示会不会有奇特的关系呢?<br>看看如下列表<br>ch  dec  bin            ch   dec   bin<br>a   97   0110 0001  -&gt;  A    65    0100 0010<br>b   98   0110 0010  -&gt;  B    66    0100 0010<br>c   99   0110 0011  -&gt;  C    67    0100 0011<br>d   100  0110 0100  -&gt;  D    68    0100 0100<br>e   101  0110 0101  -&gt;  E    69    0100 0101<br>从列表可以看出, 二进制ASCII码的低四位是一致的, 唯一的差别就在于第5位(从0开始数, 2的5次方正好是32)<br>小写字母的是1, 大写字母的是0, </p>
+<p>于是我们在编程中可以使用为运算直接将这一位置为1或者置为0实现大小写的转换, 所以, 将大小字母转换为小写字母即保留其他位, 使用”或0010 0000”(代码即”!32”)实现转换, 同样, 如果要将第小写转为大小, 用”与1101 1111”(代码即”&amp;-33”)把5位设为0即可.</p>
+<p>以下给的c++使用以上方法转换的代码片段<br>char ch = ‘A’;//定义ch的的值为’A’<br>ch != 32;//将ch转换为小写’a’<br>ch &amp;= -33;//将小写的’a’转换为’A’</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-30T07:43:49.000Z"><a href="/2015/06/30/C++-高精度类/">2015-06-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/06/30/C++-高精度类/">c++ 高精度类</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="高精度的计算方法就是将数字使用字符串存储，然后加减乘过程都是模拟列竖式运算,_除法的方法则神奇一点">高精度的计算方法就是将数字使用字符串存储，然后加减乘过程都是模拟列竖式运算, 除法的方法则神奇一点</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;iostream&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;cstring&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;string&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> BigInteger</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> max_len = <span class="number">10000</span>;<span class="comment">//数字的最大长度</span></span><br><span class="line">    <span class="keyword">int</span> num[max_len];<span class="comment">//保存数字的每位数到数组，数字时逆序的，1234保存格式为4321</span></span><br><span class="line">    <span class="keyword">int</span> len;<span class="comment">//数字的有效长度</span></span><br><span class="line"></span><br><span class="line">    BigInteger(<span class="keyword">long</span> <span class="keyword">long</span> n)<span class="comment">//构造函数，接收整数形式输入</span></span><br><span class="line">    &#123;</span><br><span class="line">        len = <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">memset</span>(num, <span class="number">0</span>, <span class="keyword">sizeof</span>(num));</span><br><span class="line">        <span class="keyword">if</span> (n &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span> (n &gt; <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                num[i++] = n % <span class="number">10</span>;</span><br><span class="line">                n /= <span class="number">10</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            len = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    BigInteger(<span class="built_in">string</span> n)<span class="comment">//构造函数接收字符串形式输入</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">memset</span>(num, <span class="number">0</span>, <span class="keyword">sizeof</span>(num));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = n.length() - <span class="number">1</span>, t = <span class="number">0</span>; i &gt;=<span class="number">0</span>; i--)</span><br><span class="line">            num[t++] = (<span class="keyword">int</span>)(n[i] - <span class="string">'0'</span>);</span><br><span class="line">        len = n.length();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    BigInteger()<span class="comment">//默认构造函数，初始值为0</span></span><br><span class="line">    &#123;</span><br><span class="line">        len = <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">memset</span>(num, <span class="number">0</span>, <span class="keyword">sizeof</span>(num));</span><br><span class="line">    &#125;</span><br><span class="line">    ~BigInteger()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">clean</span><span class="params">()</span><span class="comment">//清理掉数字前面的0，将“001509”，计算时表示为“905100”，将后面的0清除，整理为9051，最终输出1509</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (len &gt; <span class="number">1</span> &amp;&amp; !num[len - <span class="number">1</span>])</span><br><span class="line">            len--;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> BigInteger <span class="keyword">operator</span>+ (BigInteger a, BigInteger b)<span class="comment">//加法，逆序</span></span><br><span class="line">    &#123;</span><br><span class="line">        a.len = a.len &gt; b.len ? a.len + <span class="number">1</span> : a.len + <span class="number">1</span>;<span class="comment">//考虑进位情况，循环两个数中最大的位数加1次</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.len; i++)<span class="comment">//从个位开始</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> temp = a.num[i] + b.num[i];<span class="comment">//两个数的各位数相加</span></span><br><span class="line">            a.num[i] = temp % <span class="number">10</span>;<span class="comment">//求余保存到数a</span></span><br><span class="line">            a.num[i + <span class="number">1</span>] += temp / <span class="number">10</span>;<span class="comment">//实现进位</span></span><br><span class="line">        &#125;</span><br><span class="line">        a.clean();<span class="comment">//整理</span></span><br><span class="line">        <span class="keyword">return</span> a;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> BigInteger <span class="keyword">operator</span>- (BigInteger a, BigInteger b)<span class="comment">//减法,逆序</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (a &gt; b)<span class="comment">//a&gt;b才做减法</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.len; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (a.num[i] &lt; b.num[i])<span class="comment">//不够减</span></span><br><span class="line">                &#123;</span><br><span class="line">                    a.num[i] = a.num[i] + <span class="number">10</span> - b.num[i];<span class="comment">//如果被减数不是零则加10后在相减</span></span><br><span class="line">                    a.num[i + <span class="number">1</span>]--;<span class="comment">//被减数的下一位减1,</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span><span class="comment">//如果够减则两个数直接相减</span></span><br><span class="line">                    a.num[i] -= b.num[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span><span class="comment">//否则返回0</span></span><br><span class="line">            <span class="built_in">memset</span>(a.num, <span class="number">0</span>, <span class="keyword">sizeof</span>(a.num));</span><br><span class="line">        a.clean();</span><br><span class="line">        <span class="keyword">return</span> a;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> BigInteger <span class="keyword">operator</span>* (BigInteger a, BigInteger b)<span class="comment">//乘法，逆序</span></span><br><span class="line">    &#123;</span><br><span class="line">        BigInteger result;<span class="comment">//应为a,b两个数中的每个数要重复操作，所有开新的变量保存结果</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.len; i++)<span class="comment">//遍历乘数A</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; b.len; j++)<span class="comment">//遍历乘数B</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">/////////////两个数相乘的结果///加上上次计算的进位值</span></span><br><span class="line">                <span class="keyword">int</span> temp = a.num[i] * b.num[j] + result.num[i + j];</span><br><span class="line">                result.num[i + j] =  temp % <span class="number">10</span>;<span class="comment">//取余数保存</span></span><br><span class="line">                result.num[i + j + <span class="number">1</span>] += temp / <span class="number">10</span>;<span class="comment">//进位, 小于10的时候进0，错位相加同时进行</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        result.len = a.len + b.len;<span class="comment">//两数相乘的最大乘数是两个乘数的长度之和</span></span><br><span class="line">        result.clean();</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">friend</span> BigInteger <span class="keyword">operator</span>/ (BigInteger a, BigInteger b)<span class="comment">//除法，顺序</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/*</span><br><span class="line">         *比如175/6=29...3</span><br><span class="line">         *第一次循环：temp=1&lt;6 不执行操作，然后temp=1*10=10</span><br><span class="line">         *第二次循序：因为temp=10+7=17 &gt;= 6, 不断用temp-6，能减2次，保存2，然后temp剩下5， temp=5*10=60</span><br><span class="line">         *第三次循序：因为temp=50+5=55 &gt;= 6, 不断用temp-6，能减9次，保存9，然后temp剩下2， temp=2*10=20</span><br><span class="line">         *循环结束，所以结果是29</span><br><span class="line">         */</span></span><br><span class="line">        BigInteger result = <span class="number">0</span>, temp;<span class="comment">//定义变量保存结果和辅助计算中间数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = a.len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) </span><br><span class="line">        &#123;</span><br><span class="line">            temp.num[<span class="number">0</span>] = a.num[i];<span class="comment">//加上下一位数，因为是数组形式，直接赋值到temp.num[0]</span></span><br><span class="line">            <span class="keyword">while</span> (temp &gt;= b)<span class="comment">//迭代相加</span></span><br><span class="line">            &#123;</span><br><span class="line">                temp = temp - b;</span><br><span class="line">                result.num[i]++;<span class="comment">//保存相减次数</span></span><br><span class="line">            &#125;</span><br><span class="line">            temp = temp * <span class="number">10</span>;<span class="comment">//扩大十倍</span></span><br><span class="line">        &#125;</span><br><span class="line">        result.len = a.len + <span class="number">1</span>;</span><br><span class="line">        result.clean();</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> BigInteger <span class="keyword">operator</span>% (BigInteger a, BigInteger b)<span class="comment">//模运算</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> a - (a / b) * b;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    BigInteger <span class="keyword">operator</span>= (<span class="built_in">string</span> n)<span class="comment">//重载赋值符号</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = n.length() - <span class="number">1</span>, t = <span class="number">0</span>; i &gt;= <span class="number">0</span>; i++)</span><br><span class="line">            num[t++] = (<span class="keyword">int</span>)(n[i] - <span class="string">'0'</span>);</span><br><span class="line">        len = n.length();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span> &lt; (<span class="keyword">const</span> BigInteger &amp;a, <span class="keyword">const</span> BigInteger &amp;b)<span class="comment">//定义小于运算符</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (a.len != b.len)<span class="comment">//首先比较长度</span></span><br><span class="line">            <span class="keyword">return</span> a.len - b.len;</span><br><span class="line">        <span class="keyword">else</span><span class="comment">//长度相同依次比较每一位数</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = a.len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">                <span class="keyword">if</span> (a.num[i] != b.num[i])<span class="comment">//不同时才比较</span></span><br><span class="line">                    <span class="keyword">return</span> a.num[i] &lt; b.num[i];</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span> &gt; (<span class="keyword">const</span> BigInteger &amp;a, <span class="keyword">const</span> BigInteger &amp;b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> b &lt; a;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span> &gt;= (<span class="keyword">const</span> BigInteger &amp;a, <span class="keyword">const</span> BigInteger &amp;b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> !(a &lt; b);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span> &lt;= (<span class="keyword">const</span> BigInteger &amp;a, <span class="keyword">const</span> BigInteger &amp;b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> !(b &gt; a);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span> == (<span class="keyword">const</span> BigInteger &amp;a, <span class="keyword">const</span> BigInteger &amp;b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> !(a &gt; b) &amp;&amp; !(a &lt; b);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span> != (<span class="keyword">const</span> BigInteger &amp;a, <span class="keyword">const</span> BigInteger &amp;b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> !(b == a);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> ostream&amp; <span class="keyword">operator</span> &lt;&lt; (ostream &amp;os, <span class="keyword">const</span> BigInteger n)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = n.len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">            os &lt;&lt; n.num[i];</span><br><span class="line">        <span class="keyword">return</span> os;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">friend</span> istream&amp; <span class="keyword">operator</span> &gt;&gt; (istream &amp;is, BigInteger &amp;n)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">string</span> s;</span><br><span class="line">        is &gt;&gt; s;</span><br><span class="line">        n = BigInteger(s);</span><br><span class="line">        <span class="keyword">return</span> is;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    BigInteger a = BigInteger(<span class="string">"0"</span>);</span><br><span class="line">    BigInteger b = BigInteger(<span class="string">"0"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="string">"+"</span> &lt;&lt; b &lt;&lt; <span class="string">"="</span> &lt;&lt; (a + b) &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="string">"-"</span> &lt;&lt; b &lt;&lt; <span class="string">"="</span> &lt;&lt; (a - b) &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="string">"*"</span> &lt;&lt; b &lt;&lt; <span class="string">"="</span> &lt;&lt; (a * b) &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="string">"/"</span> &lt;&lt; b &lt;&lt; <span class="string">"="</span> &lt;&lt; (a / b) &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="string">"%"</span> &lt;&lt; b &lt;&lt; <span class="string">"="</span> &lt;&lt; (a % b)&lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="有缺陷的地方可以在这里完善">有缺陷的地方可以在<a href="https://github.com/xanarry/source-code/blob/master/CPP/%E9%AB%98%E7%B2%BE%E5%BA%A6%E7%B1%BB.cpp" target="_blank" rel="external">这里完善</a></h2>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-30T07:09:08.133Z"><a href="/2015/06/30/hexo-的基本使用/">2015-06-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/06/30/hexo-的基本使用/">hexo 的基本使用</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>hexo创建新博客,生成,发布以及本地服务器测试的命令行</p>
+<h2 id="快速入门">快速入门</h2><h3 id="创建一个新的博客">创建一个新的博客</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"新博客的名字"</span></span><br></pre></td></tr></table></figure>
+<p>更多: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="在本地服务器上运行测试博客(localhost:4000)">在本地服务器上运行测试博客(localhost:4000)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>更多: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="生成静态HTML文件">生成静态HTML文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>更多: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="发布到远程服务器">发布到远程服务器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>更多: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-10T07:27:54.000Z"><a href="/2015/06/10/位运算/">2015-06-10</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/06/10/位运算/">位运算</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>位运算一直不太熟悉, 所以今天重新看了看位运算, 此文做个简单的总结</p>
+<p>计算机的所有数据都是转化为二进制按位存储的, 二位运算就是一系列直接操纵位序列的运算, 简单的说就是直接操纵二进制数据, 位运算的类型有一下6种:</p>
+<p>一. <strong><font color="0070ff"> &amp; </font></strong>, 与运算(双目), 类似于求交集, 对于两个位串, 如果同一个位置的两位同时为1则取1, 否则取0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    01001101&#10; &#38;  10011011&#10;-----------------&#10;    00001001</span><br></pre></td></tr></table></figure>
+<p>二. <strong><font color="0070ff"> | </font></strong>, 或运算(双目), 类似于求交集, 即对于两个位串, 如果同一个位置的两位其中一个为1那么取1, 两个位都为0则取0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    01001101&#10; |  10011011&#10;-----------------&#10;    11011111</span><br></pre></td></tr></table></figure>
+<p>三. <strong><font color="0070ff"> ^ </font></strong>, 异或运算(双目), 对于两个位串, 如果同一个位置其中一个为1, 但不都为1则取1, 否则取0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    01001101&#10; ^  10011011&#10;-----------------&#10;    11010110</span><br></pre></td></tr></table></figure>
+<p>四. <strong><font color="0070ff"> ~ </font></strong>, 取反(单目), 对于一个位串, 对每一位取反</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">           01001101&#10;&#21462;&#21453;&#24471;&#21040;:   10110010</span><br></pre></td></tr></table></figure>
+<p>五. <strong><font color="0070ff"> &lt;&lt; </font></strong>, 左移(双目), 将一个位串向左移动n位, 高位的丢弃, 低位用零补齐</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">           01001101&#10;&#24038;&#31227;3&#20301;:    01101000</span><br></pre></td></tr></table></figure>
+<p>假如定义<strong>a = 5</strong>, 二进制为: 0000 0101<br><strong>a &lt;&lt;= 1;</strong>, 左移1位,变成: 0000 1010, 即十进制10</p>
+<p>六. <strong><font color="0070ff"> &gt;&gt; </font></strong>, 右移(双目), 将一个位串向右移动n位, 高位用零补齐, 低位的丢弃</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">           01001101&#10;&#21491;&#31227;3&#20301;:    00001001</span><br></pre></td></tr></table></figure>
+<p>假如定义<strong>a = 5</strong>, 二进制为: 0000 0101<br><strong>a &gt;&gt;= 1;</strong>, 左移1位,变成: 0000 0010, 即十进制2</p>
+<p>因此, 根据位运算的规则, 可以使用左移将数字扩大2的多少次方倍, 使用右移将数字缩小多少倍. 使用与(&amp;)或(|)运算来做位上的筛选. </p>
+<p>通过以上特性, 可以使用位运算写一个将十进制转为二进制的函数, 方法为每次取十进制的数的最低位, 然后右移一位, 然后再取最低位, 最后得到的串即为二进制数</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*处理32位整数*/</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">itob</span><span class="params">(<span class="keyword">int</span> a)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> bin[<span class="number">65</span>];<span class="comment">//保存没一位的数字</span></span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">8</span> * <span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">    <span class="comment">//不断右移取低位, 一共取32位</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = len - <span class="number">1</span>; i&gt;= <span class="number">0</span>; i--, a &gt;&gt;= <span class="number">1</span>)<span class="comment">//右移</span></span><br><span class="line">        bin[i] = (a &amp; <span class="number">1</span>);<span class="comment">//使用"0000 0000 0000 0000 0000 0000 0000 0001"筛选最低位</span></span><br><span class="line">    bin[len] = <span class="string">'\0'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">string</span> res = <span class="string">""</span>;<span class="comment">//将字符数组转为字符串并加上空格分割符, 4位一段</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i &amp;&amp; i % <span class="number">4</span> == <span class="number">0</span>)</span><br><span class="line">            res += <span class="string">" "</span>;</span><br><span class="line">        res += <span class="keyword">char</span>(bin[i] + <span class="string">'0'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//返回形如:xxxx xxxx xxxx xxxx 的二进制数</span></span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还有根据计算机表示二进制数的方式, 我们可以直接得到一个类型的最大值:</p>
+<p>以一个32位带符号整数位例子:</p>
+<p><font color="0070ff">x</font>xxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx</p>
+<p>其中最高位为<strong>u</strong>符号位, 所以实际上表示数字本身的只有后面31位, 因为要找出最大值, 那么在二进制上的每一位肯定都是1, 处理最高位, 那么值肯定是<strong><font color="0070ff">0</font>111 1111 1111 1111 1111 1111 1111  1111</strong>将二进制4位分一段, 采用16进制表示, 后面七段都是1111, 即16进制F, 最高位上只有三位<strong>111</strong>表示值, 写成16进制即<strong>7</strong>, 那么这个带符号的最大是肯定就是<strong>0x7FFFFFFF</strong>, 对应32位十进制:<strong>2147483647</strong></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-06-09T15:29:38.000Z"><a href="/2015/06/09/操作系统学习的开始/">2015-06-09</a></time>
       
       
@@ -235,326 +431,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-29T14:13:27.000Z"><a href="/2015/05/29/sublime-text-3-添加运行python文件的快捷键/">2015-05-29</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/29/sublime-text-3-添加运行python文件的快捷键/">sublime text 3 添加运行python文件的快捷键</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>打开 <strong>preferences</strong> -&gt; <strong>Key Binding User</strong>, 然后将以下代码粘贴上去即可, 设置的<strong>F5</strong>为快捷键</p>
-<pre><code>[ 
-    {
-    "<span class="attribute">keys</span>":<span class="value">[<span class="string">"f5"</span>]</span>,"<span class="attribute">caption</span>": <span class="value"><span class="string">"SublimeREPL:Python - RUN current file"</span></span>,
-    "<span class="attribute">command</span>":<span class="value"><span class="string">"run_existing_window_command"</span></span>, "<span class="attribute">args</span>":
-    <span class="value">{
-        "<span class="attribute">id</span>": <span class="value"><span class="string">"repl_python_run"</span></span>,
-        "<span class="attribute">file</span>": <span class="value"><span class="string">"config/Python/Main.sublime-menu"</span>
-    </span>}</span>}
-]
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-27T04:28:12.000Z"><a href="/2015/05/27/python递归栈溢出/">2015-05-27</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/27/python递归栈溢出/">python递归栈溢出</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>使用python写的递归程序如果递归太深, 那么极有可能因为超过系统默认的递归深度限制而出现</p>
-<pre><code><span class="label">RuntimeError:</span> maximum recursion depth exceeded <span class="keyword">in</span> comparison
-</code></pre><p>的错误, 解决方法很简单, 人为将系统设定的递归深度设置为一个较大的值即可:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.setrecursionlimit(<span class="number">1000000</span>) <span class="comment">#括号中的值为递归深度</span></span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-26T13:26:19.000Z"><a href="/2015/05/26/C语言中字符串的复制与memcpy函数/">2015-05-26</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/26/C语言中字符串的复制与memcpy函数/">C语言中字符串的复制与memcpy函数</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>今天在线做360实习生笔试题, 发现大多数题还是比较基础的, 但都需要仔细斟酌. 不过我已被虐得面目全非, 操作系统和计算机网络相关的很多知识都不会, 还得努力学习. 不过说重点, 面试题有两个编程题, 第一个是实现hashmap, 第二题是一个字符串的处理, 我主要说说第二题, 题目描述如下:</p>
-<pre><code>实现域名的字段顺序翻转函数,比如输入www<span class="class">.so</span><span class="class">.com</span>, 输出为com<span class="class">.so</span><span class="class">.www</span>, 要求实现的效率尽可能的优化
-</code></pre><p>我在做这个题的时候还剩下不到10分钟, 慌忙中将题目看复杂了,我想成会有<em>www.abc.efg.com</em>这样的情况了, 于是惯性思维促使我使用c++将域名按”.”切片, 然后逆序输出, 写的也烂, 也不是效率最高的, 提交后再看题目发现域名是只有<em>www</em>和<em>域名本体</em>和<em>com</em>三个部分, 当然后面的的<em>com</em>可能是其他的后缀,比如<em>io</em>或者<em>info</em>之类的, 发现直接是<em>memcpy()</em>复制内存片段效率应该会更高, 即首先复制后缀, 然后复制域名本体, 然后再复制<em>www</em>到字符串缓冲区,然后输出就是结果了,于是用c实现了这个方法:</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;string.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">trans</span><span class="params">(<span class="keyword">char</span> *res, <span class="keyword">char</span> *a)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="built_in">strcat</span>(a, <span class="string">"."</span>); <span class="comment">//在域名默认加上".", 因为"com", 移动到最前面后后面需要一个"."</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *src = a; <span class="comment">//复制一个常量副本, 因为memcpy()函数的参数中要求常量</span></span><br><span class="line">    <span class="keyword">int</span> len = <span class="built_in">strlen</span>(src) - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> i = len;</span><br><span class="line">    <span class="keyword">while</span>(src[--i] != <span class="string">'.'</span>); <span class="comment">//找到后开始的下标</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">memcpy</span>(res, src + i + <span class="number">1</span>, (len - i) * <span class="keyword">sizeof</span>(<span class="keyword">char</span>)); <span class="comment">//复制后缀到res字符串缓冲区的起点</span></span><br><span class="line">    <span class="built_in">memcpy</span>(res + (len - i), src + <span class="number">4</span>, (i - <span class="number">3</span>) * <span class="keyword">sizeof</span>(<span class="keyword">char</span>)); <span class="comment">//将域名内容复制到res缓冲区的末尾</span></span><br><span class="line">    <span class="built_in">memcpy</span>(res + (len + <span class="number">1</span> - <span class="number">4</span>), src, <span class="number">3</span> * <span class="keyword">sizeof</span>(<span class="keyword">char</span>)); <span class="comment">//继续将"www"复制到res末尾</span></span><br><span class="line">    res[len] = <span class="string">'\0'</span>; <span class="comment">//设置字符串结束标志</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> a[<span class="number">100</span>], res[<span class="number">100</span>];</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%s"</span>, a);</span><br><span class="line">    trans(res, a);</span><br><span class="line">    <span class="built_in">puts</span>(res);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出结果如下:</p>
-<pre><code>www<span class="class">.baidu</span><span class="class">.com</span>
-com<span class="class">.baidu</span><span class="class">.www</span>
-</code></pre><p>关于c语言中字符串的复制, 通常可以使用<em>strcpy()</em>来实现, 当然也可手动写个循环, 但是复制效率是最低的, 无论是从人的角度还是计算机的角度来说, 第三个就是直接使用<em>memcpy()</em>, 直接将复制目标内存片段到指定位置, 并且复制速度是最快的, 但是<em>strcpy()</em>与<em>memcpy()</em>在用来复制字符串的时候有一个小小的区别就是无论如何<em>strcpy()</em>从字符串的开始只复制到第一个”\0”的位置, 但是由于<em>memcpy()</em>是整个内存片段,所以”\0”也不会被忽略, 虽然最后复制内容输入到屏幕显示的结果是一样的, 我们用个小程序演示一下这个区别:</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;string.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> a[<span class="number">20</span>] = <span class="string">"asdf\0uiop"</span>;</span><br><span class="line">    <span class="keyword">char</span> b[<span class="number">20</span>];</span><br><span class="line">    <span class="keyword">char</span> c[<span class="number">20</span>];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">strcpy</span>(b, a);</span><br><span class="line">    <span class="built_in">puts</span>(b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, <span class="built_in">strlen</span>(a));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">5</span>; i &lt; <span class="number">9</span>; i++)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%c"</span>, b[i]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"-----------------------"</span>);</span><br><span class="line">    <span class="built_in">memcpy</span>(c, a, <span class="number">9</span> * <span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br><span class="line">    <span class="built_in">puts</span>(c);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, <span class="built_in">strlen</span>(c));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">5</span>; i &lt; <span class="number">9</span>; i++)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%c"</span>, c[i]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出结果如下:</p>
-<pre><code>asdf
-4
-S
-
--<span class="ruby">----------------------
-</span>asdf
-4
-uiop
-请按任意键继续. . .
-</code></pre><p>从结果可以看出,使用<em>strcpy()</em>仅仅复制到了”\0”, 因为输出b的后半部分结果是未定义的,说明并没有复制过来, 但是输出c的后半部分是, 输出了事先定义的结果</p>
-<p>同样, 利用<em>memcpy()</em>函数的特性, 我们可以做一个泛型的交换函数:</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;string.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//因为交换的数据类型是未知的, 所以添加一个额外的参数告诉函数复制多长内存片段</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">void</span> *a, <span class="keyword">void</span> *b, <span class="keyword">int</span> size)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> buffer[size];</span><br><span class="line">    <span class="built_in">memcpy</span>(buffer, a, size);</span><br><span class="line">    <span class="built_in">memcpy</span>(a, b, size);</span><br><span class="line">    <span class="built_in">memcpy</span>(b, buffer, size);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> a = <span class="string">'a'</span>, b = <span class="string">'b'</span>;</span><br><span class="line">    swap(&amp;a, &amp;b, <span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a = %c b = %c\n"</span>, a , b);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> x = <span class="number">11</span>, y = <span class="number">99</span>;</span><br><span class="line">    swap(&amp;x, &amp;y, <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"x = %d y = %d\n"</span>, x , y);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出:</p>
-<pre><code><span class="tag">a</span> = <span class="tag">b</span> <span class="tag">b</span> = <span class="tag">a</span>
-x = <span class="number">99</span> y = <span class="number">11</span>
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-25T14:37:28.000Z"><a href="/2015/05/25/python字典/">2015-05-25</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/25/python字典/">python字典</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="1-_简介:">1. 简介:</h2><p>字典是一种<em>键映射到值</em>的数据结构,相当于高级一点的列表, 列表的键只能是0到n的整数,通过数字的索引我们就能访问,修改到相关位置的数据, 字典也一样, 高级的地方就在于, 索引不是系统分配的整数, 而是可以使用自定义的内容来做访问的索引值, 这种特性给编程带来极大的便利,值得注意的是<font color="0080ff"><strong>python字典的键必须是不可变的，所以可以用数字，字符串或元组充当，但是不能使用列表,因为列表中的元素可能被无意修改 值可以是任意数据类型, 还有非常重要的一点就是字典内容的存储顺序是无序的</strong></font>, </p>
-<h2 id="2-_定义:">2. 定义:</h2><p>定义字典时键与值之间用冒号(:)隔开, 键值对之间用逗号(,)隔开, 将所有完整的键值对放在花括号中({}),就实现的字典的初始化定义, 也可以使用dict()将其他内容转为字典.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">d1 = &#123;<span class="string">'one'</span>: <span class="number">1</span>, <span class="string">'two'</span>: <span class="number">2</span>, <span class="string">'three'</span>: <span class="number">3</span>&#125; <span class="comment">#定义字典</span></span><br><span class="line">d2 = &#123;&#125; <span class="comment">#定义空字典</span></span><br><span class="line"><span class="comment">#使用其他数据生成字典</span></span><br><span class="line">d3 = dict(one=<span class="number">1</span>, two=<span class="number">2</span>, three=<span class="number">3</span>)</span><br><span class="line">d4 = dict(zip([<span class="string">'one'</span>, <span class="string">'two'</span>, <span class="string">'three'</span>], [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]))</span><br><span class="line">d5 = dict([(<span class="string">'two'</span>, <span class="number">2</span>), (<span class="string">'one'</span>, <span class="number">1</span>), (<span class="string">'three'</span>, <span class="number">3</span>)])</span><br><span class="line">d6 = dict(&#123;<span class="string">'three'</span>: <span class="number">3</span>, <span class="string">'one'</span>: <span class="number">1</span>, <span class="string">'two'</span>: <span class="number">2</span>&#125;)</span><br></pre></td></tr></table></figure>
-<h2 id="3-_访问与修改:">3. 访问与修改:</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">dict0 = &#123;<span class="string">"name"</span>:<span class="string">"Bob"</span>, <span class="string">"sex"</span>:<span class="string">"F"</span>, <span class="string">"age"</span>:<span class="number">21</span>&#125; <span class="comment">#初始化字典</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#向字典中插入新的元素,类似于c++的map</span></span><br><span class="line">dict0[<span class="string">"addr"</span>] = <span class="string">"chongqing"</span> <span class="comment">#想dict0字典中添加地址"addr"项, 值为"chongqing"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#如果使用字典中已经存在的key,那么后面的值将会替换前面的值,这里会将年龄替换为22</span></span><br><span class="line">dict0[<span class="string">"age"</span>] = <span class="number">22</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#访问字典中的键"name"对应的值</span></span><br><span class="line">name = dict0[<span class="string">"name"</span>] <span class="comment">#和列表访问方式一样</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用get()函数访问第几个条目</span></span><br><span class="line">t = dict3.get(<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-<h4 id="3-1_删除条目">3.1 删除条目</h4><pre><code><span class="tag">del</span> dict0[<span class="string">"name"</span>] #删除<span class="string">"name"</span>这一项
-dict0.<span class="function"><span class="title">clear</span><span class="params">()</span></span> #删除字典中的所有内容,即设为空字典
-<span class="tag">del</span> dict0 #直接删除字典,这个东西就从世界上消失了
-t = dict3.<span class="function"><span class="title">pop</span><span class="params">(<span class="number">1</span>)</span></span> #<span class="function"><span class="title">pop</span><span class="params">()</span></span>函数将会删除字典的键值对,并返回该值
-</code></pre><h2 id="4-_遍历字典">4. 遍历字典</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">print(dict0) <span class="comment">#按输出key-value对, 输入内容和定义时一样的</span></span><br><span class="line"><span class="comment">#使用print(d1)输出的内容如下</span></span><br><span class="line">    &#123;<span class="string">'two'</span>: <span class="number">2</span>, <span class="string">'one'</span>: <span class="number">1</span>, <span class="string">'three'</span>: <span class="number">3</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#如果我们使用:</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> dict0:</span><br><span class="line">    print(x)</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出的值只有所有键的值, 而不是字典中所有的键值对, 再额外输出dict0[x], 就能输出键值对了</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> dict0:</span><br><span class="line">    print(x + <span class="string">" : "</span> + repr(dict0[x]))</span><br><span class="line"></span><br><span class="line"><span class="comment">#因为字典中的每项是以tuple存储的, 亦可以使用如下方式遍历输出:</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> dict0:</span><br><span class="line">    print(str(x[<span class="number">0</span>]) + <span class="string">"-&gt;"</span> + str(x[<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出所有键</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> dict0.keys():</span><br><span class="line">    print(x)</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出所有值</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> dict0.values():</span><br><span class="line">    print(x)</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出键值对</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> dict0.items:</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure>
-<h2 id="5-_比较与排序">5. 比较与排序</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#比较两个字典是否相同</span></span><br><span class="line">print(dict1 == dict2)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> operator <span class="keyword">import</span> itemgetter</span><br><span class="line"><span class="comment">#定义新的字典</span></span><br><span class="line">d = &#123;<span class="string">'a'</span>:<span class="number">2</span>, <span class="string">'b'</span>:<span class="number">23</span>, <span class="string">'c'</span>:<span class="number">5</span>, <span class="string">'d'</span>:<span class="number">17</span>, <span class="string">'e'</span>:<span class="number">1</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#对字典按键升序排序</span></span><br><span class="line">print(<span class="string">"按键升序排序"</span>)</span><br><span class="line"><span class="comment">#分别获取容器,容器中单元的排序关键字,下标0,即d[0],表示键,d[1]表示值</span></span><br><span class="line">sd = sorted(d.items(), key = <span class="keyword">lambda</span> d:d[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#对字典按键降序序排序</span></span><br><span class="line">print(<span class="string">"按键降序序排序"</span>)</span><br><span class="line">sd = sorted(d.items(), key = <span class="keyword">lambda</span> d:d[<span class="number">0</span>], reverse = <span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#对字典按值升序排序</span></span><br><span class="line">print(<span class="string">"按值升序排序"</span>)</span><br><span class="line">sd = sorted(d.items(), key = <span class="keyword">lambda</span> d:d[<span class="number">1</span>], reverse = <span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#对字典按值降序排序</span></span><br><span class="line">print(<span class="string">"按值降序排序"</span>)</span><br><span class="line">sd = sorted(d.items(), key = <span class="keyword">lambda</span> d:d[<span class="number">1</span>], reverse = <span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
-<font color="0080ff"><br><strong>注意:reverse的参数默认是False,即升序排序,要逆序排序请将reverse值该为True,包括sort函数,也可以传递reverse参数设定排序方式</strong></font>
-
-
-<h2 id="6-_其他">6. 其他</h2><p>6.1 输出字典中的item的数量</p>
-<pre><code>print<span class="list">(<span class="keyword">len</span><span class="list">(<span class="keyword">dict1</span>)</span>)</span>
-</code></pre><p>6.2 得到字典的浅复制,即修改复制的字典不会影响到原有的字典</p>
-<pre><code>dict3 = dict1.<span class="function"><span class="title">copy</span><span class="params">()</span></span>
-</code></pre><p>6.3 “key” in “dict name”判断是否已经包含某个键,功能和c++ map对象的count()一致</p>
-<pre><code><span class="built_in">print</span>(<span class="number">1</span> <span class="keyword">in</span> dict0) <span class="comment">#返回bool值</span>
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-25T14:37:01.000Z"><a href="/2015/05/25/python中各种排序方式的使用/">2015-05-25</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/25/python中各种排序方式的使用/">python中各种排序方式的使用</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>python提供内置的排序函数<em>sorted()</em>和列表排序的函数<em>sort()</em>, 灵活使用这两个函数足以完成大多数排序的需求, 当然也可以手写排序函数, 其中, sort函数有三个参数sort(*, key=None, reverse=None), 第一个参数一般不用, 第二个参数指定排序的关键词, 第三个参数表示是否逆序, 默认数字按大小,字符串按字典序升序排序,对于多属性对象,也可以指定关键字排序,后面说到 </p>
-<h2 id="1-_对列表排序">1. 对列表排序</h2><pre><code><span class="keyword">nums</span> =<span class="sqbracket"> [10, 3, 4, 1, 2, 9, 6, 5, 8, 7, 0]</span>
-</code></pre><p>对于只有单一属性元素的列表,可以直接使用<em>a.sort()</em>排序, 如果想要降序排序, 则加参数<strong>“reverse = True”</strong>即可</p>
-<pre><code>nums.<span class="function"><span class="title">sort</span><span class="params">()</span></span> #升序排序
-nums.<span class="function"><span class="title">sort</span><span class="params">(reverse = True)</span></span> #降序排序
-</code></pre><p>同样可以使用内置函数sorted实现排序,返回一个有序序列</p>
-<pre><code>tnums = <span class="function"><span class="title">sorted</span><span class="params">(nums)</span></span> #返回一个升序序列给tnums
-tnums = <span class="function"><span class="title">sorted</span><span class="params">(nums, reverse = True)</span></span> #返回一个降序序列
-</code></pre><p>对于复合型列表指定关键词排序</p>
-<pre><code>nums = [<span class="params">(<span class="string">"ten"</span>, <span class="number">10</span>)</span>, <span class="params">(<span class="string">"three"</span>, <span class="number">3</span>)</span>, <span class="params">(<span class="string">"four"</span>, <span class="number">4</span>)</span>, <span class="params">(<span class="string">"one"</span>, <span class="number">1</span>)</span>, <span class="params">(<span class="string">"two"</span>, <span class="number">2</span>)</span>, <span class="params">(<span class="string">"nine"</span>, <span class="number">9</span>)</span>]
-</code></pre><p>按元组列表中的单词排序</p>
-<pre><code>nums.<span class="function"><span class="title">sort</span><span class="params">(key = lambda x : x[<span class="number">0</span>])</span></span> 
-</code></pre><p>输出排序结果: </p>
-<pre><code><span class="collection">[<span class="list">(<span class="keyword">'four'</span>, <span class="number">4</span>)</span>, <span class="list">(<span class="keyword">'nine'</span>, <span class="number">9</span>)</span>, <span class="list">(<span class="keyword">'one'</span>, <span class="number">1</span>)</span>, <span class="list">(<span class="keyword">'ten'</span>, <span class="number">10</span>)</span>, <span class="list">(<span class="keyword">'three'</span>, <span class="number">3</span>)</span>, <span class="list">(<span class="keyword">'two'</span>, <span class="number">2</span>)</span>]</span>
-</code></pre><p>按元组列表中的数字排序</p>
-<pre><code>nums.<span class="function"><span class="title">sort</span><span class="params">(key = lambda x : x[<span class="number">1</span>])</span></span> 
-</code></pre><p>输出排序结果:</p>
-<pre><code><span class="collection">[<span class="list">(<span class="keyword">'one'</span>, <span class="number">1</span>)</span>, <span class="list">(<span class="keyword">'two'</span>, <span class="number">2</span>)</span>, <span class="list">(<span class="keyword">'three'</span>, <span class="number">3</span>)</span>, <span class="list">(<span class="keyword">'four'</span>, <span class="number">4</span>)</span>, <span class="list">(<span class="keyword">'nine'</span>, <span class="number">9</span>)</span>, <span class="list">(<span class="keyword">'ten'</span>, <span class="number">10</span>)</span>]</span>
-</code></pre><h2 id="2-_对字典进行排序">2. 对字典进行排序</h2><p><strong>不要奢望python能像c++一样企图得到一个有序的dict,因为python使用的hash实现字典, 这是不可能的, 但是能将字典排序后的内容保存到一个列表中.</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">enum = [<span class="string">"zero"</span>, <span class="string">"one"</span>, <span class="string">"two"</span>, <span class="string">"three"</span>, <span class="string">"four"</span>, <span class="string">"five"</span>, <span class="string">"six"</span>, <span class="string">"seven"</span>, <span class="string">"eight"</span>, <span class="string">"nine"</span>, <span class="string">"ten"</span>]</span><br><span class="line">nnum = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>]</span><br><span class="line">sdict = dict(zip(nnum, enum)) <span class="comment">#使用上面两个列表生成key为数字, value为字符串的字典</span></span><br><span class="line">tdict = sorted(sdict.items(), key = <span class="keyword">lambda</span> x : x[<span class="number">1</span>]) <span class="comment">#使用sorted函数对字典按value排序</span></span><br></pre></td></tr></table></figure>
-<p>按value值排序输出</p>
-<pre><code><span class="number">8</span> <span class="constant">eight</span>
-<span class="number">5</span> <span class="constant">five</span>
-<span class="number">4</span> <span class="constant">four</span>
-<span class="number">9</span> <span class="constant">nine</span>
-<span class="number">1</span> <span class="constant">one</span>
-<span class="number">7</span> <span class="constant">seven</span>
-<span class="number">6</span> <span class="constant">six</span>
-<span class="number">10</span> <span class="constant">ten</span>
-<span class="number">3</span> <span class="constant">three</span>
-<span class="number">2</span> <span class="constant">two</span>
-<span class="number">0</span> <span class="constant">zero</span>
-</code></pre><p>对dict按key降序排序</p>
-<pre><code>tdict = sorted<span class="list">(<span class="keyword">sdict</span>.items<span class="list">()</span>, key = lambda x: x[<span class="number">0</span>], reverse = True)</span>
-</code></pre><p>输出按key排序后的结果</p>
-<pre><code><span class="number">0</span> <span class="constant">zero</span>
-<span class="number">1</span> <span class="constant">one</span>
-<span class="number">2</span> <span class="constant">two</span>
-<span class="number">3</span> <span class="constant">three</span>
-<span class="number">4</span> <span class="constant">four</span>
-<span class="number">5</span> <span class="constant">five</span>
-<span class="number">6</span> <span class="constant">six</span>
-<span class="number">7</span> <span class="constant">seven</span>
-<span class="number">8</span> <span class="constant">eight</span>
-<span class="number">9</span> <span class="constant">nine</span>
-<span class="number">10</span> <span class="constant">ten</span>
-</code></pre><h2 id="3-_按对象的属性排序">3. 按对象的属性排序</h2><p>定义book类,有书名和价格两个属性, 然后对book对象排序<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">book</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, price)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.price = price</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"name: "</span> + str(self.name) + <span class="string">", price: "</span> + str(self.price)</span><br><span class="line"></span><br><span class="line">生成对象列表</span><br><span class="line">name = [<span class="string">"ed"</span>, <span class="string">"dfw"</span>, <span class="string">"zert"</span>, <span class="string">"gwert"</span>, <span class="string">"rgsd"</span>, <span class="string">"hkjhi"</span>, <span class="string">"ydfg"</span>, <span class="string">"indf"</span>, <span class="string">"kjsdf"</span>, <span class="string">"kenfs"</span>]</span><br><span class="line">price = [<span class="number">123</span>, <span class="number">435</span>, <span class="number">12</span>, <span class="number">56</span>, <span class="number">23</span>, <span class="number">12</span>, <span class="number">674</span>, <span class="number">123</span>, <span class="number">3452</span>, <span class="number">979</span>]</span><br><span class="line">books = list(book(x, y) <span class="keyword">for</span> x, y <span class="keyword">in</span> zip(name, price))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> books: </span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure></p>
-<p>输出原始序列</p>
-<pre><code><span class="string">name:</span> ed, <span class="string">price:</span> <span class="number">123</span>
-<span class="string">name:</span> dfw, <span class="string">price:</span> <span class="number">435</span>
-<span class="string">name:</span> zert, <span class="string">price:</span> <span class="number">12</span>
-<span class="string">name:</span> gwert, <span class="string">price:</span> <span class="number">56</span>
-<span class="string">name:</span> rgsd, <span class="string">price:</span> <span class="number">23</span>
-<span class="string">name:</span> hkjhi, <span class="string">price:</span> <span class="number">12</span>
-<span class="string">name:</span> ydfg, <span class="string">price:</span> <span class="number">674</span>
-<span class="string">name:</span> indf, <span class="string">price:</span> <span class="number">123</span>
-<span class="string">name:</span> kjsdf, <span class="string">price:</span> <span class="number">3452</span>
-<span class="string">name:</span> kenfs, <span class="string">price:</span> <span class="number">979</span>
-</code></pre><p>使用sorted按书名排序</p>
-<pre><code>sbooks = <span class="function"><span class="title">sorted</span><span class="params">(books, key = lambda x : x.name)</span></span>
-</code></pre><p>输出结果:</p>
-<pre><code><span class="string">name:</span> dfw, <span class="string">price:</span> <span class="number">435</span>
-<span class="string">name:</span> ed, <span class="string">price:</span> <span class="number">123</span>
-<span class="string">name:</span> gwert, <span class="string">price:</span> <span class="number">56</span>
-<span class="string">name:</span> hkjhi, <span class="string">price:</span> <span class="number">12</span>
-<span class="string">name:</span> indf, <span class="string">price:</span> <span class="number">123</span>
-<span class="string">name:</span> kenfs, <span class="string">price:</span> <span class="number">979</span>
-<span class="string">name:</span> kjsdf, <span class="string">price:</span> <span class="number">3452</span>
-<span class="string">name:</span> rgsd, <span class="string">price:</span> <span class="number">23</span>
-<span class="string">name:</span> ydfg, <span class="string">price:</span> <span class="number">674</span>
-<span class="string">name:</span> zert, <span class="string">price:</span> <span class="number">12</span>
-</code></pre><p>按书价排序</p>
-<pre><code>tbooks.<span class="function"><span class="title">sort</span><span class="params">(key = lambda x: x.price)</span></span>
-<span class="function"><span class="title">print</span><span class="params">(tbooks)</span></span> #这里会输出按书价升序排序的序列
-</code></pre><p>对多个关键词自定义排序,方法也比较简单, 对单个关键词排序, 我们lambda表达式中给<em>key</em>返回单个关键词, 那么对多个关键字排序, 只需要在lambda表达式中返回一个元组即可, <em>sorted()</em>会首先按第一个元素排序, 然后第二个, 依次类推… </p>
-<p>下面看看对书本先按价格排序,如果价格相同,那么再按书名字典序排序的示例:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sbooks = sorted(books, key = <span class="keyword">lambda</span> x : (x.price, x.name))</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> sbooks:</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure>
-<p>输出结果:</p>
-<pre><code><span class="string">name:</span> hkjhi, <span class="string">price:</span> <span class="number">12</span>
-<span class="string">name:</span> zert, <span class="string">price:</span> <span class="number">12</span>
-<span class="string">name:</span> rgsd, <span class="string">price:</span> <span class="number">23</span>
-<span class="string">name:</span> gwert, <span class="string">price:</span> <span class="number">56</span>
-<span class="string">name:</span> ed, <span class="string">price:</span> <span class="number">123</span>
-<span class="string">name:</span> indf, <span class="string">price:</span> <span class="number">123</span>
-<span class="string">name:</span> dfw, <span class="string">price:</span> <span class="number">435</span>
-<span class="string">name:</span> ydfg, <span class="string">price:</span> <span class="number">674</span>
-<span class="string">name:</span> kenfs, <span class="string">price:</span> <span class="number">979</span>
-<span class="string">name:</span> kjsdf, <span class="string">price:</span> <span class="number">3452</span>
-</code></pre><p>对于按多个关键词排序, 如果我们想对其中某些关键词按降序排序怎么办呢因为默认都是升序的, 当初我查了很久才搞定这问题, 但实际上方法很简单, 直接在lambda表式中在<font color="0080ff"><strong>需要降序排序的关键词前面加一个负号(-)</strong></font>就可以了</p>
-<p>同样对于上述例子, 如果想先按姓名长度排序,如果长度相同,那么再按价格降序排序,使用下面的方法即可</p>
-<pre><code>sbooks = sorted<span class="list">(<span class="keyword">books</span>, key = lambda x : <span class="list">(<span class="keyword">len</span><span class="list">(<span class="keyword">x</span>.name)</span>, -x.price)</span>)</span>
-</code></pre><p>输出结果:</p>
-<pre><code><span class="string">name:</span> ed, <span class="string">price:</span> <span class="number">123</span>
-<span class="string">name:</span> dfw, <span class="string">price:</span> <span class="number">435</span>
-<span class="string">name:</span> ydfg, <span class="string">price:</span> <span class="number">674</span>
-<span class="string">name:</span> indf, <span class="string">price:</span> <span class="number">123</span>
-<span class="string">name:</span> rgsd, <span class="string">price:</span> <span class="number">23</span>
-<span class="string">name:</span> zert, <span class="string">price:</span> <span class="number">12</span>
-<span class="string">name:</span> kjsdf, <span class="string">price:</span> <span class="number">3452</span>
-<span class="string">name:</span> kenfs, <span class="string">price:</span> <span class="number">979</span>
-<span class="string">name:</span> gwert, <span class="string">price:</span> <span class="number">56</span>
-<span class="string">name:</span> hkjhi, <span class="string">price:</span> <span class="number">12</span>
-</code></pre><p>对象排序我们还可以使用attrgetter(key1, key2…)指派排序关键词, 使用前导入”operator”. 下面这例子先按books中的name属性排序,相同按price排序</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> operator</span><br><span class="line">sbooks = sorted(books, key = operator.attrgetter(<span class="string">"name"</span>, <span class="string">"price"</span>))</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -588,7 +464,7 @@ tnums = <span class="function"><span class="title">sorted</span><span class="par
   
     <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
   
-    <li><a href="/categories/MySQL/">MySQL</a><small>7</small></li>
+    <li><a href="/categories/MySQL/">MySQL</a><small>9</small></li>
   
     <li><a href="/categories/Operating-System/">Operating System</a><small>1</small></li>
   
@@ -606,6 +482,8 @@ tnums = <span class="function"><span class="title">sorted</span><span class="par
   
     <li><a href="/categories/位运算/">位运算</a><small>1</small></li>
   
+    <li><a href="/categories/数据库/">数据库</a><small>2</small></li>
+  
     <li><a href="/categories/汇编/">汇编</a><small>1</small></li>
   
   </ul>
@@ -619,7 +497,7 @@ tnums = <span class="function"><span class="title">sorted</span><span class="par
   
     <li><a href="/tags/C/">C++</a><small>1</small></li>
   
-    <li><a href="/tags/MySQL/">MySQL</a><small>8</small></li>
+    <li><a href="/tags/MySQL/">MySQL</a><small>11</small></li>
   
     <li><a href="/tags/Mysql/">Mysql</a><small>1</small></li>
   
@@ -654,6 +532,8 @@ tnums = <span class="function"><span class="title">sorted</span><span class="par
     <li><a href="/tags/学习/">学习</a><small>1</small></li>
   
     <li><a href="/tags/排序/">排序</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>1</small></li>
   
     <li><a href="/tags/汇编/">汇编</a><small>1</small></li>
   

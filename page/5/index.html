@@ -51,6 +51,212 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-05-12T08:08:51.000Z"><a href="/2015/05/12/python-lambda表达式/">2015-05-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/12/python-lambda表达式/">python lambda表达式</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>什么是lambda表达式呢? 简单的说就是一个没有 “return” 语句的函数,或者叫”匿名函数”,看一个简单的lambda表达式例子</p>
+<pre><code><span class="tag">lambda</span> <span class="rule"><span class="attribute">x </span>:<span class="value"> x + <span class="number">5</span></span></span>
+</code></pre><p>lambda表达式有3个部分,第一部分就是”lambda”关键字的,标明这是一个lambda表达式,然后紧接着第二部分”变量”, 然后”:”后面接着第三部分”返回值”上面的表达式接收值x,然后返回x+5的值,相当于函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> n + <span class="number">5</span></span><br></pre></td></tr></table></figure>
+<p>看看有多个参数的lambda表达式(返回三个数的和):</p>
+<pre><code><span class="tag">lambda</span> <span class="tag">x</span>, <span class="tag">y</span>, <span class="rule"><span class="attribute">z </span>:<span class="value"> x + y + z</span></span>
+</code></pre><p>那么lambda表达式和函数有什么区别呢, 直观的函数肯定要写更多的代码,而lambda仅仅是一行表达式, 假如我们仅仅是临时一次使用一个简单函数(通常只有1-3行规模的),这个函数再也没有其他的用途, 那么选择单独定义一个函数显然是不聪明的,因为要更多的代码,额外的命名. 因此lambda就能很愉快的解决这个问题.</p>
+<p>还有一个特点就是lambda表示式是可以赋值的,并可以在函数中构造并返回, 看如下例子</p>
+<pre><code><span class="attribute">g </span>=<span class="string"> lambda x : x + 5</span>
+</code></pre><p>这里’g’就相当于是lambda表达式”lambda x : x + 5”, 然后像函数一样使用即可:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">5</span></span><br><span class="line">n = g(x)</span><br><span class="line">print(n)<span class="comment">#结果输出10</span></span><br></pre></td></tr></table></figure>
+<p>看看通过参数构造不同的lambda表达式:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">make_increament</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">lambda</span> x: x + n</span><br><span class="line"></span><br><span class="line">f = make_increament(<span class="number">10</span>)<span class="comment">#构造为"lambda x : x + 10", 并返回给f</span></span><br><span class="line">g = make_increament(<span class="number">100</span>)<span class="comment">#构造为"lambda x : x + 100", 并返回给g</span></span><br><span class="line"></span><br><span class="line">print(f(<span class="number">5</span>))<span class="comment">#输出15</span></span><br><span class="line">print(g(<span class="number">5</span>))<span class="comment">#输出105</span></span><br></pre></td></tr></table></figure>
+<h2 id="其他看起来比较叼的应用">其他看起来比较叼的应用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">foo = [<span class="number">2</span>, <span class="number">18</span>, <span class="number">9</span>, <span class="number">22</span>, <span class="number">17</span>, <span class="number">24</span>, <span class="number">8</span>, <span class="number">12</span>, <span class="number">27</span>]</span><br><span class="line">print(list(filter(<span class="keyword">lambda</span> x: x % <span class="number">3</span> == <span class="number">0</span>, foo)))<span class="comment">#过滤出能被3整出的数</span></span><br><span class="line"><span class="comment">#输出[18, 9, 24, 12, 27]</span></span><br><span class="line"></span><br><span class="line">print(list(map(<span class="keyword">lambda</span> x: x * <span class="number">10</span>, foo)))<span class="comment">#将列表中的每个数乘上10</span></span><br><span class="line"><span class="comment">#输出[20, 180, 90, 220, 170, 240, 80, 120, 270]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> reduce <span class="comment">#python34要从tools中导入reduce()函数</span></span><br><span class="line">print(reduce(<span class="keyword">lambda</span> x, y: x + y, foo))<span class="comment">#求列表的和</span></span><br><span class="line"><span class="comment">#输出139</span></span><br><span class="line"></span><br><span class="line">sentence = <span class="string">"It is raining cats and dogs"</span></span><br><span class="line">lens = list(map(<span class="keyword">lambda</span> x: len(x), sentence.split()))<span class="comment">#得到每个单词的长度</span></span><br><span class="line">print(lens)</span><br><span class="line"><span class="comment">#输出[2, 2, 7, 4, 3, 4]</span></span><br></pre></td></tr></table></figure>
+<h2 id="filter(),_map(),_reduce()的作用简介">filter(), map(), reduce()的作用简介</h2><p>filter()函数的功能相当于过滤器。调用一个布尔函数bool_func来迭代遍历每个seq中的元素；返回一个使bool_seq返回值为true的元素的序列。</p>
+<p>map()函数处理一个列表里的所有元素，可以使用一个for循环来完成这个工作。但是Python内置的map函数可以帮我们的忙，它接受函数和列表作为参数，然后返回函数处理之后的列表：</p>
+<p>reduce()函数对sequence中的item顺序迭代调用function，如果有starting_value，还可以作为初始值调用</p>
+<h2 id="附上python34文档对于上述三个函数的说明">附上python34文档对于上述三个函数的说明</h2><h3 id="map(function,_iterable,_…)">map(function, iterable, …)</h3><p>Return an iterator that applies function to every item of iterable, yielding the results. If additional iterable arguments are passed, function must take that many arguments and is applied to the items from all iterables in parallel. With multiple iterables, the iterator stops when the shortest iterable is exhausted. For cases where the function inputs are already arranged into argument tuples, see</p>
+<h3 id="functools-reduce(function,_iterable[,_initializer])">functools.reduce(function, iterable[, initializer])</h3><p>Apply function of two arguments cumulatively to the items of sequence, from left to right, so as to reduce the sequence to a single value. For example, reduce(lambda x, y: x+y, [1, 2, 3, 4, 5]) calculates ((((1+2)+3)+4)+5). The left argument, x, is the accumulated value and the right argument, y, is the update value from the sequence. If the optional initializer is present, it is placed before the items of the sequence in the calculation, and serves as a default when the sequence is empty. If initializer is not given and sequence contains only one item, the first item is returned.</p>
+<h3 id="filter(function,_iterable)">filter(function, iterable)</h3><p>Construct an iterator from those elements of iterable for which function returns true. iterable may be either a sequence, a container which supports iteration, or an iterator. If function is None, the identity function is assumed, that is, all elements of iterable that are false are removed.<br>Note that filter(function, iterable) is equivalent to the generator expression (item for item in iterable if function(item)) if function is not None and (item for item in iterable if item) if function is None.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-05-07T13:11:27.000Z"><a href="/2015/05/07/最大公约数的新理解/">2015-05-07</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/07/最大公约数的新理解/">最大公约数的新理解</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天在做一道题时要用到最大公约数,数据据范围是任意整数,也就是说正负数,包括0都要能正确无误的的计算出最大公约数,我才突然发现我之前求公约数函数有很大的局限性,即只能求两个正整数的公约数,我之前的方法就是始终用大的数去除以小的数,然后不断求余迭代,直到余数为0,然后输出公约数.</p>
+<p>这是我之前求公约数的方法</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (a &lt; b)</span><br><span class="line">        swap(a, b);</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">int</span> t = a % b)</span><br><span class="line">    &#123;</span><br><span class="line">        a = b;</span><br><span class="line">        b = t;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从代码就能看出, 一旦遇到0, 程序就不能正常运行了.参考了一下他人的代码才发现比较大小的过程是没有必要的, 因为在一次循环后大小顺序已经交换了.假如现在求12和16的公约数, 首先是执行<font color="0080ff">12/16=0…12</font>, 然后迭代一次, 自然就得到了<font color="0080ff">16/12=1…4</font>的过程.处理这个问题还有一个更重要的地方就是如果遇到其中一个数0, 那么公约数就是另外一个, 因为0是不能作为约数的, 所有循环中的条件就应该检查被除数b是否为0, 而不是检查a除以b的余数是否为0.</p>
+<p>综上, 得到了新的公约数算法,以下分别是循环版和递归版的算法:</p>
+<h3 id="循环版本">循环版本</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> t = a % b;</span><br><span class="line">        a = b;</span><br><span class="line">        b = t;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="递归版本(短小精悍的代码)">递归版本(短小精悍的代码)</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> !b ? a : gcd(b, a % b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就能计算任意两个整数的公约数, 之前写的代码简直太挫了…</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-05-02T05:35:14.000Z"><a href="/2015/05/02/sublime-text-3-注册码/">2015-05-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/02/sublime-text-3-注册码/">sublime text 3 注册码</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>以下为sublime text 3注册码, 3059已经激活, 其他版本应该也可以</p>
+<pre><code>Andrew Weber  
+Single User License  
+EA7E-855605  
+813A03DD 5E4AD<span class="number">9E6 6C0</span>EEB94 BC99798F  
+<span class="number">942194A6 02</span>396E98 E<span class="number">62C9979 4</span>BB979FE  
+<span class="number">91424C9</span>D A45400BF F<span class="number">6747D88 2</span>FB88078  
+90F5CC94 1CDC92DC <span class="number">8457107</span><span class="keyword">A</span> F151657B  
+<span class="number">1D22E383</span> <span class="keyword">A</span><span class="number">997F016</span> <span class="number">42397640 33</span>F41CFC  
+E1D0AE85 A0BBD<span class="number">039 0E9</span>C8D55 E1B89D5D  
+5CDB7036 E56DE1C0 EFCC<span class="number">0840 650</span>CD3A6  
+B98FC99C 8FAC73EE D<span class="number">2B95564</span> DF450523
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-05-01T01:31:00.000Z"><a href="/2015/05/01/hexo-添加disqus评论系统/">2015-05-01</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/01/hexo-添加disqus评论系统/">hexo添加disqus评论系统</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="1:注册disqus账号https://disqus-com">1:注册disqus账号<a href="https://disqus.com" target="_blank" rel="external">https://disqus.com</a></h3><h3 id="2:在disqus设置页面中点_Add_Disqus_to_your_site_添加你的网站地址,_和设置Choose_your_unique_Disqus_URL,_这一栏填写的就是hexo中所使用的short_name">2:在disqus设置页面中点 <font color="0080ff">Add Disqus to your site</font> 添加你的网站地址, 和设置<font color="0080ff">Choose your unique Disqus URL</font>, 这一栏填写的就是hexo中所使用的short_name</h3><h3 id="3:打开根目录下的config-yml,_在最后面添加">3:打开根目录下的<font color="0080ff">config.yml</font>, 在最后面添加</h3><pre><code><span class="attribute">disqus_shortname</span>: <span class="string">your_disqus_short_name</span>
+</code></pre><h3 id="4:打开hexo\themes\light\_config-yml,_将">4:打开<font color="0080ff">hexo\themes\light\_config.yml</font>, 将</h3><pre><code><span class="attribute">comment_provider</span>: <span class="string">facebook</span>
+</code></pre><p>改为</p>
+<pre><code><span class="attribute">comment_provider</span>: <span class="string">disqus</span>
+</code></pre><p>然后就能看到页面中的评论系统了</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-05-01T00:52:10.000Z"><a href="/2015/05/01/半期总结/">2015-05-01</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/01/半期总结/">半期总结</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>时间过的真快, 三月8号开的学, 转眼间就到的五一, 本学期的时间几乎过半! 这半学期除了做的个安卓的课表和刷了一些题感觉什么都没做,开学还打算的早起跑步了,结果一次早床都没有起过, 基本上每次都到上课的时间才起床, 而寒假开始学的Python到现在还停留在使用循环的阶段, 自己都讨厌自己了. 所以,从五一为新的时间段,毕竟大东北的天气五一后才算好,逐步适应起早床,多看书,多编程,多刷点题,为五月即将到来的的ACM省赛做好准备,虽然极大的可能被虐, 哈哈. 还有, 后半期要让Python上一个台阶.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-04-28T14:10:36.000Z"><a href="/2015/04/28/测试/">2015-04-28</a></time>
       
       
@@ -109,7 +315,7 @@
   
     <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
   
-    <li><a href="/categories/MySQL/">MySQL</a><small>7</small></li>
+    <li><a href="/categories/MySQL/">MySQL</a><small>9</small></li>
   
     <li><a href="/categories/Operating-System/">Operating System</a><small>1</small></li>
   
@@ -127,6 +333,8 @@
   
     <li><a href="/categories/位运算/">位运算</a><small>1</small></li>
   
+    <li><a href="/categories/数据库/">数据库</a><small>2</small></li>
+  
     <li><a href="/categories/汇编/">汇编</a><small>1</small></li>
   
   </ul>
@@ -140,7 +348,7 @@
   
     <li><a href="/tags/C/">C++</a><small>1</small></li>
   
-    <li><a href="/tags/MySQL/">MySQL</a><small>8</small></li>
+    <li><a href="/tags/MySQL/">MySQL</a><small>11</small></li>
   
     <li><a href="/tags/Mysql/">Mysql</a><small>1</small></li>
   
@@ -175,6 +383,8 @@
     <li><a href="/tags/学习/">学习</a><small>1</small></li>
   
     <li><a href="/tags/排序/">排序</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>1</small></li>
   
     <li><a href="/tags/汇编/">汇编</a><small>1</small></li>
   
