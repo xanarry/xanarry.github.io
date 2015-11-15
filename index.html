@@ -51,59 +51,17 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-11-15T08:30:16.000Z"><a href="/2015/11/15/linux安装mysql-c语言开发库/">2015-11-15</a></time>
+        <time datetime="2015-11-15T08:36:36.000Z"><a href="/2015/11/15/sql的循环-判断-跳转语句/">2015-11-15</a></time>
       
       
   
-    <h1 class="title"><a href="/2015/11/15/linux安装mysql-c语言开发库/">linux安装mysql c语言开发库</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>默认可能没有安装mysql的链接库, 使用下面语句安装</p>
-<pre><code>sudo apt-<span class="built_in">get</span> install libmysqlclient-<span class="built_in">dev</span>
-</code></pre><p>使用下面两条命令查看库文件的位置和头文件的位置</p>
-<pre><code>mysql_config <span class="comment">--libs</span>
-mysql_config <span class="comment">--cflags</span>
-</code></pre><p>然后就可以使用</p>
-<pre><code>gcc <span class="keyword">in</span><span class="class">.c</span> -o -lmysqlclient
-</code></pre><p>编译</p>
-<p>使用集成开发工具要添加库的路径到工具上</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-11-15T08:26:17.859Z"><a href="/2015/11/15/SQL的循环语句/">2015-11-15</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/11/15/SQL的循环语句/"></a></h1>
+    <h1 class="title"><a href="/2015/11/15/sql的循环-判断-跳转语句/">sql的循环,判断,跳转语句</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>title: SQL的循环语句<br>date: 2015-11-15 15:44:49<br>tags: MySQL</p>
-<h2 id="categories:_数据库">categories: 数据库</h2><h1 id="循环语句:">循环语句:</h1><h2 id="NO-1_while">NO.1 while</h2><pre><code><span class="keyword">while</span> 布尔表达式(循环的条件) <span class="keyword">do</span>
+        <h1 id="循环语句:">循环语句:</h1><h2 id="NO-1_while">NO.1 while</h2><pre><code><span class="keyword">while</span> 布尔表达式(循环的条件) <span class="keyword">do</span>
     循环体(语句用分号标记结束)
 <span class="keyword">end</span> <span class="keyword">while</span>
 </code></pre><h2 id="NO-2_repeat">NO.2 repeat</h2><pre><code><span class="keyword">repeat</span>
@@ -187,6 +145,47 @@ mysql&gt; create function sum100()
 </span>    -<span class="ruby">&gt; <span class="keyword">end</span>
 </span>    -<span class="ruby">&gt;<span class="regexp">//</span></span>
 </code></pre><h1 id="赋值语句">赋值语句</h1><p>对于赋值语句同样可使用<br>    select a into b;<br>等同与<br>    set b = a;</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-11-15T08:30:16.000Z"><a href="/2015/11/15/linux安装mysql-c语言开发库/">2015-11-15</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/11/15/linux安装mysql-c语言开发库/">linux安装mysql c语言开发库</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>默认可能没有安装mysql的链接库, 使用下面语句安装</p>
+<pre><code>sudo apt-<span class="built_in">get</span> install libmysqlclient-<span class="built_in">dev</span>
+</code></pre><p>使用下面两条命令查看库文件的位置和头文件的位置</p>
+<pre><code>mysql_config <span class="comment">--libs</span>
+mysql_config <span class="comment">--cflags</span>
+</code></pre><p>然后就可以使用</p>
+<pre><code>gcc <span class="keyword">in</span><span class="class">.c</span> -o -lmysqlclient
+</code></pre><p>编译</p>
+<p>使用集成开发工具要添加库的路径到工具上</p>
 
       
     </div>
@@ -845,7 +844,7 @@ mysql&gt; select <span class="keyword">*</span> from person left outer join sala
   
     <li><a href="/categories/位运算/">位运算</a><small>1</small></li>
   
-    <li><a href="/categories/数据库/">数据库</a><small>3</small></li>
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   
     <li><a href="/categories/汇编/">汇编</a><small>1</small></li>
   
@@ -863,6 +862,8 @@ mysql&gt; select <span class="keyword">*</span> from person left outer join sala
     <li><a href="/tags/MySQL/">MySQL</a><small>11</small></li>
   
     <li><a href="/tags/Mysql/">Mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/SQL/">SQL</a><small>1</small></li>
   
     <li><a href="/tags/c-高精度/">c++高精度</a><small>1</small></li>
   
